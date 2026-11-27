@@ -479,6 +479,46 @@ const LEVELS = [
  [250,'🫒','Trưởng lão Ô Liu','Lời nói ra là anh em ghi vào file']
 ];
 const POINTS = [['👍','Bấm “Tôi cũng bị”',1],['🆕','Báo lỗi mới',5],['💬','Trả lời câu hỏi',3],['✅','Được người quản lý duyệt',10]];
+const HPOINTS = [['🆕','Người báo lỗi đầu tiên trong sổ tay',5],['👍','Cùng gặp, xác nhận lỗi',1],['💬','Góp câu trả lời, kinh nghiệm',3],['🙋','Đặt câu hỏi cho hội',1],['🎁','Chia sẻ phụ kiện, link mua',3],['⭐','Góp đánh giá xe',2]];
+/* Đóng góp đã có trong sổ tay nhóm (cột "Người báo/Người chia sẻ") → cộng vào Bảng vàng */
+const nameKey = n => String(n||'').normalize('NFC').toLowerCase().replace(/\s+/g,' ').trim();
+function histTally(since){
+ const P = new Map();
+ const ok = d => { if(!since) return true; const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(d||''); return !!m && new Date(+m[3], m[2]-1, +m[1]) >= since; };
+ const names = who => { const seen = new Set(), out = [];
+  String(who||'').replace(/\s+và nhiều anh em/gi,'').split(/[,;\n]+/).forEach(x => {
+   x = x.trim(); let ask = false;
+   if(/\(hỏi\)\s*$/i.test(x)){ ask = true; x = x.replace(/\s*\(hỏi\)\s*$/i,''); }
+   if(!x || x.length > 40 || /nhiều anh em|nhóm vinno|\(người bán\)|^\(/i.test(x)) return;
+   const k = nameKey(x); if(seen.has(k)) return; seen.add(k); out.push({name:x, k, ask});
+  }); return out; };
+ const add = (n, f, pts) => { const r = P.get(n.k) || {name:n.name, metoo:0, report:0, answer:0, ask:0, share:0, rv:0, points:0}; r[f]++; r.points += pts; P.set(n.k, r); };
+ (D.errs||[]).forEach(e => { if(!ok(e.date)) return; names(e.who).forEach((n,i) => i === 0 ? add(n,'report',5) : add(n,'metoo',1)); });
+ (D.qa||[]).forEach(q => { if(!ok(q.date)) return; names(q.who).forEach(n => n.ask ? add(n,'ask',1) : add(n,'answer',3)); });
+ (D.pk||[]).forEach(x => { if(!ok(x.date)) return; names(x.who).forEach(n => add(n,'share',3)); });
+ if(!since) (D.rv||[]).forEach(x => names(x.who).forEach(n => add(n,'rv',2)));
+ return P;
+}
+function mergeHist(list, since, allMap){
+ const H = histTally(since), out = (list||[]).map(r => Object.assign({}, r)), byName = new Map(out.map(r => [nameKey(r.name), r]));
+ H.forEach((h, k) => {
+  const r = byName.get(k);
+  if(r){ ['metoo','report','answer','ask','share','rv'].forEach(f => r[f] = (r[f]||0) + h[f]); r.points += h.points; }
+  else { const c = PAINTS[[...k].reduce((a,ch) => a + ch.charCodeAt(0), 0) % 7][0]; const n = Object.assign({k:'h'+out.length, av:'car', color:c, ok:0, hist:true}, h); out.push(n); byName.set(k, n); }
+ });
+ out.sort((a,b) => b.points - a.points || a.name.localeCompare(b.name,'vi'));
+ out.forEach(r => r.allPoints = allMap ? (allMap.get(nameKey(r.name)) ?? r.points) : r.points);
+ return out;
+}
+function withHist(raw){
+ if(!D || !D.errs) return raw;
+ const all = mergeHist(raw.all, null), allMap = new Map(all.map(r => [nameKey(r.name), r.points]));
+ const now = new Date(), since = new Date(now.getFullYear(), now.getMonth(), 1);
+ const month = raw.month ? mergeHist(raw.month, since, allMap) : null;
+ const me = {}, rankOf = (list, srv) => { const i = list.findIndex(r => r.me); if(i >= 0) return {rank:i+1, points:list[i].points}; const pts = (srv && srv.points) || 0; return pts ? {rank: list.filter(r => r.points > pts).length + 1, points: pts} : {rank:0, points:0}; };
+ me.all = rankOf(all, raw.me && raw.me.all); if(month) me.month = rankOf(month, raw.me && raw.me.month);
+ return Object.assign({}, raw, {all, month, me});
+}
 const VERSIONS = ['8E.1.8.2','8E.1.9.0'];
 const AV_ICONS = ICN.slice();
 function avatarHtml(av, color, size){
@@ -834,15 +874,15 @@ async function syncProfile(){
 }
 
 /* ---- Bảng vàng ---- */
-let LB = null, LBTAB = 'month', LBERR = '';
+let LB = null, LBTAB = 'all', LBERR = '';
 async function loadBoard(){
  LBERR = '';
  try{
   const j = await getJSON('board');
   if(!j || j.ok === false || !j.all) throw new Error((j && j.error) || 'old');
-  LB = j;
+  LB = withHist(j);
  }catch(e){
-  LB = {all: BOARD.map(b => Object.assign({av:'car'}, b)), month: null, me: {}, avs: {}};
+  LB = withHist({all: BOARD.map(b => Object.assign({av:'car'}, b)), month: null, me: {}, avs: {}});
  }
  if(location.hash === '#bang-vang') renderBoard();
  if(S.tab === 'loi' && !S.q && !S.g && $('#screen').classList.contains('hidden')) renderLoi();
@@ -856,23 +896,24 @@ function renderBoard(){
  const now = new Date(), mName = `tháng ${now.getMonth()+1}`;
  const top = rows.slice(0,3), rest = rows.slice(3, 30);
  const pod = (r, k) => r ? `<div class="pod p${k+1}${r.me?' isme':''}"><span class="md">${['🥇','🥈','🥉'][k]}</span>${lbAv(r)}<b>${esc(r.name)}</b><div class="pt">${r.points}</div><small>${LEVELS[levelOf(r.allPoints ?? r.points)][1]} ${esc(LEVELS[levelOf(r.allPoints ?? r.points)][2])}</small></div>` : '<div></div>';
- const stat = r => [r.metoo?`👍${r.metoo}`:'', r.report?`🆕${r.report}`:'', r.answer?`💬${r.answer}`:'', r.ok?`✅${r.ok}`:''].filter(Boolean).join('  ');
+ const stat = r => [r.report?`🆕${r.report}`:'', r.answer?`💬${r.answer}`:'', r.share?`🎁${r.share}`:'', r.metoo?`👍${r.metoo}`:'', r.rv?`⭐${r.rv}`:'', r.ask?`🙋${r.ask}`:'', r.ok?`✅${r.ok}`:''].filter(Boolean).join('  ');
  const mine = LB.me && LB.me[hasMonth ? LBTAB : 'all'];
  openScreen(`<div class="nav">${backBtn}</div>
   <div class="dh"><span class="ic" style="font-size:40px">🏆</span><h2>Bảng vàng đóng góp<br><small class="note" style="font-weight:500">Người góp nhiều nhất cho hội VINNO VF8</small></h2></div>
-  ${hasMonth ? `<div class="seg"><button data-lbt="month" aria-pressed="${LBTAB==='month'}">Tháng này</button><button data-lbt="all" aria-pressed="${LBTAB==='all'}">Từ trước đến nay</button></div>` : ''}
+  ${hasMonth ? `<div class="seg"><button data-lbt="all" aria-pressed="${LBTAB==='all'}">Từ trước đến nay</button><button data-lbt="month" aria-pressed="${LBTAB==='month'}">Tháng này</button></div>` : ''}
   ${rows.length ? `<div class="podium">${pod(top[1],1)}${pod(top[0],0)}${pod(top[2],2)}</div>
   ${rest.length ? `<div class="list"><ol class="lb">${rest.map((r,k) => `<li class="${r.me?'isme':''}"><span class="rk">${k+4}</span>${lbAv(r)}<span class="nm"><b>${esc(r.name)}${r.me?' (bạn)':''}</b><small>${stat(r)}</small></span><span class="pt">${r.points}<small>điểm</small></span></li>`).join('')}</ol></div>` : ''}`
   : `<div class="list"><div class="empty">${ico('car',72)}<br>${LBTAB==='month'?`Chưa ai có điểm trong ${mName}.`:'Chưa ai có điểm.'} Bấm 👍 “Tôi cũng bị” ở một lỗi để lên bảng đầu tiên!</div></div>`}
   ${mine && mine.rank > 3 ? `<div class="myrank">${myAv(38)}<span style="flex:1"><b>Hạng của bạn: #${mine.rank}</b><br><small>${mine.points} điểm${rows[0] ? `, kém hạng 1 ${Math.max(0, rows[0].points - mine.points)} điểm` : ''}</small></span></div>` : ''}
-  <div class="card" style="margin-top:14px"><h3>Cách kiếm điểm</h3><div class="earn">${POINTS.map(([i,t,n]) => `<span>${i}</span><span>${t}</span><b>+${n}</b>`).join('')}</div></div>
+  <div class="card" style="margin-top:14px"><h3>Cách kiếm điểm trên app</h3><div class="earn">${POINTS.map(([i,t,n]) => `<span>${i}</span><span>${t}</span><b>+${n}</b>`).join('')}</div></div>
+  <div class="card"><h3>Đóng góp trong sổ tay nhóm cũng được tính</h3><div class="earn">${HPOINTS.map(([i,t,n]) => `<span>${i}</span><span>${t}</span><b>+${n}</b>`).join('')}</div><p class="note" style="margin-top:10px">Ai đặt tên trong app trùng tên trong sổ tay sẽ được cộng dồn điểm.</p></div>
   ${LB && LB.month === null && online() ? '<p class="note">Bảng xếp hạng theo tháng sẽ có sau khi cập nhật máy chủ.</p>' : ''}`);
 }
 function miniBoard(){
- const rows = LB && (LB.month && LB.month.length ? LB.month : LB.all);
+ const rows = LB && LB.all;
  if(!rows || !rows.length) return `<button class="mini" data-act="openBoard"><span style="font-size:28px">🏆</span><span><b>Bảng vàng đóng góp</b><small>Xem ai đang dẫn đầu hội</small></span></button>`;
  const t3 = rows.slice(0,3);
- return `<button class="mini" data-act="openBoard"><span class="stack">${t3.map(r => lbAv(r)).join('')}</span><span style="flex:1;min-width:0"><b>🏆 Bảng vàng ${LB.month && LB.month.length ? 'tháng này' : ''}</b><small>Dẫn đầu: ${esc(t3[0].name)}, ${t3[0].points} điểm</small></span><span class="note">Xem ›</span></button>`;
+ return `<button class="mini" data-act="openBoard"><span class="stack">${t3.map(r => lbAv(r)).join('')}</span><span style="flex:1;min-width:0"><b>🏆 Bảng vàng đóng góp</b><small>Dẫn đầu: ${esc(t3[0].name)}, ${t3[0].points} điểm</small></span><span class="note">Xem ›</span></button>`;
 }
 
 /* ---- Cài app ra màn hình ---- */

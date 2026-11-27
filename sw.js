@@ -1,5 +1,5 @@
 /* VINNO VF8 – service worker: mở được khi mạng yếu. Đổi số phiên bản khi cập nhật app. */
-const CACHE = 'vinno-vf8-v7.2.0';
+const CACHE = 'vinno-vf8-v7.3.0';
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'logo.webp', 'icons.webp', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
