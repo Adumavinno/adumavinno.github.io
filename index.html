@@ -305,7 +305,8 @@ mark{background:color-mix(in srgb,var(--gold) 38%,transparent);color:inherit;bor
 .hbtn{border:0;background:var(--card);border-radius:50%;width:40px;height:40px;font-size:19px}
 .me{border:0;background:var(--card);padding:4px 12px 4px 4px}
 .menu{border-bottom:1px solid var(--line)}
-.menu .wrap{gap:0;padding-top:2px}
+.menu .wrap{gap:0;padding-top:2px;grid-template-columns:repeat(5,1fr)}
+.menu a{font-size:12.5px;white-space:nowrap}
 .menu a{position:relative;gap:4px;padding:6px 2px 10px;font-size:13px;border-bottom:0;color:var(--muted)}
 .menu a .ico{--s:30px}
 .menu a[aria-current="page"]{color:var(--ink);font-weight:700}
@@ -346,6 +347,15 @@ main{padding-top:16px}
 .pod{border-radius:20px 20px 12px 12px}
 .myrank{border-radius:18px}
 .unans{border-radius:20px}
+ol.steps{margin:0;padding:0;list-style:none;counter-reset:st}
+ol.steps li{counter-increment:st;position:relative;padding:0 0 12px 38px;line-height:1.5}
+ol.steps li:last-child{padding-bottom:0}
+ol.steps li::before{content:counter(st);position:absolute;left:0;top:-1px;width:26px;height:26px;border-radius:50%;background:var(--olive);color:#fff;font-weight:700;font-size:13.5px;display:grid;place-items:center}
+ul.keep{margin:0;padding:0 0 0 18px}
+ul.keep li{margin:0 0 8px;line-height:1.5}
+ul.keep li:last-child{margin-bottom:0}
+.tipcard{background:color-mix(in srgb,var(--gold) 13%,var(--card))}
+.chev{color:var(--muted);font-size:22px;flex:none}
 @keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -361,6 +371,7 @@ main{padding-top:16px}
 <nav class="menu" aria-label="Mục chính"><div class="wrap">
 <a href="#loi" data-tab="loi"><span class="ico" data-ic="tools" aria-hidden="true"></span>Lỗi &amp; sửa</a>
 <a href="#luu-y" data-tab="luu-y"><span class="ico" data-ic="clip" aria-hidden="true"></span>Lưu ý</a>
+<a href="#huong-dan" data-tab="huong-dan"><span class="ico" data-ic="tip" aria-hidden="true"></span>Hướng dẫn</a>
 <a href="#phu-kien" data-tab="phu-kien"><span class="ico" data-ic="gift" aria-hidden="true"></span>Phụ kiện</a>
 <a href="#hoi-dap" data-tab="hoi-dap"><span class="ico" data-ic="ask" aria-hidden="true"></span>Hỏi đáp</a>
 </div></nav>
@@ -378,6 +389,13 @@ main{padding-top:16px}
 <section data-view="luu-y" class="hidden">
 <div class="seg" id="luuSeg"><button data-luu="nhan">🔍 Khi nhận xe</button><button data-luu="dung">💡 Khi dùng xe</button></div>
 <div id="luuBody"></div>
+</section>
+<section data-view="huong-dan" class="hidden">
+<div class="search">
+<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+<input id="hdQ" type="search" enterkeyhint="search" placeholder="Tìm: sạc, ACC, auto hold, cốp…" autocomplete="off" aria-label="Tìm hướng dẫn">
+</div>
+<div id="hdBody"></div>
 </section>
 <section data-view="phu-kien" class="hidden">
 <div class="search">
@@ -702,7 +720,7 @@ function renderMe(){
 }
 
 /* ---- Tab: Lỗi ---- */
-const S = { tab:'loi', q:'', g:'', st:'', sort:'n', limit:20, luu:null, pkQ:'', pkCat:'', qaQ:'', qaTopic:'' };
+const S = { tab:'loi', hdQ:'', q:'', g:'', st:'', sort:'n', limit:20, luu:null, pkQ:'', pkCat:'', qaQ:'', qaTopic:'' };
 function errRow(e, Q){
  const i = stInfo(e.st), sn = Q ? errSnip(e, Q) : '';
  return `<a class="row" href="#loi-${e.id}"><span class="ic">${gIcon(e.g)}</span><span class="tx"><p class="d">${Q ? hl(e.desc, Q) : esc(e.desc)}</p>${sn ? `<span class="snip">${sn}</span>` : ''}
@@ -736,6 +754,7 @@ function renderLoi(){
   const b = [];
   if(qa && qa.list.length) b.push(`<button data-also="hoi-dap">${ico('ask')}${qa.list.length} câu hỏi đáp</button>`);
   if(pk && pk.list.length) b.push(`<button data-also="phu-kien">${ico('gift')}${pk.list.length} phụ kiện</button>`);
+  const hd = searchItems(GUIDE, S.q, gFields), hdn = hd && !hd.approx ? hd.list.filter(x => termAllIn(x.t+' '+x.s+' '+x.q, hd.Q)).length : 0; if(hdn) b.unshift(`<button data-also="huong-dan">${ico('tip')}Hướng dẫn liên quan</button>`);
   if(b.length) also = `<div class="also">${b.join('')}</div>`;
  }
  box.innerHTML = `${S.g ? `<button class="back-chip" data-act="clearG">← Các nhóm lỗi</button>` : ''}
@@ -951,13 +970,17 @@ if(IS_PWA_HOST){
 
 /* ---- Tab: Lưu ý ---- */
 const CHECK = [
- ['🎨','Thân vỏ, sơn', [['son','Soi sơn dưới nắng: không vết đánh bóng, trầy xước',['N75','Q6']],['taynam','Bấm thử nút 4 tay nắm cửa: không lỏng, không kêu',['T29']],['crom','Chỉ crom thân sau dán chắc, không bong',['T33']],['cua','Mở hết cỡ 2 cửa trước: không kêu cót két',['T35','N76']],['guong','Gương phải chỉnh được đủ 4 hướng',['T32']]]],
- ['💡','Đèn', [['xinhan','Đèn xi nhan gài khít, không vết keo',['T6']],['denhau','Mép đèn hậu hai bên khít đều, chụp ảnh lưu lại',['T7']],['hoinuoc','Đèn hậu không có hơi nước',['T5']],['vexn','Bật xi nhan, đủ các vế cùng sáng',['T8']]]],
- ['💺','Nội thất', [['cuagio','Cửa gió hàng ghế sau không bung, có gió',['T10']],['hoc','Mở thử hộc đồ chân ghế phụ',['T24']],['cuasau','Cửa sau bên lái mở được từ trong',['T15']],['hoanthien','Gập ghế 2, xem gioăng cốp, tấm chắn nắng',['T31']]]],
- ['📶','Phần mềm, kết nối', [['ver','Ghi lại phiên bản phần mềm',['T26']],['acc','Menu có ga tự động (ACC), giữ làn',['T26']],['vfc','Kích hoạt VF Connect, eSIM có sóng',['T14','T17']],['ghe','Chỉnh ghế xong bấm Lưu vị trí trong Hồ sơ',['T22']],['bh','App VinFast hiện thông tin bảo hành',['N36']]]],
- ['📄','Đồ đi kèm, giấy tờ', [['chia','Đủ 2 chìa khóa, giấy hẹn đăng ký',['Q30']],['cop','Cốp có móc cứu hộ, bộ vá lốp',['Q30']],['vin','Số khung đầu 80 thường là xe demo',['Q121']]]]
+ ['🎨','Thân vỏ, sơn', [['son','Soi sơn dưới nắng: không vết đánh bóng, trầy xước, vết dặm vá',['N75','Q6']],['taynam','Bấm thử nút 4 tay nắm cửa: không lỏng, không kêu',['T29']],['dongcua','Đóng mở cả 4 cửa: nhẹ, khít, không vênh',[]],['cua','Mở hết cỡ 2 cửa trước: không kêu cót két',['T35','N76']],['crom','Chỉ crom thân sau dán chắc, không bong',['T33']],['gioang','Gioăng ca-pô, gioăng cốp, ốp nhựa, bậc cửa không hở, không kênh',[]],['capo','Mở ca-pô và cốp: sạch, không dấu vết chuột, kiến (xe để lâu ở bãi)',[]],['guong','Gương chỉnh được đủ 4 hướng, gập mở bình thường',['T32']]]],
+ ['🛞','Lốp, mâm', [['apsuat','Áp suất lốp đúng nhãn dán ở xe (có xe bị bơm ngược trước, sau)',['hd:lop']],['opmam','Ốp mâm lắp đúng, không che van bơm',[]]]],
+ ['💡','Đèn', [['xinhan','Đèn xi nhan gài khít, không vết keo',['T6']],['denhau','Mép đèn hậu hai bên khít đều, chụp ảnh lưu lại',['T7']],['hoinuoc','Đèn hậu không có hơi nước',['T5']],['vexn','Bật xi nhan, đủ các vế cùng sáng',['T8']],['dencac','Nhờ người đứng ngoài xem đèn pha, cốt, phanh, lùi (đèn lùi chỉ một bên là đúng thiết kế)',[]]]],
+ ['💺','Nội thất', [['cuagio','Cửa gió hàng ghế sau không bung, có gió',['T10']],['dieuhoa','Bật điều hòa: mát, không mùi lạ, quạt không kêu to',['hd:dieu-hoa']],['hoc','Mở thử hộc đồ chân ghế phụ',['T24']],['cuasau','Cửa sau bên lái mở được từ trong',['T15']],['khoatre','Bật khóa trẻ em: cửa sau không mở được từ trong',[]],['kinh','Bấm kính một chạm lên xuống ở từng cửa',[]],['loa','Phát nhạc, chỉnh âm về phía sau để chắc loa sau có tiếng, ghép Bluetooth gọi thử',[]],['sacdt','Thử ổ điện trong hộc và đế sạc không dây (ốp điện thoại có thẻ từ làm xe báo lỗi)',[]],['hoanthien','Gập ghế 2, xem gioăng cốp, tấm chắn nắng',['T31']]]],
+ ['🚗','Bật xe và lái thử', [['baoloi','Bật xe: màn hình không báo lỗi túi khí, ADAS, cắt ngang. Còn chế độ nhà máy thì nhờ xưởng tắt',[]],['cam360','Vào R xem camera 360. Vào D bật xi nhan xem camera xi nhan (ở P không hiện là bình thường)',['hd:camera']],['copdien','Mở đóng cốp bằng nút trên cốp và trên chìa',['hd:cop-capo']],['congsac','Mở nắp cổng sạc, đèn cổng không báo đỏ. Đại lý có trụ thì cắm sạc thử',['hd:sac-xe']],['laithu','Lái thử: vô lăng không lệch, đánh lái hết hai bên, qua gờ không có tiếng lạ',[]]]],
+ ['📶','Phần mềm, kết nối', [['ver','Ghi lại phiên bản phần mềm, hỏi xưởng đã lên bản mới nhất chưa',['T26','hd:phan-mem']],['acc','Menu có ga tự động (ACC), giữ làn',['T26','hd:acc']],['vfc','Kích hoạt VF Connect, eSIM có sóng',['T14','T17','hd:app']],['ghe','Chỉnh ghế xong bấm Lưu vị trí trong Hồ sơ',['T22','hd:ho-so']],['bh','App VinFast hiện thông tin bảo hành',['N36']]]],
+ ['⚙️','Cài đặt lần đầu', [['hoso','Tạo hồ sơ người lái (chỉ làm được khi xe ở P)',['hd:ho-so']],['faeb','Bật Phanh khẩn cấp tự động F-AEB: hồ sơ mới đang tắt sẵn',['hd:canh-bao']],['adasxem','Xem lại cảnh báo điểm mù, giữ làn, cảnh báo mở cửa đang bật hay tắt',['hd:canh-bao']],['appvf','Cài app VinFast bằng đúng email VinFast ID đã khai với đại lý',['hd:app']],['hotline','Lưu số tổng đài VinFast 1900 23 23 89 (24/7)',['hd:cuu-ho']]]],
+ ['📄','Đồ đi kèm, giấy tờ', [['chia','Đủ 2 chìa khóa, giấy hẹn đăng ký',['Q30']],['cop','Cốp có móc cứu hộ, bộ vá lốp (có xe không có, hỏi rõ)',['Q30']],['hdsd','Sách hướng dẫn bản in trong hộc đồ ghế phụ',[]],['giayto','Giấy tờ xe, bảo hiểm bắt buộc. Bảo hiểm thân vỏ là bản điện tử',[]],['vin','Đối chiếu số khung với giấy tờ. Số khung đầu 80 thường là xe demo',['Q121']]]]
 ];
 function refLink(r){
+ if(r.startsWith('hd:')) return `<a href="#hd-${r.slice(3)}">📘 Xem hướng dẫn</a>`;
  if(r[0]==='Q') return `<a href="#hoi-dap" data-qa="${r}">Xem hỏi đáp</a>`;
  const e = D.errs.find(x => x.id===r); return e ? `<a href="#loi-${r}">👥 ${people(e)} người gặp</a>` : '';
 }
@@ -1016,13 +1039,149 @@ function renderQA(){
  if(pendingQA){ const d = $('#qa-'+pendingQA); pendingQA = null; if(d){ d.open = true; requestAnimationFrame(() => d.scrollIntoView({block:'center'})); } }
 }
 
+/* ---- Hướng dẫn sử dụng: tóm tắt từ HDSD VF 8 All New 2026 của VinFast + kinh nghiệm anh em trong hội ---- */
+const HDSD_URL = 'https://om.vinfastauto.com/vi_vn/detail?car=VF8NP&year=2026';
+const HDG = [['lai','🚗','Lái xe cơ bản'],['sac','🔋','Pin và sạc'],['adas','🛡️','Hỗ trợ lái (ADAS)'],['tiennghi','🪑','Chìa khóa và tiện nghi'],['ketnoi','📱','App và phần mềm'],['suco','🧰','Lốp, bảo dưỡng, sự cố']];
+const GUIDE = [
+ {id:'khoi-dong', g:'lai', ic:'car', t:'Khởi động và tắt xe', s:'Đạp phanh là xe sẵn sàng, không có nút bấm khởi động',
+  steps:['Mang chìa theo người, mở cửa lái và ngồi vào xe.','Đạp phanh: màn hình hiện "Sẵn sàng" là xe đã bật.','Đóng hết cửa, cốp, nắp ca-pô rồi gạt cần số xuống (D) hoặc lên (R). Phanh tay tự nhả.','Khi dừng hẳn, bấm nút P ở đầu cần số, xuống xe và khóa xe. Xe tự tắt nguồn.'],
+  keep:['Chìa hết pin vẫn khởi động được: đặt chìa vào hộc chứa đồ trên bệ tì tay, đạp phanh rồi vào số.','Xe có 3 trạng thái: Tắt, Phụ kiện (mở cửa là vào, dùng được màn hình), Sẵn sàng (đã đạp phanh).','Sau khi khóa xe, nghe quạt hoặc bơm còn chạy một lúc là bình thường: xe đang sạc ắc quy 12V, làm mát hoặc cập nhật phần mềm.'],
+  tips:['Trước khi rời xe, tháo dây an toàn ghế lái và bỏ đồ trên ghế trước. Xe tưởng còn người ngồi nên không tắt hẳn.','Nhìn thấy gương đã gập là xe đã khóa.'], q:'khởi động tắt xe'},
+ {id:'can-so', g:'lai', ic:'wheel', t:'Cần số và chế độ lái', s:'Cần số sau vô lăng bên phải, kiêm luôn cần bật ADAS',
+  steps:['Đạp phanh, xe đứng yên rồi mới gạt cần: gạt xuống là D, gạt lên là R, bấm nút đầu cần là P.','Đổi chế độ lái: chạm Chế độ lái ở góc màn hình dành cho người lái, chọn chế độ muốn dùng (ECO để tiết kiệm điện).','Trong cùng màn hình đó có Chế độ di chuyển chậm (xe tự bò khi nhả phanh) và Tự động về số P (mở cửa lái khi đã dừng là xe tự về P).'],
+  keep:['Số N chỉ dùng khi đẩy xe ở xưởng hoặc lên xe cứu hộ. Về N là mất phanh tái sinh, phải đạp phanh mạnh hơn.','Không chuyển số khi xe đang chạy, không đạp ga và phanh cùng lúc.','Đang bật Tự động về số P mà mở cửa lái thì không vào được D hoặc R.'],
+  tips:['Khi đang chạy D, gạt cần xuống thêm một nấc là bật ga tự động (ACC). Gạt lên là về N, kể cả khi đang chạy: đã có anh em gạt nhầm về N trên cao tốc.'], q:'cần số'},
+ {id:'phanh', g:'lai', ic:'tire', t:'Phanh tay và Giữ phanh tự động', s:'Phanh tay điện tử, Auto Hold, hỗ trợ khởi hành ngang dốc',
+  steps:['Phanh tay tự bật khi bấm P hoặc khi tắt xe. Tự nhả khi đạp phanh và vào D (vào R thì đạp nhẹ ga).','Bật Giữ phanh tự động (Auto Hold): chạm Chế độ lái, tìm Giữ phanh tự động, bật lên.','Có Auto Hold: dừng đèn đỏ chỉ cần đạp phanh cho xe dừng hẳn rồi nhả chân, xe vẫn đứng yên. Đạp ga là đi.'],
+  keep:['Auto Hold giữ quá 5 phút, mở cửa lái hoặc dốc trên 25% thì xe tự chuyển sang phanh tay.','Hỗ trợ khởi hành ngang dốc chỉ giữ xe khoảng 2 giây sau khi nhả phanh.','Xe hết pin thì không nhả được phanh tay.'],
+  tips:['Tắt chế độ di chuyển chậm mà không bật Auto Hold thì xe dễ trôi khi dừng ngang dốc.'], q:'auto hold giữ phanh'},
+ {id:'tai-sinh', g:'lai', ic:'battery', t:'Phanh tái sinh và lái tiết kiệm', s:'Nhả ga là xe tự giảm tốc và nạp lại pin',
+  steps:['Chạm Chế độ lái, tìm Phanh tái sinh, chọn mức Tắt, Thấp, Trung bình hoặc Cao.','Mức càng cao thì nhả ga xe giảm tốc càng mạnh và thu hồi được càng nhiều điện.'],
+  keep:['Pin đầy, quá nóng hoặc quá lạnh thì phanh tái sinh yếu đi hoặc tạm không có.','Phanh tái sinh chỉ hỗ trợ, không thay được phanh chân.','Đi xa hơn mỗi lần sạc: chạy đều ga, tránh phanh gấp, đủ áp suất lốp, đóng kính khi chạy nhanh, bỏ bớt đồ nặng trong xe.'],
+  tips:[], q:'phanh tái sinh quãng đường'},
+ {id:'sac-xe', g:'sac', ic:'battery', t:'Sạc xe', s:'Cắm sạc, dừng sạc, khi sạc không vào',
+  steps:['Về số P, ấn vào nắp cổng sạc để mở.','Cắm thẳng súng sạc vào cổng tới khi khớp hẳn. Dùng bộ sạc di động thì cắm vào ổ điện trước, rồi mới cắm vào xe.','Xe tự xác thực rồi bắt đầu sạc, tình trạng hiện trên màn hình.','Dừng: bấm Dừng sạc trên màn hình, xác nhận, đợi vài giây rồi rút súng. Đóng nắp và ấn để khóa.'],
+  keep:['Cổng sạc nhận AC Type 2 và DC CCS2. Hạn chế sạc siêu nhanh thường xuyên để pin bền.','Sạc không vào: thử trụ khác. Vẫn không được thì rút súng, đóng nắp, khóa xe, đợi 5 phút cho xe "ngủ", mở khóa rồi cắm lại.','Súng sạc bị kẹt: dừng sạc, ngắt điện trụ (nút dừng khẩn cấp nếu có), tắt xe. Dây nhả khẩn cấp nằm ở khoang trước, sau tấm che.','Ổ điện nhà dùng bộ sạc di động phải có dây nối đất. Không dùng dây nối dài hay ổ chia.','Lúc sạc nhanh trời nóng, điều hòa có thể yếu đi một chút. Đây là để làm mát pin, không phải lỗi.'],
+  tips:['Lỗi sạc, lỗi cổng sạc và trụ báo lỗi là nhóm được anh em báo nhiều. Xem các lỗi liên quan ngay bên dưới.'], q:'sạc'},
+ {id:'cai-dat-sac', g:'sac', ic:'battery', t:'Mục tiêu sạc, lịch sạc, nhắc pin', s:'Cài sạc đến bao nhiêu %, sạc giờ nào',
+  steps:['Chạm biểu tượng Pin ở góc màn hình dành cho người lái (hoặc Thư viện ứng dụng > Ứng dụng EV) > Cài đặt.','Mục tiêu sạc: kéo thanh trượt tới mức % muốn dừng.','Giới hạn dòng sạc: bấm + hoặc − (hữu ích khi ổ điện nhà yếu).','Lịch sạc AC: bật lên, chọn giờ bắt đầu và kết thúc, bấm Lưu.','Nhắc nhở mức pin: bật và kéo ngưỡng cảnh báo. Tới ngưỡng xe sẽ báo và gợi ý trạm sạc.'],
+  keep:['Đặt mục tiêu thấp hơn mức pin đang có thì phiên sạc kết thúc luôn.','Trên app VinFast cũng xem được mức pin, đổi mục tiêu sạc và xem lịch sử sạc.'],
+  tips:[], q:'mục tiêu sạc'},
+ {id:'giu-pin', g:'sac', ic:'battery', t:'Giữ pin bền', s:'Những thói quen giúp pin lâu chai',
+  steps:['Đừng để pin về 0%. Dưới 5% xe sẽ báo, nên sạc ngay.','Để xe lâu không đi (2–3 tuần) thì giữ pin trên 30%, tốt nhất trong khoảng 30–60%.','Ưu tiên đỗ chỗ râm mát. Nắng gắt lâu làm pin nóng và nhanh lão hóa.','Tăng ga từ từ. Thốc ga liên tục làm pin nóng và chịu tải lớn.'],
+  keep:['Pin rất yếu thì xe vào chế độ tiết kiệm, ngừng sạc cho ắc quy 12V. Cần sạc sớm, nếu không ắc quy 12V có thể cạn.','Pin cao áp không cần chủ xe bảo dưỡng, cứ theo lịch kiểm tra của VinFast.'],
+  tips:[], q:'pin tụt'},
+ {id:'acc', g:'adas', ic:'camera', t:'Ga tự động thích ứng (ACC)', s:'Xe tự giữ tốc độ và giữ khoảng cách với xe trước',
+  steps:['Đang ở số D, gạt cần số xuống một nấc để bật. Tốc độ cài hiện màu xanh.','Chỉnh tốc độ: lăn con lăn bên trái vô lăng lên hoặc xuống (giữ lâu để nhảy 5 đơn vị). Hoặc đạp ga tới tốc độ muốn rồi gạt cần xuống để lưu.','Chỉnh khoảng cách: nút bên phải để tăng, nút bên trái để giảm.','Tắt: đạp phanh hoặc đẩy cần số vào trong. Bật lại với cài đặt cũ: đẩy cần ra ngoài.'],
+  keep:['Tốc độ cài từ 20 đến 150 km/h. Lần đầu bật mà không có xe phía trước thì xe phải đang chạy từ 20 km/h trở lên.','ACC tự tắt khi quá 150 km/h hoặc khi người lái đạp ga đè quá 15 phút.','Người lái vẫn phải quan sát và chịu trách nhiệm tốc độ theo luật.'],
+  tips:['Cần ACC chính là cần số: gạt lên khi đang chạy là về N. Tập thao tác ở chỗ vắng trước.'], q:'acc ga tự động'},
+ {id:'tro-lai-cao-toc', g:'adas', ic:'camera', t:'Trợ lái trên cao tốc', s:'ACC kèm tự đánh lái giữ giữa làn',
+  steps:['Số D, hai vạch làn hiện màu xám (sẵn sàng).','Gạt cần số xuống hết hành trình để bật. Làn và vạch chuyển sang màu xanh dương.','Chỉnh tốc độ và khoảng cách như ACC.','Tắt: đạp phanh hoặc đẩy cần số vào trong. Khi tắt, phải cầm lái ngay.'],
+  keep:['Hệ thống cần nhận rõ cả hai vạch làn. Vạch mờ, mưa lớn, đường cong gắt thì có thể tự ngắt.','Luôn để tay trên vô lăng, sẵn sàng tiếp quản.'],
+  tips:[], q:'trợ lái cao tốc'},
+ {id:'giu-lan', g:'adas', ic:'camera', t:'Hỗ trợ làn đường', s:'Cảnh báo chệch làn, hỗ trợ giữ làn',
+  steps:['Chạm ADAS ở góc màn hình dành cho người lái > Hỗ trợ lái xe > Làn đường.','Bật hoặc tắt Hỗ trợ làn đường. Có thể bật riêng Hỗ trợ đánh lái, chuông cảnh báo, rung vô lăng và chọn độ nhạy Thấp/Trung bình/Cao.'],
+  keep:['Chỉ hoạt động trong khoảng 60–150 km/h và cần nhìn rõ vạch làn.','Bật xi nhan chuyển làn thì hệ thống tạm không can thiệp.','Có thể tự bật lại sau mỗi lần khởi động, tùy hồ sơ người lái.','Đường trơn nên tắt.'],
+  tips:[], q:'giữ làn'},
+ {id:'canh-bao', g:'adas', ic:'crash', t:'Phanh khẩn cấp và các cảnh báo', s:'F-AEB, cảnh báo va chạm, điểm mù, mở cửa, xe cắt ngang',
+  steps:['Chạm ADAS > Phòng tránh va chạm.','Phanh khẩn cấp tự động (AEB): bật Phía trước.','Cảnh báo va chạm phía trước (FCW): bật và chọn độ nhạy.','Cuộn xuống bật Cảnh báo điểm mù (BSD), Cảnh báo phương tiện cắt ngang phía sau và Cảnh báo mở cửa (DOW).'],
+  keep:['Hồ sơ người lái mới tạo thì F-AEB đang TẮT. Nhớ vào bật.','F-AEB hiệu quả trong khoảng 10–60 km/h và không hoạt động ban đêm. Không tắt được AEB, FCW khi xe chạy trên 10 km/h.','Cảnh báo mở cửa vẫn hoạt động khoảng 30 phút sau khi tắt xe.','Giữ sạch camera, radar. Không dán phim hay nhãn trước camera, radar.'],
+  tips:['Xe báo lỗi ADAS hoặc cảnh báo cắt ngang "ảo" là lỗi anh em gặp khá nhiều. Xem các lỗi liên quan bên dưới.'], q:'adas cảnh báo'},
+ {id:'camera', g:'adas', ic:'camera', t:'Camera 360 và cảm biến đỗ', s:'Xem toàn cảnh khi lùi, đỗ xe',
+  steps:['Vào số R là camera và cảm biến lùi tự bật.','Mở tay: Thư viện ứng dụng > Camera (chỉ khi xe chạy chậm).','Trong màn hình camera chọn xem phía trước, phía sau, giao lộ hoặc 3D.'],
+  keep:['Camera 360 tự tắt khi chạy số D từ 15 km/h. Đang ở số R thì không tắt được.','Cảm biến trước tự bật khi số D dưới 10 km/h, tắt khi trên 15 km/h.','Bật Chế độ rửa xe thì cảm biến đỗ tạm tắt.'],
+  tips:['Camera xi nhan chỉ hiện khi xe ở số D. Đứng ở số P bật xi nhan không thấy hình là bình thường.'], q:'camera 360'},
+ {id:'chia-khoa', g:'tiennghi', ic:'key', t:'Chìa khóa, khóa và mở xe', s:'Mở cửa không cần lấy chìa, tìm xe, thay pin chìa',
+  steps:['Mở hoặc khóa không cần lấy chìa: mang chìa trong khoảng 1 m, bấm nút trên tay nắm cửa trước.','Bấm khóa hoặc mở trên chìa một lần. Giữ nút cốp để mở hoặc đóng cốp.','Tìm xe: bấm nhanh nút báo động (trong khoảng 15 m), xe nháy đèn và bóp còi.','Hạ cả 4 kính: bấm mở rồi giữ nút mở. Nâng kính: giữ nút khóa.','Thay pin chìa: rút chìa cơ, cạy nắp sau, xoay nắp trong ngược chiều kim đồng hồ, thay pin CR2032.'],
+  keep:['Ắc quy 12V hết điện: dùng chìa cơ mở cửa lái (kéo tay nắm ra hết cỡ rồi cắm chìa).','Quên chìa trong xe thì xe báo và không cho khóa.'],
+  tips:[], q:'chìa khóa'},
+ {id:'ho-so', g:'tiennghi', ic:'seat', t:'Hồ sơ người lái, nhớ ghế và gương', s:'Mỗi người một hồ sơ, xe tự chỉnh ghế, gương, vô lăng',
+  steps:['Chạm tên hồ sơ trên màn hình > Hồ sơ của tôi để tạo hoặc đổi hồ sơ (chỉ khi xe ở P).','Chỉnh ghế, gương, vô lăng xong: Cài đặt hồ sơ > Cá nhân hóa > Lưu mới.','Liên kết chìa với hồ sơ: Cài đặt hồ sơ > Xác thực > Liên kết, đặt chìa ở khu vực bệ trung tâm.','Liên kết app VinFast và đặt mã PIN cũng ở Cài đặt hồ sơ.'],
+  keep:['Tối đa 11 hồ sơ: chủ xe, người lái phụ, khách, người lạ và 7 hồ sơ tùy chỉnh.','Cài đặt ADAS cũng lưu theo hồ sơ.'],
+  tips:['Chỉnh ghế mà không bấm Lưu thì lần sau ghế về vị trí cũ.','Đặt chìa sâu trong hộc bệ tì tay, không phải khay để cốc, khi liên kết.','Thảm lót sàn mua thêm có thể chặn ray ghế lái làm ghế không tiến hết được.'], q:'hồ sơ ghế'},
+ {id:'guong', g:'tiennghi', ic:'car', t:'Gương chiếu hậu', s:'Chỉnh, gập, tự hạ gương khi lùi',
+  steps:['Chạm Gương ở góc màn hình dành cho người lái (hoặc Cài đặt > Cài đặt xe > Gương).','Chọn gương Trái hoặc Phải, chỉnh bằng nút trên vô lăng, bấm Lưu vị trí.','Bật Tự động gập gương, Tự động hạ gương khi lùi ở cùng màn hình.'],
+  keep:['Bật tự động gập thì giữ nút khóa trên chìa để gập, giữ nút mở để mở gương.','Mất điện: ấn nhẹ vào mép mặt gương để chỉnh tay.'],
+  tips:[], q:'gương'},
+ {id:'dieu-hoa', g:'tiennghi', ic:'ac', t:'Điều hòa', s:'Tự động, làm mát nhanh, khử mờ kính',
+  steps:['Bấm A/C trên thanh điều hòa để bật hoặc tắt. MAX AC là làm lạnh nhanh nhất.','Bấm Tốc độ quạt để mở bảng điều hòa, chọn Tự động để xe tự điều chỉnh.','Kính mờ: bấm nút Khử mờ phía trước. Kính mờ phía ngoài thì bật thêm gạt mưa.'],
+  keep:['Đổi tay quạt, hướng gió hoặc A/C là xe chuyển về chế độ chỉnh tay.','Tuần hoàn trong mà tắt làm lạnh thì dễ mờ kính. Trời mưa không nên lấy gió ngoài.','Nước nhỏ dưới gầm khi bật lạnh là bình thường.'],
+  tips:[], q:'điều hòa'},
+ {id:'cop-capo', g:'tiennghi', ic:'car', t:'Cốp điện và nắp ca-pô', s:'Mở cốp nhiều cách, cài độ cao cốp',
+  steps:['Mở hoặc đóng cốp: giữ nút cốp trên chìa, bấm nút trên cốp, hoặc bấm biểu tượng trên màn hình khi xe ở P.','Cài độ cao: mở hết cốp, giữ nút cốp 3 giây tới khi bíp, đưa cốp tới độ cao muốn, giữ lại 3 giây tới khi bíp.','Mở ca-pô: kéo lẫy dưới taplo phía lái hai lần, nâng nắp, gài thanh chống chắc chắn.'],
+  keep:['Cốp điện hỏng: vào hàng ghế 2, gập ghế, tháo nắp ở mặt trong cốp, ấn giữ công tắc rồi đẩy cốp ra.','Không chạy xe khi ca-pô chưa gài hẳn.'],
+  tips:[], q:'cốp'},
+ {id:'app', g:'ketnoi', ic:'key', t:'App VinFast và liên kết xe', s:'Điều khiển từ xa, xem pin, đặt lịch dịch vụ',
+  steps:['Tải app VinFast, đăng ký bằng đúng email đã dùng để tạo VinFast ID với đại lý. App sẽ tự liên kết với xe.','Trong app: xem pin và sạc, đổi mục tiêu sạc, bật điều hòa, khóa hoặc mở cửa từ xa (tùy xe).','Thêm người lái phụ: vào Quản lý vai trò, gửi lời mời tới email app của người đó.','Dịch vụ: Đặt lịch dịch vụ hoặc Cứu hộ trên đường > Tạo yêu cầu.'],
+  keep:['App không tự hiện xe thì liên hệ đại lý để liên kết.'],
+  tips:['Đăng ký gói VF Connect xong mà xe vẫn báo đang kích hoạt hoặc eSIM không sóng: gọi tổng đài 1900 23 23 89 báo lỗi liên kết, nói rõ đã thử những gì.','Xác nhận email bảo hành điện tử của VinFast thì app mới hiện thông tin bảo hành.'], q:'app vf connect esim'},
+ {id:'phan-mem', g:'ketnoi', ic:'soft', t:'Cập nhật phần mềm (OTA)', s:'Xe tự tải bản mới qua Wi-Fi hoặc 4G',
+  steps:['Có bản mới, xe và app sẽ báo. Xem ở Cài đặt > Giới thiệu > Phần mềm.','Xe tự tải qua Wi-Fi khi có kết nối, không có Wi-Fi thì tải bằng dữ liệu di động. Tải dừng giữa chừng vẫn tiếp tục được.','Làm theo hướng dẫn trên màn hình để cài. Cài mất một lúc, nên làm khi không cần dùng xe.'],
+  keep:['Bản cập nhật có thể sửa lỗi và thêm tính năng an toàn, nên cập nhật đầy đủ.'],
+  tips:['Nhiều lỗi phần mềm anh em gặp được sửa sau khi lên bản mới tại xưởng hoặc qua OTA. Khi nhận xe nên hỏi xưởng đã lên bản mới nhất chưa.'], q:'phần mềm cập nhật'},
+ {id:'lop', g:'suco', ic:'tire', t:'Lốp và áp suất lốp', s:'Kiểm tra định kỳ, cảnh báo áp suất',
+  steps:['Xem áp suất khuyến nghị trên nhãn dán ở xe (trụ cửa lái).','Đo khi lốp nguội, khoảng 14 ngày một lần và trước chuyến đi xa.','Thiếu thì bơm thêm, thừa thì ấn lõi van để xả. Đậy lại nắp van.'],
+  keep:['Lốp nóng thì áp suất tăng. Đừng xả bớt lốp đang nóng.','Xe báo áp suất thấp: giảm tốc, dừng sớm ở chỗ an toàn, tránh phanh gấp, đánh lái gắt.','Lốp dự phòng (nếu có) không có cảm biến áp suất và chỉ chạy tạm dưới 80 km/h.','Đảo lốp hoặc thay cảm biến xong cần cài lại cảm biến áp suất.'],
+  tips:['Có anh em nhận xe bị bơm ngược áp suất trước và sau. Kiểm lại ngay khi nhận.'], q:'áp suất lốp'},
+ {id:'bao-duong', g:'suco', ic:'tools', t:'Lịch bảo dưỡng', s:'15.000 km hoặc 1 năm một lần',
+  steps:['Bảo dưỡng định kỳ mỗi 15.000 km hoặc 1 năm, tùy điều kiện nào đến trước. Xe và app sẽ nhắc khi gần tới kỳ.','Mỗi kỳ thay lọc gió điều hòa và kiểm tra lốp, phanh, gầm, pin, cổng sạc, ắc quy 12V.','Dầu phanh thay 2 năm một lần.','Đặt lịch trong app VinFast > Đặt lịch dịch vụ.'],
+  keep:['Lọc gió điều hòa nên thay sớm hơn nếu hay đi đường bụi hoặc thấy gió yếu, có mùi.','Chuột cắn dây điện không được bảo hành. Xe đỗ lâu nên có biện pháp chống chuột.','Đừng đỗ xe ở chỗ dễ ngập.'],
+  tips:['Dán phim cách nhiệt: dặn thợ hạn chế xịt nước. Nước chảy xuống hộp điều khiển dưới ghế phụ làm xe báo loạn lỗi.'], q:'bảo dưỡng'},
+ {id:'va-lop', g:'suco', ic:'tire', t:'Vá lốp khẩn cấp', s:'Dùng bình dung dịch vá lốp (nếu xe có)',
+  steps:['Đỗ chỗ an toàn, về P, tắt xe, bật đèn khẩn cấp, đặt biển cảnh báo.','Xoay chỗ thủng xuống vị trí thấp nhất, tháo nắp van, vặn đầu bình vào van.','Mở van, dốc ngược bình cho dung dịch vào hết, đóng van.','Chạy ngay ít nhất 10 km, dưới 80 km/h cho dung dịch dàn đều. Sau đó đi sửa lốp sớm, tổng cộng không quá 500 km.'],
+  keep:['Chỉ vá được lỗ nhỏ hơn 6 mm ở mặt lốp, không vá được hông lốp.','Dung dịch có hạn dùng, xem trên nhãn bình.'],
+  tips:['Có xe giao kèm bộ vá lốp, có xe không. Hỏi rõ khi nhận xe.'], q:'vá lốp'},
+ {id:'ac-quy', g:'suco', ic:'battery', t:'Hết ắc quy 12V', s:'Mở cửa bằng chìa cơ, câu bình',
+  steps:['Mở cửa lái bằng chìa cơ.','Mở ca-pô, tháo tấm che để thấy ắc quy 12V, mở nắp cực dương.','Câu dây đỏ: cực + xe mình nối với cực + ắc quy tốt. Dây đen: cực − ắc quy tốt nối với điểm mát của xe mình.','Nổ máy xe kia rồi bật nguồn xe mình.'],
+  keep:['Chỉ dùng nguồn 12V. Không câu bình khi xe đang cắm sạc.','Không dùng VF8 để câu bình cho xe khác.','Vẫn không lên: gọi cứu hộ.'],
+  tips:[], q:'ắc quy 12v'},
+ {id:'cuu-ho', g:'suco', ic:'crash', t:'Cứu hộ, gọi khẩn cấp, kéo xe', s:'Tổng đài 24/7, nút SOS, chế độ kéo xe',
+  steps:['Tổng đài VinFast 1900 23 23 89, làm việc 24/7.','Gọi cứu hộ trên xe: Thư viện ứng dụng > Ứng dụng Dịch vụ > Trung tâm Hỗ trợ. Hoặc trong app VinFast > Cứu hộ trên đường.','Tai nạn: giữ nút SOS trên đèn trần phía trước để gọi khẩn cấp (eCall). Va chạm nặng xe có thể tự gọi.','Cần kéo xe: bật Chế độ Kéo xe trong Ứng dụng Dịch vụ, ưu tiên xe cứu hộ sàn phẳng.'],
+  keep:['Không kéo xe mà để bánh lăn trên đường. Xe cứu hộ thường phải nâng bánh trước và đặt bánh sau lên bệ đỡ, đi tối đa 50 km.'],
+  tips:['Lưu sẵn số tổng đài trong điện thoại ngay khi nhận xe.'], q:'cứu hộ'},
+ {id:'duong-ngap', g:'suco', ic:'engine', t:'Đi qua đường ngập', s:'Khi nào được đi, đi thế nào, xe ngập thì làm gì',
+  steps:['Nước sâu quá khoảng sáng gầm thì không đi.','Nếu phải đi: dưới 10 km/h, đều ga, đi thẳng, tắt điều hòa, để chế độ ECO hoặc Normal.','Không dừng giữa chỗ ngập, không mở cửa, hạn chế lùi.','Qua rồi: đạp phanh vài lần cho khô má phanh, chạy chậm thử phanh.'],
+  keep:['Xe không vào Sẵn sàng, báo lỗi pin hoặc điện, có mùi khét hay khói: dừng xe, tắt nguồn, không sạc, ra khỏi xe và gọi VinFast.','Xe đã ngập thì không khởi động lại, không sạc, chỉ sửa ở xưởng ủy quyền. Hư hỏng do ngập không được bảo hành.'],
+  tips:[], q:'ngập nước'}
+];
+const gFields = x => [[x.t,6,true],[x.s,3],[x.steps.join(' '),2],[x.keep.join(' '),1.5],[x.tips.join(' '),1.5],[x.q,2]];
+
+const HDP = {}; // vị trí đã mở
+function renderHD(){
+ const box = $('#hdBody');
+ const sr = S.hdQ ? searchItems(GUIDE, S.hdQ, gFields) : null, Q = sr && sr.Q;
+ const row = x => `<a class="row" href="#hd-${x.id}"><span class="ic">${ico(x.ic,44)}</span><span class="tx"><p class="d">${Q ? hl(x.t, Q) : esc(x.t)}</p><span class="m">${Q ? hl(x.s, Q) : esc(x.s)}</span></span><span class="chev" aria-hidden="true">›</span></a>`;
+ if(sr){ box.innerHTML = sr.list.length ? `<div class="h"><h2>Kết quả cho “${esc(S.hdQ)}”</h2></div><div class="list">${sr.list.map(row).join('')}</div>` : `<div class="list"><div class="empty">Chưa có hướng dẫn cho “${esc(S.hdQ)}”. Thử từ khác, hoặc hỏi anh em ở tab Hỏi đáp.</div></div>`; return; }
+ box.innerHTML = `<p class="note" style="margin:0 2px 4px">Tóm tắt từ Hướng dẫn sử dụng VF 8 All New 2026 của VinFast, kèm kinh nghiệm thực tế của anh em trong hội.</p>
+  ${HDG.map(([g,e,name]) => `<div class="h"><h2>${e} ${name}</h2></div><div class="list">${GUIDE.filter(x => x.g===g).map(row).join('')}</div>`).join('')}
+  <p class="note" style="margin:16px 2px 0">Bản đầy đủ: <a href="${HDSD_URL}" target="_blank" rel="noopener">HDSD chính hãng VinFast</a></p>`;
+}
+function renderGuide(id){
+ const x = GUIDE.find(g => g.id === id);
+ if(!x){ openScreen(`<div class="nav">${backBtn}</div><div class="empty">Không tìm thấy hướng dẫn này.</div>`); return; }
+ let rel = '';
+ if(!LOADING && D.errs){
+  const se = searchItems(D.errs, x.q, errFields), sq = searchItems(D.qa.filter(isAnswered), x.q, qaFields);
+  const er = se ? se.list.filter(e => termAllIn(e.desc, se.Q)).slice(0,3) : [], qa = sq ? sq.list.filter(q => termAllIn(q.q, sq.Q)).slice(0,3) : [];
+  if(er.length || qa.length) rel = `<div class="h"><h2>👥 Anh em đã gặp, đã hỏi</h2></div><div class="list">${er.map(e => errRow(e)).join('')}${qa.map(q => `<a class="row" href="#hoi-dap" data-qa="${q.id}"><span class="ic">${qIcon(q.topic)}</span><span class="tx"><p class="d">${esc(q.q)}</p><span class="m">Hỏi đáp · ${esc(q.topic||'')}</span></span></a>`).join('')}</div>`;
+ }
+ openScreen(`<div class="nav">${backBtn}</div>
+  <div class="dh"><span class="ic">${ico(x.ic,60)}</span><h2>${esc(x.t)}<br><small class="note" style="font-weight:500">${esc(x.s)}</small></h2></div>
+  <div class="card"><h3>📘 Cách làm</h3><ol class="steps">${x.steps.map(t => `<li>${esc(t)}</li>`).join('')}</ol></div>
+  ${x.keep.length ? `<div class="card"><h3>📌 Cần nhớ</h3><ul class="keep">${x.keep.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}
+  ${x.tips.length ? `<div class="card tipcard"><h3>💬 Kinh nghiệm anh em</h3><ul class="keep">${x.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}
+  ${rel}
+  <p class="note" style="margin-top:16px">Nguồn: tóm tắt từ HDSD VF 8 All New 2026 của VinFast. Kinh nghiệm anh em là thông tin cộng đồng, không phải hướng dẫn chính hãng. <a href="${HDSD_URL}" target="_blank" rel="noopener">Xem HDSD đầy đủ</a></p>`);
+}
+
 /* ---- Router ---- */
-const TABS = ['loi','luu-y','phu-kien','hoi-dap'];
+const TABS = ['loi','luu-y','huong-dan','phu-kien','hoi-dap'];
 let navDepth = 0;
 function route(){
  const h = decodeURIComponent(location.hash.slice(1));
  if(!L.profile) return renderSignup(false);
  if(h.startsWith('loi-')) return renderDetail(h.slice(4));
+ if(h.startsWith('hd-')) return renderGuide(h.slice(3));
  if(h==='bao-loi') return renderReport();
  if(h==='ho-so') return renderProfile();
  if(h==='doi-avatar') return renderAvatar();
@@ -1034,7 +1193,7 @@ function route(){
  document.querySelectorAll('[data-view]').forEach(s => s.classList.toggle('hidden', s.dataset.view!==S.tab));
  document.querySelectorAll('[data-tab]').forEach(a => a.dataset.tab===S.tab ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
  $('#fab').classList.toggle('hidden', S.tab!=='loi');
- ({'loi':renderLoi,'luu-y':renderLuu,'phu-kien':renderPK,'hoi-dap':renderQA})[S.tab]();
+ ({'loi':renderLoi,'luu-y':renderLuu,'huong-dan':renderHD,'phu-kien':renderPK,'hoi-dap':renderQA})[S.tab]();
  renderMe(); renderInstall();
 }
 function go(h){ navDepth++; location.hash = h; }
@@ -1072,9 +1231,10 @@ async function refreshMe(){ if(!online()) return checkLevelUp(); try{ const j = 
 let qT;
 $('#q').addEventListener('input', e => { clearTimeout(qT); qT = setTimeout(() => { S.q = e.target.value.trim(); S.limit = 20; renderLoi(); }, 150); });
 $('#qClear').onclick = () => { $('#q').value=''; S.q=''; renderLoi(); };
-['#q','#pkQ','#qaQ'].forEach(s => $(s).addEventListener('keydown', e => { if(e.key === 'Enter') e.target.blur(); }));
+['#q','#pkQ','#qaQ','#hdQ'].forEach(s => $(s).addEventListener('keydown', e => { if(e.key === 'Enter') e.target.blur(); }));
 let pT, aT;
 $('#pkQ').addEventListener('input', e => { clearTimeout(pT); pT = setTimeout(() => { S.pkQ = e.target.value.trim(); renderPK(); }, 150); });
+$('#hdQ').addEventListener('input', e => { clearTimeout(aT); aT = setTimeout(() => { S.hdQ = e.target.value.trim(); renderHD(); }, 150); });
 $('#qaQ').addEventListener('input', e => { clearTimeout(aT); aT = setTimeout(() => { S.qaQ = e.target.value.trim(); renderQA(); }, 150); });
 $('#fab').onclick = () => go('bao-loi');
 $('#meBtn').onclick = () => go('ho-so');
@@ -1088,7 +1248,7 @@ document.addEventListener('click', async ev => {
  if(ds.g){ S.g = ds.g; S.st=''; S.limit=20; return renderLoi(); }
  if(ds.av){ AVPICK = ds.av; return renderAvatar(); }
  if(ds.lbt){ LBTAB = ds.lbt; return renderBoard(); }
- if(ds.also){ const q = S.q; if(ds.also==='hoi-dap'){ S.qaQ = q; S.qaTopic=''; $('#qaQ').value = q; } else { S.pkQ = q; S.pkCat=''; $('#pkQ').value = q; } location.hash = ds.also; return; }
+ if(ds.also){ const q = S.q; if(ds.also==='huong-dan'){ S.hdQ = q; $('#hdQ').value = q; } else if(ds.also==='hoi-dap'){ S.qaQ = q; S.qaTopic=''; $('#qaQ').value = q; } else { S.pkQ = q; S.pkCat=''; $('#pkQ').value = q; } location.hash = ds.also; return; }
  if(ds.st !== undefined){ S.st = ds.st; S.limit=20; return renderLoi(); }
  if(ds.luu){ S.luu = ds.luu; return renderLuu(); }
  if(ds.pc){ S.pkCat = ds.pc; return renderPK(); }
