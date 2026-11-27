@@ -1,0 +1,22 @@
+{
+  "name": "VINNO VF8 All New",
+  "short_name": "VINNO VF8",
+  "description": "Sổ tay lỗi, mẹo dùng xe, phụ kiện và hỏi đáp của hội VF8 All New – VINNO Club.",
+  "lang": "vi",
+  "id": "./",
+  "start_url": "./#loi",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F3F5FB",
+  "theme_color": "#1E2A5A",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Báo lỗi mới", "url": "./#bao-loi", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Bảng vàng", "url": "./#bang-vang", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
+}

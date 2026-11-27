@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E2A5A">
+<title>VINNO VF8 All New</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;
+--bg:#F3F5FB;--card:#FFFFFF;--soft:#EAEEF7;--ink:#141B33;--muted:#5B6378;--line:#DFE4EF;
+--brand:#1E2A5A;--olive:#2459D6;--on:#FFFFFF;--tint:#E2EAFF;--gold:#F59E0B;
+--red:#C2392E;--amber:#B07A0A;--green:#2D7A43;--blue:#2E66A6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+--bg:#0D1120;--card:#161B2E;--soft:#1F2640;--ink:#E8ECF7;--muted:#A0A8C0;--line:#2A3250;
+--brand:#0A0E1C;--olive:#7FA6FF;--on:#0D1120;--tint:#1C2A52;--gold:#FBBF24;
+--red:#F07A6E;--amber:#E5B550;--green:#72C98A;--blue:#7DABE6}}
+:root[data-theme="dark"]{color-scheme:dark;
+--bg:#0D1120;--card:#161B2E;--soft:#1F2640;--ink:#E8ECF7;--muted:#A0A8C0;--line:#2A3250;
+--brand:#0A0E1C;--olive:#7FA6FF;--on:#0D1120;--tint:#1C2A52;--gold:#FBBF24;
+--red:#F07A6E;--amber:#E5B550;--green:#72C98A;--blue:#7DABE6}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:25;background:var(--card)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--olive)}
+:focus-visible{outline:2px solid var(--olive);outline-offset:2px}
+.hidden{display:none!important}
+.wrap{max-width:620px;margin:0 auto;padding:0 16px}
+
+/* Header + top menu */
+.head{background:var(--card)}
+.head .wrap{display:flex;align-items:center;gap:10px;padding-top:12px;padding-bottom:6px}
+.head .logo{height:46px;width:auto;flex:none;display:block}
+.av{display:block;width:100%;height:100%}
+.head h1{margin:0;font:800 20px/1.05 'Baloo 2','Be Vietnam Pro',sans-serif;flex:1;color:var(--ink)}
+.head h1 small{display:block;font:600 11.5px/1.2 'Be Vietnam Pro',sans-serif;color:var(--muted);letter-spacing:.06em}
+.h h2,.dh h2,.welcome h2,.pf h2,.tile b,.levelup h3{font-family:'Baloo 2','Be Vietnam Pro',sans-serif}
+.ico{display:inline-block;flex:none;width:var(--s,40px);height:var(--s,40px);background:url(https://adumavinno.github.io/icons.webp) no-repeat;background-size:500% 400%}
+.me{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:3px 10px 3px 3px;font-size:13px;font-weight:600;max-width:55%}
+.me .av{width:30px;height:30px}
+.me span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+.menu .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding-top:4px;padding-bottom:0}
+.menu a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 9px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;line-height:1.2;text-align:center;border-bottom:3px solid transparent}
+.menu a .ico{--s:34px;transition:transform .15s}
+.menu a[aria-current="page"] .ico{transform:scale(1.12)}
+.menu a[aria-current="page"]{color:var(--olive);border-bottom-color:var(--olive)}
+main{padding:14px 0 calc(96px + env(safe-area-inset-bottom,0px))}
+
+/* Basics */
+.search{position:relative;margin-bottom:14px}
+.search input{width:100%;height:48px;border-radius:14px;border:1px solid var(--line);background:var(--card);padding:0 42px 0 44px;font-size:16px;outline:none}
+.search input:focus{border-color:var(--olive)}
+.search>svg{position:absolute;left:14px;top:13px;width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round}
+.search .x{position:absolute;right:4px;top:4px;width:40px;height:40px;border:0;background:none;color:var(--muted);font-size:20px}
+.h{display:flex;align-items:baseline;justify-content:space-between;margin:18px 2px 10px}
+.h h2{margin:0;font-size:16px;font-weight:700}
+.h button,.h a{border:0;background:none;color:var(--olive);font-weight:600;font-size:14px;padding:4px 0;text-decoration:none}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:0 16px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:500;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--c,var(--muted));flex:none}
+.c-red{--c:var(--red)}.c-amber{--c:var(--amber)}.c-green{--c:var(--green)}.c-blue{--c:var(--blue)}
+.list{background:var(--card);border-radius:16px;overflow:hidden}
+.empty{padding:32px 20px;text-align:center;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:48px;padding:0 20px;border-radius:14px;border:0;background:var(--olive);color:var(--on);font-weight:600;font-size:15px;text-decoration:none}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn.sm{height:36px;padding:0 14px;font-size:14px;border-radius:10px}
+.btn.full{width:100%}
+.btn:disabled{opacity:.45}
+.note{font-size:13px;color:var(--muted)}
+
+/* Tiles */
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{border:0;background:var(--card);border-radius:18px;padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;min-height:112px;justify-content:center;box-shadow:0 2px 0 var(--line)}
+.tile:active{transform:translateY(1px);box-shadow:none}
+.tile .i{font-size:34px;line-height:1.3}
+.tile .ico{--s:56px}
+.tile b{font-size:14.5px;font-weight:700;line-height:1.15}
+.tile small{font-size:12px;color:var(--muted)}
+.tile.hot{position:relative}
+.tile.hot::after{content:attr(data-red);position:absolute;top:8px;right:8px;min-width:20px;height:20px;border-radius:10px;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 5px}
+
+/* Error rows */
+.row{display:flex;gap:12px;align-items:center;padding:12px 14px;text-decoration:none;color:inherit;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row:active{background:var(--soft)}
+.ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:24px;flex:none}
+.ic .ico{--s:44px}
+.row .tx{flex:1;min-width:0}
+.row .d{margin:0;font-weight:500;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row .m{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:12.5px;color:var(--muted)}
+.row .n{flex:none;text-align:center;min-width:40px}
+.row .n b{display:block;font-size:17px;line-height:1.1}
+.row .n small{font-size:11px;color:var(--muted)}
+.mine{font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:6px;background:var(--tint);color:var(--olive)}
+.more{display:block;width:100%;border:0;background:none;color:var(--olive);font-weight:600;padding:14px;border-top:1px solid var(--line)}
+.fab{position:fixed;right:max(16px,calc(50% - 294px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:15;height:54px;padding:0 22px;border-radius:27px;border:0;background:var(--olive);color:var(--on);font-weight:700;font-size:15px;box-shadow:0 6px 18px rgba(30,40,10,.3);display:flex;align-items:center;gap:8px}
+.fab svg{width:20px;height:20px}
+.back-chip{display:inline-flex;align-items:center;gap:6px;border:0;background:var(--tint);color:var(--olive);font-weight:600;font-size:14px;height:36px;padding:0 14px;border-radius:999px;margin-bottom:12px}
+
+/* Screens */
+.screen{position:fixed;inset:0;z-index:30;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:env(safe-area-inset-top,0px)}
+.screen .wrap{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+.back{border:0;background:none;display:flex;align-items:center;gap:2px;color:var(--olive);font-weight:600;padding:10px 10px 10px 0}
+.back svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.dh{display:flex;gap:12px;align-items:flex-start;margin:4px 0 14px}
+.dh .ic{width:60px;height:60px;font-size:30px}
+.dh .ic .ico{--s:60px}
+.dh h2{margin:0;font-size:19px;line-height:1.38;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.stat{background:var(--card);border-radius:14px;padding:12px 14px}
+.stat small{display:block;font-size:12px;color:var(--muted)}
+.stat b{display:flex;align-items:center;gap:7px;font-size:15px;margin-top:2px}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px}
+.card p{margin:0;white-space:pre-line;overflow-wrap:anywhere}
+.card .sec+.sec{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.warn{background:color-mix(in srgb,var(--red) 12%,var(--card));border-radius:14px;padding:12px 14px;margin-bottom:12px;font-size:14px}
+.warn b{color:var(--red)}
+details.fold{background:var(--card);border-radius:16px;margin-bottom:12px}
+details.fold>summary{list-style:none;padding:15px 16px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary span{font-weight:500;color:var(--muted);font-size:13px;margin-left:auto}
+details.fold>summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);flex:none;margin-top:-4px}
+details.fold[open]>summary::after{transform:rotate(-135deg);margin-top:4px}
+.fold .in{padding:0 16px 16px;white-space:pre-line;overflow-wrap:anywhere}
+.tl{list-style:none;margin:0;padding:0;white-space:normal}
+.tl li{padding:10px 0;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:0;padding-top:0}
+.tl time{font-weight:600;font-size:13px;color:var(--olive)}
+.tl p{margin:2px 0 0;font-size:14.5px}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--card);border-top:1px solid var(--line);padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px))}
+.dock .r{display:flex;align-items:center;gap:12px}
+.dock .r p{margin:0;flex:1;font-size:13px;color:var(--muted);line-height:1.35}
+.dock .r p b{color:var(--ink);display:block;font-size:14.5px}
+.vers{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+
+/* Forms */
+.field{margin-bottom:16px}
+.field>label,.field>.lb{display:block;font-size:14px;font-weight:600;margin-bottom:7px}
+.inp{width:100%;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:12px 13px;font-size:16px;outline:none}
+.inp:focus{border-color:var(--olive)}
+textarea.inp{min-height:100px;resize:vertical}
+select.inp{appearance:none;-webkit-appearance:none}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pick button{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:600;font-size:14px}
+.pick button .i{font-size:30px}
+.pick button .ico{--s:52px}
+.pick button[aria-pressed="true"]{border-color:var(--olive);background:var(--tint)}
+.paints{display:flex;flex-wrap:wrap;gap:12px}
+.paint{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;color:var(--muted);width:56px;padding:0}
+.paint i{width:40px;height:40px;border-radius:50%;background:var(--p);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.paint[aria-pressed="true"]{color:var(--ink);font-weight:600}
+.paint[aria-pressed="true"] i{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--olive)}
+.dupes{background:color-mix(in srgb,var(--amber) 13%,var(--card));border-radius:12px;padding:12px 14px;margin:-6px 0 16px;font-size:13.5px}
+.dupes a{display:block;padding:6px 0 0;color:var(--ink)}
+.copybox{background:var(--soft);border-radius:12px;padding:12px;white-space:pre-wrap;font-size:13.5px;margin:12px 0;max-height:240px;overflow:auto}
+
+/* Onboarding */
+.welcome{text-align:center;padding:24px 0 8px}
+.welcome .logo{width:200px;height:auto;margin:0 auto 6px;display:block}
+.welcome h2{margin:0;font-size:22px}
+.welcome p{margin:6px auto 0;max-width:320px;color:var(--muted);font-size:14px}
+
+/* Profile */
+.pf{text-align:center;padding:8px 0 4px}
+.pf .avw{width:120px;height:120px;margin:0 auto}
+.pf .chg{margin-top:8px}
+.pf h2{margin:8px 0 2px;font-size:21px}
+.lvl{display:inline-flex;align-items:center;gap:6px;background:var(--tint);color:var(--olive);font-weight:700;border-radius:999px;padding:5px 12px;font-size:14px}
+.bar{height:10px;border-radius:5px;background:var(--soft);overflow:hidden;margin:10px 0 6px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--olive),var(--gold))}
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.nums div{background:var(--card);border-radius:14px;padding:12px 6px;text-align:center}
+.nums b{display:block;font-size:20px}
+.nums small{font-size:12px;color:var(--muted)}
+.ladder li,.board li{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.ladder,.board{list-style:none;margin:0;padding:0}
+.ladder li:first-child,.board li:first-child{border-top:0}
+.ladder .e{font-size:24px;width:32px;text-align:center}
+.ladder .t{flex:1}
+.ladder .t b{display:block;font-size:14.5px}
+.ladder .t small{color:var(--muted);font-size:12.5px}
+.ladder .p{font-size:12.5px;color:var(--muted);font-weight:600}
+.ladder li.on .t b{color:var(--olive)}
+.ladder li.lock{opacity:.45}
+.board .rk{width:24px;font-weight:700;color:var(--muted);text-align:center}
+.board .nm{flex:1;font-weight:500}
+.board .pt{font-weight:700}
+.earn{display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:center;font-size:14px}
+.earn b{color:var(--olive)}
+
+/* Checklist & Q&A */
+.seg{display:flex;background:var(--soft);border-radius:12px;padding:3px;margin-bottom:14px}
+.seg button{flex:1;border:0;background:none;border-radius:10px;height:40px;font-size:14px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.ring{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:16px;padding:14px 16px}
+.ring svg{width:56px;height:56px;flex:none}
+.ring b{font-size:16px}
+.ck{display:flex;gap:12px;padding:13px 14px;border-top:1px solid var(--line);align-items:flex-start}
+.ck:first-child{border-top:0}
+.ck input{width:24px;height:24px;margin:0;accent-color:var(--olive);flex:none}
+.ck label{font-weight:500;display:block;line-height:1.4}
+.ck.done label{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.ck .r{font-size:12.5px;margin-top:3px}
+.ck .r a{text-decoration:none;font-weight:600;margin-right:10px}
+details.qa{border-top:1px solid var(--line)}
+details.qa:first-child{border-top:0}
+details.qa summary{list-style:none;cursor:pointer;padding:13px 14px;display:flex;gap:12px;align-items:center;font-weight:500;line-height:1.4}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa .a{padding:0 14px 16px 70px;white-space:pre-line;overflow-wrap:anywhere;font-size:14.5px}
+details.qa .by{font-size:12px;color:var(--muted);margin-top:10px}
+details.qa[open] summary{color:var(--olive)}
+.unans{background:color-mix(in srgb,var(--gold) 15%,var(--card));border-radius:16px;margin-bottom:14px}
+.unans>summary{padding:14px 16px;font-weight:600;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px}
+.unans>summary::-webkit-details-marker{display:none}
+.unans .q{padding:12px 16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
+.unans .q p{margin:0;font-size:14.5px}
+
+/* Accessories */
+.pk{display:flex;gap:12px;align-items:center;padding:12px 14px;border-top:1px solid var(--line)}
+.pk:first-child{border-top:0}
+.pk .tx{flex:1;min-width:0}
+.pk .nm{font-weight:500;line-height:1.35}
+.pk .nt{font-size:12.5px;color:var(--muted);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* Search */
+mark{background:color-mix(in srgb,var(--gold) 38%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+.snip{display:block;font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.also{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.also button{border:1px dashed var(--line);background:var(--card);border-radius:999px;height:34px;padding:0 12px;font-size:13.5px;font-weight:600;color:var(--olive);display:flex;align-items:center;gap:6px}
+.also button .ico{--s:24px}
+.approx{font-size:13px;color:var(--muted);margin:-4px 2px 10px}
+
+/* Header actions */
+.hbtn{flex:none;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;font-size:20px;padding:0}
+.me .av{border-radius:50%;overflow:hidden}
+.avw{display:block;border-radius:50%;overflow:hidden;background:var(--tint);flex:none}
+.avw .ico{--s:100%;width:100%;height:100%}
+.avw img,.avw svg{display:block;width:100%;height:100%;object-fit:cover}
+.install{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#2459D6,#1E2A5A);color:#fff;border-radius:16px;padding:12px 14px;margin-bottom:14px;text-decoration:none;border:0;width:100%;text-align:left}
+.install b{display:block;font-size:15px}
+.install small{font-size:12.5px;opacity:.85}
+.install .go{margin-left:auto;background:#fff;color:#1E2A5A;font-weight:700;border-radius:10px;padding:8px 12px;font-size:13.5px;flex:none}
+.install .x2{background:none;border:0;color:#fff;opacity:.7;font-size:20px;padding:0 2px;flex:none}
+
+/* Avatar picker */
+.avgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.avgrid button{border:2px solid transparent;background:var(--card);border-radius:18px;padding:8px;aspect-ratio:1;display:grid;place-items:center}
+.avgrid button[aria-pressed="true"]{border-color:var(--olive);background:var(--tint)}
+.avgrid .avw{width:100%;height:100%}
+.upl{display:flex;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--line);border-radius:16px;padding:14px;font-weight:600;color:var(--olive);cursor:pointer;margin-bottom:16px;background:var(--card)}
+.upl input{display:none}
+
+/* Leaderboard */
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:8px;margin:8px 0 14px}
+.pod{text-align:center;background:var(--card);border-radius:18px 18px 10px 10px;padding:12px 6px 10px;position:relative}
+.pod .avw{width:64px;height:64px;margin:0 auto 6px}
+.pod.p1{padding-top:18px;background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 28%,var(--card)),var(--card))}
+.pod.p1 .avw{width:84px;height:84px;box-shadow:0 0 0 4px var(--gold)}
+.pod .md{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:26px}
+.pod b{display:block;font-size:14px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pod .pt{font:800 20px/1.1 'Baloo 2',sans-serif;color:var(--olive)}
+.pod small{display:block;font-size:11.5px;color:var(--muted)}
+.lb li{display:flex;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid var(--line)}
+.lb{list-style:none;margin:0;padding:0}
+.lb li:first-child{border-top:0}
+.lb .rk{width:26px;text-align:center;font-weight:800;color:var(--muted)}
+.lb .avw{width:42px;height:42px}
+.lb .nm{flex:1;min-width:0}
+.lb .nm b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb .nm small{font-size:12px;color:var(--muted)}
+.lb .pt{font:800 18px/1 'Baloo 2',sans-serif;text-align:right}
+.lb .pt small{display:block;font:500 11px 'Be Vietnam Pro',sans-serif;color:var(--muted)}
+.lb li.mine,.pod.mine{outline:2px solid var(--olive);outline-offset:-2px}
+.myrank{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));margin-top:12px;background:var(--ink);color:var(--bg);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.myrank .avw{width:38px;height:38px}
+.mini{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:16px;padding:12px 14px;margin-top:14px;border:0;width:100%;text-align:left}
+.mini .stack{display:flex}
+.mini .stack .avw{width:34px;height:34px;box-shadow:0 0 0 2px var(--card)}
+.mini .stack .avw+.avw{margin-left:-10px}
+.mini b{display:block;font-size:14.5px}
+.mini small{font-size:12.5px;color:var(--muted)}
+
+/* Sheet */
+.veil{position:fixed;inset:0;z-index:40;background:rgba(10,12,6,.45)}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;z-index:60;max-width:90vw;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+.levelup{position:fixed;inset:0;z-index:70;display:grid;place-items:center;background:rgba(10,12,6,.55);padding:24px}
+.levelup>div{background:var(--card);border-radius:24px;padding:28px 24px;text-align:center;max-width:320px;animation:pop .35s ease-out}
+.levelup .e{font-size:56px;line-height:1}
+.levelup .ico{--s:96px;margin:0 auto}
+.levelup h3{margin:8px 0 4px;font-size:20px}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="head"><div class="wrap">
+<img class="logo" src="https://adumavinno.github.io/logo.webp" alt="Logo VINNO VF8 All New">
+<h1>VINNO VF8<small>ALL NEW CLUB</small></h1>
+<button class="hbtn hidden" id="instBtn" aria-label="Cài app ra màn hình">📲</button>
+<button class="hbtn" id="lbBtn" aria-label="Bảng vàng đóng góp">🏆</button>
+<button class="me hidden" id="meBtn" aria-label="Hồ sơ của tôi"></button>
+</div></header>
+<nav class="menu" aria-label="Mục chính"><div class="wrap">
+<a href="#loi" data-tab="loi"><span class="ico" data-ic="tools" aria-hidden="true"></span>Lỗi &amp;<br>khắc phục</a>
+<a href="#luu-y" data-tab="luu-y"><span class="ico" data-ic="clip" aria-hidden="true"></span>Lưu ý<br>nhận, dùng xe</a>
+<a href="#phu-kien" data-tab="phu-kien"><span class="ico" data-ic="gift" aria-hidden="true"></span>Đồ chơi<br>phụ kiện</a>
+<a href="#hoi-dap" data-tab="hoi-dap"><span class="ico" data-ic="ask" aria-hidden="true"></span>Hỏi<br>đáp</a>
+</div></nav>
+
+<main><div class="wrap">
+<section data-view="loi">
+<div class="search">
+<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+<input id="q" type="search" enterkeyhint="search" placeholder="Xe bị gì? Gõ: eSIM, đèn hậu, ADAS…" autocomplete="off" aria-label="Tìm lỗi">
+<button class="x hidden" id="qClear" aria-label="Xóa">×</button>
+</div>
+<div id="instHost"></div>
+<div id="loiBody"></div>
+</section>
+<section data-view="luu-y" class="hidden">
+<div class="seg" id="luuSeg"><button data-luu="nhan">🔍 Khi nhận xe</button><button data-luu="dung">💡 Khi dùng xe</button></div>
+<div id="luuBody"></div>
+</section>
+<section data-view="phu-kien" class="hidden">
+<div class="search">
+<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+<input id="pkQ" type="search" placeholder="Tìm: camera, thảm, bơm lốp…" autocomplete="off" aria-label="Tìm phụ kiện">
+</div>
+<div id="pkBody"></div>
+</section>
+<section data-view="hoi-dap" class="hidden">
+<div class="search">
+<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+<input id="qaQ" type="search" placeholder="Tìm: sạc, biển số, lốp…" autocomplete="off" aria-label="Tìm câu hỏi">
+</div>
+<div class="chips" id="qaChips"></div>
+<div id="qaBody"></div>
+</section>
+</div></main>
+<button class="fab" id="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Báo lỗi</button>
+
+<div class="screen hidden" id="screen" role="dialog" aria-modal="true"><div class="wrap" id="screenIn"></div></div>
+<div id="dockHost"></div>
+<div class="toast" id="toast" role="status"></div>
+<div id="popHost"></div>
+
+<script type="application/json" id="seed">null</script>
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbx1XQMGFbZSYXTvg2L6FW4KKl_u1nGOWJf6ygS2SFA_EsR6vFGugCW4iIm9pY6OBh9C/exec';
+const PWA_URL = 'https://adumavinno.github.io/';
+const IS_PWA_HOST = /github\.io$/.test(location.hostname);
+// Khóa an toàn: chỉ cho chạy mã của chính app, chỉ gửi dữ liệu tới máy chủ Google của hội, không nhúng trang lạ
+if(IS_PWA_HOST){ const m = document.createElement('meta'); m.httpEquiv = 'Content-Security-Policy'; m.content = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"; document.head.appendChild(m); }
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fold = s => String(s ?? '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
+const DATE_RE = /(?:^|\s)((?:\d{1,2}\s*[–-]\s*)?\d{1,2}\/\d{1,2}(?:\/\d{4})?)\s*:/g;
+const breakDates = s => String(s ?? '').replace(DATE_RE, (m,d,i) => (i ? '\n\n' : '') + d + ':');
+const linkify = s => esc(s).replace(/https?:\/\/[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener noreferrer">${u.length>40?u.slice(0,38)+'…':u}</a>`);
+const CAR = `<path d="M40 148 L40 116 Q41 105 53 101 L66 88 Q72 82 82 82 L146 82 Q158 83 168 94 L182 106 Q201 109 205 121 L206 148 Z" fill="__PAINT__"/> <path d="M71 90 Q75 87 82 87 L111 87 L111 103 L61 103 Z" fill="#2E3A14" opacity=".55"/> <path d="M117 87 L145 87 Q154 88 162 100 L163 103 L117 103 Z" fill="#2E3A14" opacity=".55"/> <rect x="40" y="128" width="166" height="4" fill="#2E3A14" opacity=".18"/> <path d="M196 113 L205 116 L205 122 L197 121 Z" fill="#F3E3A2"/> <path d="M40 112 L46 112 L46 120 L40 120 Z" fill="#C2392E" opacity=".9"/> <circle cx="78" cy="148" r="25" fill="#2E3A14"/><circle cx="170" cy="148" r="25" fill="#2E3A14"/> <circle cx="78" cy="148" r="19" fill="#5E7227"/><circle cx="78" cy="148" r="12.5" fill="#B9CC7E"/><circle cx="78" cy="148" r="6" fill="#C2392E"/> <circle cx="170" cy="148" r="19" fill="#5E7227"/><circle cx="170" cy="148" r="12.5" fill="#B9CC7E"/><circle cx="170" cy="148" r="6" fill="#C2392E"/> <path d="M98 82 C96 73 98 67 103 63" fill="none" stroke="#D9B44A" stroke-width="3" stroke-linecap="round"/> <path d="M102 64 C109 53 124 49 136 52 C130 63 116 68 102 64 Z" fill="#D9B44A"/> <path d="M105 63 C114 59 124 55 132 54" fill="none" stroke="#2E3A14" stroke-width="1.5" stroke-linecap="round" opacity=".5"/> `;
+const LOGO = 'https://adumavinno.github.io/logo.webp';
+const ICN = ['tools','clip','gift','ask','tip','battery','key','camera','tv','ice','soft','ac','bulb','crash','car','seat','wheel','engine','tire','puzzle'];
+const ico = (n, s) => { const k = Math.max(0, ICN.indexOf(n)); return `<span class="ico" aria-hidden="true" style="${s?`--s:${s}px;`:''}background-position:${(k%5)*25}% ${Math.floor(k/5)*100/3}%"></span>`; };
+const DKEY = 'vf8olive.data';
+let D = JSON.parse($('#seed').textContent) || (() => { try{ return JSON.parse(localStorage.getItem(DKEY)); }catch(e){ return null; } })() || {updated:'', errs:[], qa:[], pk:[], rv:[], groups:[]};
+let LOADING = !D.errs.length;
+
+/* ---- Device storage ---- */
+const KEY = 'vf8olive.v1';
+(function importHandoff(){
+ const h = location.hash;
+ if(!h.startsWith('#import=')) return;
+ try{
+  const raw = decodeURIComponent(escape(atob(h.slice(8).replace(/-/g,'+').replace(/_/g,'/'))));
+  const inc = JSON.parse(raw), cur = JSON.parse(localStorage.getItem(KEY) || '{}');
+  if(inc && inc.device && (!cur.profile || cur.device === inc.device)) localStorage.setItem(KEY, JSON.stringify(inc));
+ }catch(e){}
+ try{ history.replaceState(null, '', location.pathname + '#loi'); }catch(e){ location.hash = 'loi'; }
+})();
+function loadLocal(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
+const L = Object.assign({metoo:{}, check:{}, name:'', profile:null, nRep:0, nAns:0, lastLvl:0}, loadLocal());
+if(!L.device) L.device = 'd' + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+if(!L.profile && L.name) L.profile = null;
+function saveLocal(){ try{ localStorage.setItem(KEY, JSON.stringify(L)); }catch(e){} }
+saveLocal();
+
+let EXTRA = {}, EXTRA_VER = {}, ME = null, BOARD = [];
+const GAS = typeof google !== 'undefined' && google.script && google.script.run;
+const online = () => !!(GAS || API_URL);
+async function getJSON(action, extra){
+ if(GAS) return gas(action === 'board' ? 'apiBoard' : 'apiData', L.device);
+ const r = await fetch(API_URL + '?action=' + action + '&device=' + encodeURIComponent(L.device) + (extra||''));
+ return r.json();
+}
+const gas = (fn, arg) => new Promise((res, rej) => google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](arg));
+
+/* ---- Vocab ---- */
+const ST = [['Chưa có cách fix','red','Chưa fix'],['Có cách xử lý tạm','amber','Xử lý tạm'],['Đã có cách fix','green','Đã fix'],['Chờ VinFast xử lý','blue','Chờ hãng']];
+const stInfo = st => { const r = ST.find(x => x[0]===st); return r ? {c:r[1], s:r[2]} : {c:'amber', s:st||'Chưa rõ'}; };
+const GROUPS = {
+ 'Pin / Sạc':['battery','Pin, sạc'], 'Khóa / Chìa khóa / App':['key','Chìa khóa, app'], 'ADAS / Cảm biến / Camera':['camera','ADAS, camera'],
+ 'Màn hình / Giải trí':['tv','Màn hình'], 'Phần mềm / OTA':['soft','Phần mềm'], 'Điều hòa':['ac','Điều hòa'],
+ 'Đèn / Điện':['bulb','Đèn, điện'], 'Thân vỏ / Sơn':['crash','Thân vỏ, sơn'], 'Nội thất / Ghế':['seat','Nội thất'],
+ 'Phanh / Treo / Lái':['wheel','Phanh, lái'], 'Động cơ điện / Truyền động':['engine','Động cơ'], 'Lốp / Mâm':['tire','Lốp, mâm'], 'Khác':['puzzle','Khác']
+};
+const gIcon = (g, s) => ico((GROUPS[g]||['puzzle'])[0], s);
+const QIC = {'Pin / Sạc':'battery','Sạc':'battery','Ắc quy 12V':'battery','Chìa khóa':'key','Khóa / Chìa khóa':'key','Khóa / Cốp':'key','VF Connect':'key','ADAS':'camera','Camera':'camera','Màn hình':'tv','Màn hình / Giải trí':'tv','Giải trí':'tv','Phần mềm / OTA':'soft','Phiên bản':'soft','Cài đặt':'soft','Điều hòa':'ac','Đèn':'bulb','Ngoại thất':'crash','Thân vỏ':'crash','Nội thất':'seat','Lái xe':'wheel','Lốp':'tire','Lốp / Mâm':'tire','Phụ kiện':'gift','Pin / Phụ kiện':'gift','Nhận xe':'car','Mua xe':'car','Lưu ý':'tip','Mẹo':'tip'};
+const qIcon = (t, s) => ico(QIC[t] || 'ask', s);
+const PKI = {'Camera hành trình':'📹','Thảm sàn':'🟫','Cứu hộ / Lốp':'🛟','Thẻ nhớ':'💾','Gối tựa':'🛋️','Bảo vệ nội thất':'🛡️','Chốt cài dây an toàn':'🔗','Bảo vệ pin':'🔋','Dụng cụ':'🔧','Phát wifi trên xe':'📶','Phim cách nhiệt':'🕶️','Sạc tại nhà':'🔌','Che nắng':'⛱️','Máy hút bụi':'🧹','Giá đỡ điện thoại':'📱','Điện thoại / Sạc':'📱','Đèn LED nội thất':'💡','Ốp mâm':'🛞','Bọc vô lăng':'🎡','Chìa khóa':'🔑','VETC':'🛣️','Hiển thị tốc độ (HUD)':'🧮','Nước hoa / đồ chơi xe':'🌸','Trang trí':'✨'};
+const QAI = {'Pin / Sạc':'🔋','Sạc':'🔋','Giấy tờ':'📄','Mua xe':'🧾','Phụ kiện':'🎁','Cài đặt':'⚙️','Lưu ý':'📌','Màn hình':'📺','Chìa khóa':'🔑','Lái xe':'🧭','Bảo hành':'🛡️','ADAS':'📷','Điều hòa':'❄️','Thiết bị':'🔌','Cứu hộ':'🛟','Nội thất':'💺','Nhận xe':'🚗','VF Connect':'📶','Mẹo':'💡','Lốp':'🛞','Lốp / Mâm':'🛞','Camera':'📷','Đèn':'💡','Bảo hiểm':'📑','Ắc quy 12V':'🔋','Vietmap':'🗺️'};
+const PAINTS = [['Trắng','#F4F4F1'],['Đen','#1E1F22'],['Xám','#7B8088'],['Bạc','#C3C7CC'],['Đỏ','#B3262B'],['Xanh dương','#2D5D9F'],['Xanh ô liu','#6E7B3A'],['Màu khác','#B59A6A']];
+const paintHex = n => (PAINTS.find(p => p[0]===n) || PAINTS[6])[1];
+const LEVELS = [
+ [0,'🎀','Xe mới bóc nilon','Vừa nhận hội, ghế còn mùi xe mới'],
+ [10,'👻','Thợ săn lỗi ảo','Đã quen với túi khí, ADAS báo lỗi ảo'],
+ [30,'🔄','Cao thủ reset vô lăng','Giữ 2 nút 30 giây không cần nhìn'],
+ [60,'🔧','Kỹ sư tháo cọc âm','Chưa tháo cọc âm thì chưa gọi là sửa'],
+ [100,'💡','Thầy lang đèn hậu','Chữa hấp hơi bằng nắng và niềm tin'],
+ [160,'📡','Phù thủy OTA','Biết bản mới sắp về trước cả sale'],
+ [250,'🫒','Trưởng lão Ô Liu','Lời nói ra là anh em ghi vào file']
+];
+const POINTS = [['👍','Bấm “Tôi cũng bị”',1],['🆕','Báo lỗi mới',5],['💬','Trả lời câu hỏi',3],['✅','Được người quản lý duyệt',10]];
+const VERSIONS = ['8E.1.8.2','8E.1.9.0'];
+const AV_ICONS = ICN.slice();
+function avatarHtml(av, color, size){
+ const st = size ? `style="width:${size}px;height:${size}px"` : '';
+ av = String(av || 'car');
+ if(av.startsWith('p:data:image/')) return `<span class="avw" ${st}><img src="${esc(av.slice(2))}" alt=""></span>`;
+ if(av.startsWith('i:')) return `<span class="avw" ${st}>${ico(av.slice(2))}</span>`;
+ return `<span class="avw" ${st}>${carSvg(paintHex(color || 'Xanh dương'))}</span>`;
+}
+const myAv = (size) => avatarHtml((L.profile||{}).av, (L.profile||{}).color, size);
+function carSvg(paint, cls){ return `<svg class="${cls||''}" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="120" fill="var(--tint)"/><g transform="translate(14 8) scale(.88)">${CAR.replaceAll('__PAINT__', paint).replaceAll('#5E7227','#3A3F4B').replaceAll('#B9CC7E','#CDD2DC').replaceAll('r="6" fill="#C2392E"','r="6" fill="#7B8194"').replace(/<path d="M98 82[\s\S]*$/,'')}</g></svg>`; }
+
+/* ---- Data prep ---- */
+function parseNotes(note){
+ note = String(note||'').trim(); if(!note) return {head:'', tl:[]};
+ const ms = [...note.matchAll(DATE_RE)];
+ if(!ms.length) return {head:note, tl:[]};
+ return {head: note.slice(0, ms[0].index).trim(), tl: ms.map((m,i) => ({d:m[1].replace(/\s/g,''), t: note.slice(m.index+m[0].length, i+1<ms.length ? ms[i+1].index : note.length).trim()}))};
+}
+const dval = s => { const m = String(s).match(/(\d{1,2})\/(\d{1,2})(?:\/(\d{4}))?$/); return m ? (+(m[3]||2026))*10000 + (+m[2])*100 + (+m[1]) : 0; };
+let TIPS = [];
+function prep(){
+ [D.errs, D.qa, D.pk].forEach(a => a.forEach(x => { delete x._sf; }));
+ D.errs.forEach(e => { e._p = parseNotes(e.note); e._last = Math.max(dval(e.date), ...e._p.tl.map(x => dval(x.d)), 0); e._idx = fold([e.desc,e.ctx,e.tmp,e.fix,e.note,e.g,e.where,e.ver,e.cls].join(' ')); });
+ D.qa.forEach(q => q._idx = fold([q.topic,q.q,q.a,q.note].join(' ')));
+ D.pk.forEach(p => p._idx = fold([p.cat,p.name,p.note].join(' ')));
+ TIPS = [
+  ...D.errs.filter(e => /^Không phải lỗi/.test(e.cls) && (e.tmp||e.fix)).map(e => ({id:e.id, i:gIcon(e.g), t:e.desc, a:[e.tmp, e.fix].filter(Boolean).join('\n\n')})),
+  ...D.qa.filter(q => q.a && (/^LƯU Ý/i.test(q.q) || ['Lưu ý','Mẹo','Cài đặt','Lái xe'].includes(q.topic))).map(q => ({id:q.id, i:qIcon(q.topic), t:q.q.replace(/^LƯU Ý:\s*/i,''), a:q.a}))
+ ];
+}
+const people = e => (e.n||0) + (EXTRA[e.id]||0);
+const isAnswered = q => q.a && q.topic !== 'Chưa có giải đáp';
+const safety = e => /Phanh|Lái|Pin/.test(e.g) || /túi khí|phanh|mất lái/i.test(e.desc);
+const match = (idx, q) => fold(q).split(/\s+/).filter(Boolean).every(w => idx.includes(w));
+
+/* ---- Tìm kiếm thông minh: bỏ dấu, từ đồng nghĩa, chấm điểm, gõ sai 1 ký tự ---- */
+const NFC = new Map();
+const nf = s => { let o = ''; for(const c of String(s ?? '').split('')){ let f = NFC.get(c); if(f === undefined){ f = fold(c)[0] || ''; f = /[a-z0-9]/.test(f) ? f : ' '; NFC.set(c, f); } o += f; } return o; };
+const STOP = new Set('bi loi xe cua khi thi la va co khong gi sao nao bao nhieu cach the nhu duoc nen minh toi em anh bac oi a ha nhe voi de o tai cho cai con vi hay roi van luc dang se ra vao len xuong mot nhung cac nguoi lam sua fix bi'.split(' '));
+const SYN = [
+ ['esim','sim','4g','lte','tin hieu','vf connect','song dien thoai','mat song'],
+ ['adas','giu lan','lan duong','acc','ga tu dong','cruise','ho tro lai'],
+ ['dieu hoa','dh','may lanh','dhoa','cua gio','quat gio'],
+ ['sac','sac pin','cong sac','tru sac','charge','sac nhanh'],
+ ['ota','cap nhat','phan mem','update','firmware','phien ban'],
+ ['camera','camera 360','cam 360'],
+ ['tui khi','airbag'],
+ ['chia khoa','key','the tu','smartkey'],
+ ['loa','am thanh','audio','nhac','bluetooth','bt'],
+ ['man hinh','mhu','man trung tam'],
+ ['den hau','den sau'],
+ ['xi nhan','xinhan','den bao re'],
+ ['lop','vo xe','banh xe','ap suat lop','tpms'],
+ ['mam','lazang','la zang','vanh xe'],
+ ['phanh','thang'],
+ ['vo lang','tay lai'],
+ ['guong','kinh chieu hau','guong chieu hau'],
+ ['app','ung dung','app vinfast'],
+ ['ac quy','acquy','binh 12v','12v'],
+ ['phim cach nhiet','dan phim'],
+ ['camera hanh trinh','cam hanh trinh','dashcam'],
+ ['bien so','dang ky xe','dang kiem'],
+ ['gat mua','can gat nuoc'],
+ ['cop','cop sau','khoang hanh ly'],
+ ['ghe','ghe lai','ghe phu'],
+ ['ket noi','lien ket','connect']
+];
+const SYNMAP = new Map(); SYN.forEach(g => g.forEach(w => SYNMAP.set(w, g)));
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function lev1(a, b){ // true nếu a, b sai khác tối đa 1 ký tự
+ if(a === b) return true; const la = a.length, lb = b.length; if(Math.abs(la-lb) > 1) return false;
+ let i = 0, j = 0, d = 0;
+ while(i < la && j < lb){ if(a[i] === b[j]){ i++; j++; continue; } if(++d > 1) return false; if(la > lb) i++; else if(lb > la) j++; else { i++; j++; } }
+ return d + (la-i) + (lb-j) <= 1;
+}
+function parseQuery(q){
+ const raw = String(q||'').toLowerCase().trim(); if(!raw) return null;
+ let f = ' ' + nf(raw).replace(/\s+/g,' ').trim() + ' ';
+ const rawWords = raw.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+ const terms = [];
+ // cụm từ đồng nghĩa nhiều chữ, dài trước
+ [...SYNMAP.keys()].filter(k => k.includes(' ')).sort((a,b) => b.length-a.length).forEach(k => {
+  if(f.includes(' '+k+' ')){ terms.push({alts:SYNMAP.get(k), main:k, raw:null}); f = f.replace(' '+k+' ', ' '); }
+ });
+ let words = f.trim().split(' ').filter(Boolean);
+ const keep = words.filter(w => !STOP.has(w)), stops = words.filter(w => STOP.has(w));
+ if(keep.length || terms.length) words = keep; else stops.length = 0;
+ words.forEach(w => {
+  const rw = rawWords.find(x => nf(x).trim() === w) || null;
+  terms.push({alts: SYNMAP.get(w) || [w], main:w, raw: rw && rw !== w ? rw : null});
+ });
+ if(!terms.length) return null;
+ terms.forEach(t => t.res = t.alts.map(a => ({a, syn: a !== t.main, ex: new RegExp('(?:^|\\s)'+reEsc(a).replace(/ /g,'\\s+')+'(?=\\s|$)'), pre: new RegExp('(?:^|\\s)'+reEsc(a).replace(/ /g,'\\s+')), sub: a.length >= 4 ? new RegExp(reEsc(a)) : null})));
+ return {terms, stops: stops.map(w => new RegExp('(?:^|\\s)'+w+'(?=\\s|$)')), phrase: nf(raw).replace(/\s+/g,' ').trim()};
+}
+function termScore(t, F){ // F: [{n: chuỗi đã chuẩn hóa, r: chữ gốc thường, w: trọng số, fz: có cho gõ sai}]
+ let best = 0;
+ for(const f of F){
+  for(const x of t.res){
+   let s = 0;
+   if(x.ex.test(f.n)) s = 1; else if(x.a.length >= 2 && x.pre.test(f.n)) s = x.a.length >= 4 ? .8 : .3; else if(x.sub && x.sub.test(f.n)) s = .45;
+   else if(f.fz && x.a.length >= 5 && !x.a.includes(' ')) { if(f.n.split(/\s+/).some(w => w.length >= 4 && lev1(w, x.a))) s = .4; }
+   if(!s) continue;
+   if(x.syn) s *= .85;
+   if(t.raw && !x.syn) s *= f.r.includes(t.raw) ? 1.2 : .55; // gõ có dấu: ưu tiên đúng dấu (đèn ≠ đen)
+   best = Math.max(best, s * f.w);
+  }
+ }
+ return best;
+}
+function searchItems(items, q, fieldsOf){
+ const Q = typeof q === 'string' ? parseQuery(q) : q; if(!Q) return null;
+ const scored = items.map(it => {
+  const F = it._sf || (it._sf = fieldsOf(it).filter(x => x[0]).map(([txt,w,fz]) => ({n:' '+nf(txt)+' ', r:String(txt).toLowerCase(), w, fz:!!fz})));
+  const per = Q.terms.map(t => termScore(t, F));
+  const hit = per.filter(s => s > 0).length;
+  let score = per.reduce((a,b) => a+b, 0);
+  if(Q.phrase.includes(' ') && F[0] && F[0].n.includes(' '+Q.phrase)) score += 4;
+  if(hit && F[0]){
+   Q.terms.forEach(t => { const c = F[0].n.split(t.res[0].ex).length - 1; if(c > 1) score += Math.min(c-1, 3) * .5; }); // nhắc nhiều lần → liên quan hơn
+   if(Q.stops) Q.stops.forEach(re => { if(re.test(F[0].n)) score += .3; }); // chữ phụ (không, vào…) chỉ để xếp hạng
+  }
+  return {it, score, hit};
+ });
+ let res = scored.filter(x => x.hit === Q.terms.length), approx = false;
+ if(!res.length && Q.terms.length > 1){ const need = Math.ceil(Q.terms.length/2); res = scored.filter(x => x.hit >= need); approx = res.length > 0; }
+ res.sort((a,b) => b.score - a.score);
+ return {list: res.map(x => x.it), score: new Map(res.map(x => [x.it, x.score])), approx, Q};
+}
+function hl(text, Q){ // tô sáng chữ khớp, giữ nguyên dấu
+ text = String(text ?? ''); if(!Q) return esc(text);
+ const n = nf(text), marks = new Array(text.length).fill(false);
+ Q.terms.forEach(t => t.res.forEach(x => {
+  const re = new RegExp('(^|\\s)(' + reEsc(x.a).replace(/ /g,'\\s+') + ')', 'g'); let m;
+  while((m = re.exec(n))){ let s = m.index + m[1].length, e = s + m[2].length; while(e < n.length && n[e] !== ' ') e++; for(let k = s; k < e; k++) marks[k] = true; if(re.lastIndex === m.index) re.lastIndex++; }
+ }));
+ let out = '', on = false;
+ for(let k = 0; k < text.length; k++){ if(marks[k] !== on){ out += on ? '</mark>' : '<mark>'; on = marks[k]; } out += esc(text[k]); }
+ return out + (on ? '</mark>' : '');
+}
+function snippet(text, Q, len){ // đoạn ngắn quanh chỗ khớp đầu tiên
+ text = String(text ?? ''); if(!text || !Q) return '';
+ const n = nf(text); let pos = -1;
+ Q.terms.forEach(t => t.res.forEach(x => { const m = new RegExp('(^|\\s)' + reEsc(x.a).replace(/ /g,'\\s+')).exec(n); if(m && (pos < 0 || m.index < pos)) pos = m.index + m[1].length; }));
+ if(pos < 0) return '';
+ len = len || 110; const s = Math.max(0, pos - 35), e = Math.min(text.length, s + len);
+ return (s > 0 ? '…' : '') + hl(text.slice(s, e), Q) + (e < text.length ? '…' : '');
+}
+const errFields = e => [[e.desc,6,1],[(GROUPS[e.g]||[])[1]||e.g,3],[e.tmp,2.5,1],[e.fix,2.5,1],[e.ctx,2],[e.where,1],[e.ver,1],[e.note,1]];
+const qaFields = q => [[q.q,6,1],[q.topic,3],[q.a,2,1],[q.note,1]];
+const pkFields = p => [[p.name,6,1],[p.cat,4],[p.note,2],[p.raw,1]];
+const termAllIn = (txt, Q) => Q.terms.every(t => termScore(t, [{n:' '+nf(txt)+' ', r:String(txt).toLowerCase(), w:1}]) > 0);
+function errSnip(e, Q){ // nếu tiêu đề không khớp, cho xem chỗ khớp
+ if(!Q || Q.terms.every(t => termScore(t, [{n:' '+nf(e.desc)+' ', r:e.desc.toLowerCase(), w:1}]) > 0)) return '';
+ for(const [txt] of [[e.tmp],[e.fix],[e.ctx],[e.note]]){ const s = snippet(txt, Q); if(s) return s; }
+ return '';
+}
+
+/* ---- Points & level ---- */
+function myStats(){
+ if(ME) return ME;
+ const m = Object.keys(L.metoo).length;
+ return {metoo:m, report:L.nRep||0, answer:L.nAns||0, ok:0, points: m + 5*(L.nRep||0) + 3*(L.nAns||0)};
+}
+function levelOf(p){ let i = 0; LEVELS.forEach((l,k) => { if(p >= l[0]) i = k; }); return i; }
+function checkLevelUp(){
+ const lv = levelOf(myStats().points);
+ if(lv > (L.lastLvl||0)){
+  const l = LEVELS[lv];
+  $('#popHost').innerHTML = `<div class="levelup" data-act="closePop"><div>${ico('car',96)}<div class="e">${l[1]}</div><h3>Lên cấp: ${esc(l[2])}</h3><p class="note">${esc(l[3])}</p><button class="btn full" data-act="closePop" style="margin-top:14px">Tuyệt vời</button></div></div>`;
+ }
+ if(lv !== L.lastLvl){ L.lastLvl = lv; saveLocal(); }
+ renderMe();
+}
+function renderMe(){
+ const p = L.profile; if(!p){ $('#meBtn').classList.add('hidden'); return; }
+ const l = LEVELS[levelOf(myStats().points)];
+ $('#meBtn').classList.remove('hidden');
+ $('#meBtn').innerHTML = `${myAv(30)}<span>${l[1]} ${esc(p.name)}</span>`;
+}
+
+/* ---- Tab: Lỗi ---- */
+const S = { tab:'loi', q:'', g:'', st:'', sort:'n', limit:20, luu:null, pkQ:'', pkCat:'', qaQ:'', qaTopic:'' };
+function errRow(e, Q){
+ const i = stInfo(e.st), sn = Q ? errSnip(e, Q) : '';
+ return `<a class="row" href="#loi-${e.id}"><span class="ic">${gIcon(e.g)}</span><span class="tx"><p class="d">${Q ? hl(e.desc, Q) : esc(e.desc)}</p>${sn ? `<span class="snip">${sn}</span>` : ''}
+  <span class="m c-${i.c}"><span class="dot"></span>${esc(i.s)}${L.metoo[e.id]?' <span class="mine">Xe mình bị</span>':''}</span></span>
+  <span class="n"><b>${people(e)}</b><small>người</small></span></a>`;
+}
+function renderLoi(){
+ $('#qClear').classList.toggle('hidden', !S.q);
+ const box = $('#loiBody');
+ if(LOADING){ box.innerHTML = `<div class="empty">Đang tải dữ liệu…</div>`; return; }
+ const sorted = l => l.sort((a,b) => S.sort==='new' ? b._last-a._last || people(b)-people(a) : people(b)-people(a) || b._last-a._last);
+ if(!S.q && !S.g){
+  const gs = Object.keys(GROUPS).filter(g => D.errs.some(e => e.g===g));
+  box.innerHTML = `<div class="tiles">${gs.map(g => { const n = D.errs.filter(e => e.g===g), red = n.filter(e => e.st==='Chưa có cách fix').length;
+    return `<button class="tile${red?' hot':''}" data-red="${red}" data-g="${esc(g)}">${ico(GROUPS[g][0])}<b>${GROUPS[g][1]}</b><small>${n.length} lỗi</small></button>`; }).join('')}</div>
+   <div class="h"><h2>🔥 Nhiều người gặp nhất</h2><button data-act="allErr">Xem tất cả</button></div>
+   <div class="list">${sorted(D.errs.filter(e => e.k==='that')).slice(0,6).map(e => errRow(e)).join('')}</div>
+   ${miniBoard()}
+   <p class="note" style="margin:14px 2px 0">Số đỏ trên ô là số lỗi chưa có cách fix. Lỗi liên quan phanh, lái, pin, túi khí nên mang ra xưởng kiểm tra.</p>`;
+  return;
+ }
+ const inGroup = D.errs.filter(e => S.g==='*' || !S.g || e.g===S.g);
+ const sr = S.q ? searchItems(inGroup, S.q, errFields) : null;
+ const Q = sr && sr.Q;
+ const base = sr ? sr.list : inGroup;
+ const list = sr && S.sort==='n' ? base.filter(e => !S.st || e.st===S.st) : sorted(base.filter(e => !S.st || e.st===S.st));
+ const title = S.g && S.g!=='*' ? `${GROUPS[S.g]?.[1]||S.g}` : S.q ? `Kết quả cho “${esc(S.q)}”` : 'Tất cả lỗi';
+ let also = '';
+ if(S.q){
+  const qa = searchItems(D.qa.filter(isAnswered), S.q, qaFields), pk = searchItems(D.pk, S.q, pkFields);
+  const b = [];
+  if(qa && qa.list.length) b.push(`<button data-also="hoi-dap">${ico('ask')}${qa.list.length} câu hỏi đáp</button>`);
+  if(pk && pk.list.length) b.push(`<button data-also="phu-kien">${ico('gift')}${pk.list.length} phụ kiện</button>`);
+  if(b.length) also = `<div class="also">${b.join('')}</div>`;
+ }
+ box.innerHTML = `${S.g ? `<button class="back-chip" data-act="clearG">← Các nhóm lỗi</button>` : ''}
+  <div class="chips"><button class="chip" data-st="" aria-pressed="${!S.st}">Tất cả ${base.length}</button>${ST.map(([st,c,s]) => `<button class="chip c-${c}" data-st="${esc(st)}" aria-pressed="${S.st===st}"><span class="dot"></span>${s} ${base.filter(e=>e.st===st).length}</button>`).join('')}</div>
+  <div class="h" style="margin-top:4px"><h2>${title}</h2><button data-act="sort">${S.sort==='new'?'🕒 Mới nhất':(sr?'🎯 Khớp nhất':'👥 Nhiều người')}</button></div>
+  ${sr && sr.approx ? `<p class="approx">Không có lỗi khớp hết các từ, đây là kết quả gần đúng.</p>` : ''}${also}
+  ${list.length ? `<div class="list">${list.slice(0,S.limit).map(e => errRow(e, Q)).join('')}${list.length>S.limit?`<button class="more" data-act="more">Xem thêm ${list.length-S.limit}</button>`:''}</div>`
+   : `<div class="list"><div class="empty">${ico('puzzle',64)}<br>Chưa thấy lỗi này. Báo để anh em cùng theo dõi.<br><br><button class="btn sm" data-act="report">Báo lỗi mới</button></div></div>`}`;
+}
+
+/* ---- Detail ---- */
+const backBtn = `<button class="back" data-act="back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Quay lại</button>`;
+function openScreen(html){ $('#screenIn').innerHTML = html; $('#screen').classList.remove('hidden'); $('#screen').scrollTop = 0; document.body.style.overflow='hidden'; $('#fab').classList.add('hidden'); }
+function closeScreen(){ $('#screen').classList.add('hidden'); $('#dockHost').innerHTML=''; document.body.style.overflow=''; }
+let dockOpen = false, pickVer = '';
+function renderDock(e){
+ const me = L.metoo[e.id];
+ if(me){ $('#dockHost').innerHTML = `<div class="dock"><div class="wrap"><div class="r"><p><b>👍 Xe bạn cũng bị</b>Phiên bản ${esc(me.v||'chưa rõ')}</p><button class="btn ghost sm" data-act="unmetoo" data-id="${e.id}">Bỏ</button></div></div></div>`; return; }
+ if(!dockOpen){ $('#dockHost').innerHTML = `<div class="dock"><div class="wrap"><div class="r"><p><b>Xe bạn cũng bị?</b>+1 điểm đóng góp</p><button class="btn" data-act="dockOpen">👍 Tôi cũng bị</button></div></div></div>`; return; }
+ $('#dockHost').innerHTML = `<div class="dock"><div class="wrap"><p class="note" style="margin:0 0 4px">Phiên bản phần mềm xe bạn (Cài đặt trên màn hình):</p>
+  <div class="vers">${['',...VERSIONS,'__other'].map(v => `<button class="chip" data-ver="${v}" aria-pressed="${pickVer===v}">${v===''?'Chưa rõ':v==='__other'?'Bản khác':v}</button>`).join('')}</div>
+  <input class="inp ${pickVer==='__other'?'':'hidden'}" id="mtOther" placeholder="Ví dụ 8E.1.9.1" style="margin-bottom:10px">
+  <div class="r"><button class="btn ghost" data-act="dockClose">Hủy</button><button class="btn" style="flex:1" data-act="metoo" data-id="${e.id}">Xác nhận</button></div></div></div>`;
+}
+function renderDetail(id){
+ const e = D.errs.find(x => x.id===id);
+ if(!e){ openScreen(`<div class="nav">${backBtn}</div><div class="empty">${LOADING?'Đang tải…':'Không tìm thấy lỗi này.'}</div>`); return; }
+ const i = stInfo(e.st), p = e._p;
+ const fixes = [['🩹','Cách xử lý tạm', e.tmp], ['✅','Cách fix triệt để', e.fix]].filter(x => x[2]);
+ const vers = EXTRA_VER[e.id] ? Object.entries(EXTRA_VER[e.id]).map(([v,n]) => `${esc(v)}: ${n}`).join(', ') : '';
+ const more = [['Khi nào xảy ra', e.ctx], ['Phần mềm', e.ver], ['Phiên bản anh em ghi', vers], ['Báo lần đầu', e.date]].filter(x => x[1]);
+ openScreen(`<div class="nav">${backBtn}</div>
+  <div class="dh"><span class="ic">${gIcon(e.g)}</span><h2>${esc(e.desc)}</h2></div>
+  <div class="stats"><div class="stat"><small>Trạng thái</small><b class="c-${i.c}"><span class="dot"></span>${esc(i.s)}</b></div><div class="stat"><small>Người gặp</small><b>👥 ${people(e)}</b></div>
+  ${e.where?`<div class="stat" style="grid-column:1/-1"><small>Nơi xử lý</small><b>📍 ${esc(e.where)}</b></div>`:''}</div>
+  ${safety(e) ? `<div class="warn"><b>⚠️ Liên quan an toàn.</b> Nên mang xe ra xưởng kiểm tra.</div>` : ''}
+  ${fixes.length ? `<div class="card">${fixes.map(([ic,t,v]) => `<div class="sec"><h3>${ic} ${t}</h3><p>${linkify(v)}</p></div>`).join('')}</div>` : `<div class="card"><p class="note">Chưa có cách xử lý. Ai biết thì báo trong nhóm nhé.</p></div>`}
+  ${more.length ? `<details class="fold"><summary>ℹ️ Thông tin thêm</summary><div class="in">${more.map(([k,v]) => `<b>${k}:</b> ${linkify(v)}`).join('\n')}</div></details>` : ''}
+  ${p.head || p.tl.length ? `<details class="fold"><summary>💬 Anh em trao đổi<span>${p.tl.length||1} tin</span></summary><div class="in">${p.head?linkify(p.head)+'\n\n':''}${p.tl.length?`<ol class="tl">${p.tl.slice().reverse().map(x => `<li><time>${esc(x.d)}</time><p>${linkify(x.t)}</p></li>`).join('')}</ol>`:''}</div></details>` : ''}`);
+ dockOpen = false; pickVer = ''; renderDock(e);
+}
+
+/* ---- Forms ---- */
+let DRAFT = {};
+const dv = id => esc(DRAFT[id] ?? '');
+function renderReport(){
+ openScreen(`<div class="nav">${backBtn}</div><div class="dh"><span class="ic">${ico('tools')}</span><h2>Báo lỗi mới<br><small class="note" style="font-weight:500">+5 điểm, +10 nếu được duyệt</small></h2></div>
+  <div class="field"><label for="rDesc">Xe bị gì?</label><textarea class="inp" id="rDesc" placeholder="Hiện thông báo gì, xảy ra thế nào">${dv('rDesc')}</textarea></div>
+  <div id="rDupes"></div>
+  <div class="field"><span class="lb">Thuộc nhóm nào?</span><div class="tiles" id="rGs">${Object.entries(GROUPS).map(([g,[i,n]]) => `<button class="tile" style="min-height:84px" data-rg="${esc(g)}" aria-pressed="${DRAFT.rG===g}">${ico(i,40)}<b style="font-size:12.5px">${n}</b></button>`).join('')}</div></div>
+  <div class="field"><label for="rCtx">Xảy ra khi nào</label><input class="inp" id="rCtx" value="${dv('rCtx')}" placeholder="Khởi động, đang chạy, đang sạc…"></div>
+  <div class="field"><label for="rVer">Phiên bản phần mềm</label><input class="inp" id="rVer" value="${dv('rVer')}" placeholder="Ví dụ 8E.1.9.0"></div>
+  <div class="field"><label for="rTmp">Cách xử lý tạm (nếu biết)</label><input class="inp" id="rTmp" value="${dv('rTmp')}"></div>
+  <button class="btn full" data-act="sendReport">${online() ? 'Gửi lỗi' : 'Tạo nội dung để dán vào Zalo'}</button><div id="rOut"></div>`);
+ if(DRAFT.rDesc) $('#rDesc').dispatchEvent(new Event('input', {bubbles:true}));
+ paintRG();
+}
+function paintRG(){ document.querySelectorAll('[data-rg]').forEach(b => b.style.outline = DRAFT.rG===b.dataset.rg ? '2px solid var(--olive)' : ''); }
+function dupes(text){
+ const Q = parseQuery(text); if(!Q || Q.terms.length < 2) return [];
+ const r = searchItems(D.errs, Q, errFields); return r ? r.list.slice(0,3) : [];
+}
+function renderAnswer(id){
+ const q = D.qa.find(x => x.id===id); if(!q){ openScreen(`<div class="nav">${backBtn}</div>`); return; }
+ openScreen(`<div class="nav">${backBtn}</div><div class="dh"><span class="ic">${ico('tip')}</span><h2>${esc(q.q)}</h2></div>
+  <div class="field"><label for="aText">Câu trả lời của bạn <span class="note">(+3 điểm)</span></label><textarea class="inp" id="aText"></textarea></div>
+  <button class="btn full" data-act="sendAnswer" data-id="${q.id}">${online() ? 'Gửi câu trả lời' : 'Tạo nội dung để dán vào Zalo'}</button><div id="aOut"></div>`);
+}
+function copyOut(el, text){ el.innerHTML = `<div class="copybox" id="cb">${esc(text)}</div><button class="btn ghost full" data-act="copy">Sao chép</button>`; el._text = text; }
+async function copyText(t){
+ try{ await navigator.clipboard.writeText(t); toast('Đã sao chép, dán vào nhóm Zalo nhé'); }
+ catch(e){ const r = document.createRange(); r.selectNodeContents($('#cb')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('Đã chọn sẵn, bấm Sao chép'); }
+}
+
+/* ---- Account ---- */
+let PF = {};
+function renderSignup(edit){
+ PF = Object.assign({name:'', status:'', color:'', addr:''}, L.profile || {name:L.name||''});
+ openScreen(`${edit?`<div class="nav">${backBtn}</div>`:''}<div class="welcome"><img class="logo" src="${LOGO}" alt="Logo VINNO VF8 All New"><h2>${edit?'Sửa hồ sơ':'Chào mừng vào hội!'}</h2><p>${edit?'':'Tạo hồ sơ nhanh, không cần mật khẩu. Thông tin chỉ lưu trên máy này.'}</p></div>
+  <div class="field"><label for="pName">Tên gọi trong nhóm Zalo</label><input class="inp" id="pName" value="${esc(PF.name)}" placeholder="Ví dụ: An Hưng Yên" autocomplete="nickname"></div>
+  <div class="field"><span class="lb">Bạn đã nhận xe chưa?</span><div class="pick" id="pSt"></div></div>
+  <div class="field"><span class="lb">Màu xe</span><div class="paints" id="pCol"></div></div>
+  <div class="field"><label for="pAddr">Địa chỉ</label><input class="inp" id="pAddr" value="${esc(PF.addr)}" placeholder="Tỉnh/thành, quận/huyện" autocomplete="address-level1"></div>
+  <button class="btn full" id="pSave" data-act="saveProfile">${edit?'Lưu hồ sơ':'Vào hội VINNO'}</button>
+  <p class="note" style="text-align:center;margin-top:10px">Chỉ tên gọi được ghi kèm khi bạn đóng góp. Địa chỉ không gửi đi đâu.</p>`);
+ paintPF();
+}
+function paintPF(){
+ $('#pSt').innerHTML = [['da','car','Đã nhận xe'],['chua','clip','Chưa nhận xe']].map(([v,i,t]) => `<button data-pst="${v}" aria-pressed="${PF.status===v}">${ico(i)}${t}</button>`).join('');
+ $('#pCol').innerHTML = PAINTS.map(([n,h]) => `<button class="paint" data-pcol="${esc(n)}" aria-pressed="${PF.color===n}" style="--p:${h}"><i></i>${n}</button>`).join('');
+ $('#pSave').disabled = !(PF.name.trim() && PF.status && PF.color);
+}
+function renderProfile(){
+ const p = L.profile, s = myStats(), lv = levelOf(s.points), l = LEVELS[lv], nx = LEVELS[lv+1];
+ const pct = nx ? Math.round((s.points - l[0]) / (nx[0] - l[0]) * 100) : 100;
+ openScreen(`<div class="nav">${backBtn}<button class="btn ghost sm" data-act="editProfile">✏️ Sửa</button></div>
+  <div class="pf">${myAv()}<button class="btn ghost sm chg" data-act="pickAv">📷 Đổi avatar</button><h2>${esc(p.name)}</h2>
+  <span class="lvl">${l[1]} ${esc(l[2])}</span><p class="note" style="margin:6px 0 0">${esc(l[3])}</p></div>
+  <div class="card" style="margin-top:14px"><div style="display:flex;justify-content:space-between;font-weight:600"><span>⭐ ${s.points} điểm</span><span class="note">${nx?`còn ${nx[0]-s.points} điểm lên ${nx[1]}`:'Cấp cao nhất'}</span></div><div class="bar"><i style="width:${pct}%"></i></div></div>
+  <div class="nums"><div><b>${s.metoo}</b><small>👍 Tôi cũng bị</small></div><div><b>${s.report}</b><small>🆕 Báo lỗi</small></div><div><b>${s.answer}</b><small>💬 Trả lời</small></div></div>
+  <div class="card"><h3>Cách kiếm điểm</h3><div class="earn">${POINTS.map(([i,t,n]) => `<span>${i}</span><span>${t}</span><b>+${n}</b>`).join('')}</div></div>
+  <div class="card"><h3>Các cấp trong hội</h3><ol class="ladder">${LEVELS.map((x,k) => `<li class="${k===lv?'on':k>lv?'lock':''}"><span class="e">${x[1]}</span><span class="t"><b>${esc(x[2])}</b><small>${esc(x[3])}</small></span><span class="p">${x[0]}đ</span></li>`).join('')}</ol></div>
+  <button class="mini" data-act="openBoard"><span style="font-size:28px">🏆</span><span><b>Xem Bảng vàng đóng góp</b><small>Ai đang dẫn đầu hội tháng này</small></span></button>
+  <div style="height:12px"></div>
+  <div class="card"><h3>Thông tin của bạn</h3><p>${p.status==='da'?'🚗 Đã nhận xe':'⏳ Chưa nhận xe'}, màu ${esc(p.color.toLowerCase())}${p.addr?`\n📍 ${esc(p.addr)}`:''}</p></div>
+  ${online()?'':'<p class="note">Bản xem thử: điểm tính trên máy này.</p>'}`);
+}
+
+/* ---- Đổi avatar ---- */
+let AVPICK = null;
+function renderAvatar(){
+ const p = L.profile; AVPICK = AVPICK || p.av || 'car';
+ const opt = (v) => `<button data-av="${esc(v)}" aria-pressed="${AVPICK===v}" aria-label="Chọn avatar">${avatarHtml(v, p.color)}</button>`;
+ const photo = AVPICK.startsWith('p:') ? AVPICK : (p.av||'').startsWith('p:') ? p.av : '';
+ openScreen(`<div class="nav">${backBtn}</div><div class="pf">${avatarHtml(AVPICK, p.color, 120)}<h2>Chọn avatar</h2><p class="note" style="margin:2px 0 14px">Avatar hiện trên Bảng vàng cho cả hội cùng thấy.</p></div>
+  <label class="upl">📷 Dùng ảnh của bạn<input type="file" accept="image/*" id="avFile"></label>
+  <div class="avgrid">${opt('car')}${photo ? opt(photo) : ''}${AV_ICONS.map(n => opt('i:'+n)).join('')}</div>
+  <div style="height:16px"></div><button class="btn full" data-act="saveAv">Lưu avatar</button>`);
+}
+function readPhoto(file){
+ return new Promise((res, rej) => {
+  const url = URL.createObjectURL(file), img = new Image();
+  img.onload = () => { const S2 = 96, c = document.createElement('canvas'); c.width = c.height = S2; const x = c.getContext('2d');
+   const m = Math.min(img.width, img.height); x.drawImage(img, (img.width-m)/2, (img.height-m)/2, m, m, 0, 0, S2, S2);
+   URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', .72)); };
+  img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('Không đọc được ảnh')); };
+  img.src = url;
+ });
+}
+async function syncProfile(){
+ if(!online() || !L.profile) return;
+ const p = L.profile, sig = [p.name, p.av||'car', p.color].join('|');
+ if(L.synced === sig) return;
+ try{ await api({action:'profile', av: p.av || 'car', color: p.color}); L.synced = sig; saveLocal(); }catch(e){}
+}
+
+/* ---- Bảng vàng ---- */
+let LB = null, LBTAB = 'month', LBERR = '';
+async function loadBoard(){
+ LBERR = '';
+ try{
+  const j = await getJSON('board');
+  if(!j || j.ok === false || !j.all) throw new Error((j && j.error) || 'old');
+  LB = j;
+ }catch(e){
+  LB = {all: BOARD.map(b => Object.assign({av:'car'}, b)), month: null, me: {}, avs: {}};
+ }
+ if(location.hash === '#bang-vang') renderBoard();
+ if(S.tab === 'loi' && !S.q && !S.g && $('#screen').classList.contains('hidden')) renderLoi();
+}
+const lbAv = (r, size) => avatarHtml(r.av === 'photo' ? 'p:' + ((LB && LB.avs && LB.avs[r.k]) || '') : r.av, r.color, size);
+function boardRows(){ return !LB ? null : (LBTAB === 'month' && LB.month ? LB.month : LB.all) || []; }
+function renderBoard(){
+ const rows = boardRows();
+ if(!rows){ openScreen(`<div class="nav">${backBtn}</div><div class="empty">Đang tải Bảng vàng…</div>`); return; }
+ const hasMonth = !!(LB && LB.month);
+ const now = new Date(), mName = `tháng ${now.getMonth()+1}`;
+ const top = rows.slice(0,3), rest = rows.slice(3, 30);
+ const pod = (r, k) => r ? `<div class="pod p${k+1}${r.me?' mine':''}"><span class="md">${['🥇','🥈','🥉'][k]}</span>${lbAv(r)}<b>${esc(r.name)}</b><div class="pt">${r.points}</div><small>${LEVELS[levelOf(r.allPoints ?? r.points)][1]} ${esc(LEVELS[levelOf(r.allPoints ?? r.points)][2])}</small></div>` : '<div></div>';
+ const stat = r => [r.metoo?`👍${r.metoo}`:'', r.report?`🆕${r.report}`:'', r.answer?`💬${r.answer}`:'', r.ok?`✅${r.ok}`:''].filter(Boolean).join('  ');
+ const mine = LB.me && LB.me[hasMonth ? LBTAB : 'all'];
+ openScreen(`<div class="nav">${backBtn}</div>
+  <div class="dh"><span class="ic" style="font-size:40px">🏆</span><h2>Bảng vàng đóng góp<br><small class="note" style="font-weight:500">Người góp nhiều nhất cho hội VINNO VF8</small></h2></div>
+  ${hasMonth ? `<div class="seg"><button data-lbt="month" aria-pressed="${LBTAB==='month'}">Tháng này</button><button data-lbt="all" aria-pressed="${LBTAB==='all'}">Từ trước đến nay</button></div>` : ''}
+  ${rows.length ? `<div class="podium">${pod(top[1],1)}${pod(top[0],0)}${pod(top[2],2)}</div>
+  ${rest.length ? `<div class="list"><ol class="lb">${rest.map((r,k) => `<li class="${r.me?'mine':''}"><span class="rk">${k+4}</span>${lbAv(r)}<span class="nm"><b>${esc(r.name)}${r.me?' (bạn)':''}</b><small>${stat(r)}</small></span><span class="pt">${r.points}<small>điểm</small></span></li>`).join('')}</ol></div>` : ''}`
+  : `<div class="list"><div class="empty">${ico('car',72)}<br>${LBTAB==='month'?`Chưa ai có điểm trong ${mName}.`:'Chưa ai có điểm.'} Bấm 👍 “Tôi cũng bị” ở một lỗi để lên bảng đầu tiên!</div></div>`}
+  ${mine && mine.rank > 3 ? `<div class="myrank">${myAv(38)}<span style="flex:1"><b>Hạng của bạn: #${mine.rank}</b><br><small>${mine.points} điểm${rows[0] ? `, kém hạng 1 ${Math.max(0, rows[0].points - mine.points)} điểm` : ''}</small></span></div>` : ''}
+  <div class="card" style="margin-top:14px"><h3>Cách kiếm điểm</h3><div class="earn">${POINTS.map(([i,t,n]) => `<span>${i}</span><span>${t}</span><b>+${n}</b>`).join('')}</div></div>
+  ${LB && LB.month === null && online() ? '<p class="note">Bảng xếp hạng theo tháng sẽ có sau khi cập nhật máy chủ.</p>' : ''}`);
+}
+function miniBoard(){
+ const rows = LB && (LB.month && LB.month.length ? LB.month : LB.all);
+ if(!rows || !rows.length) return `<button class="mini" data-act="openBoard"><span style="font-size:28px">🏆</span><span><b>Bảng vàng đóng góp</b><small>Xem ai đang dẫn đầu hội</small></span></button>`;
+ const t3 = rows.slice(0,3);
+ return `<button class="mini" data-act="openBoard"><span class="stack">${t3.map(r => lbAv(r)).join('')}</span><span style="flex:1;min-width:0"><b>🏆 Bảng vàng ${LB.month && LB.month.length ? 'tháng này' : ''}</b><small>Dẫn đầu: ${esc(t3[0].name)}, ${t3[0].points} điểm</small></span><span class="note">Xem ›</span></button>`;
+}
+
+/* ---- Cài app ra màn hình ---- */
+let BIP = null;
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+function handoffUrl(){
+ const b = btoa(unescape(encodeURIComponent(JSON.stringify(L)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+ return PWA_URL + '#import=' + b;
+}
+function renderInstall(){
+ const host = $('#instHost'); if(!host) return;
+ let can = false;
+ if(IS_PWA_HOST) can = !isStandalone() && (BIP || isIOS);
+ else if(GAS) can = !!window.FROM_GH;
+ $('#instBtn').classList.toggle('hidden', !can);
+ if(!can || L.hideInst){ host.innerHTML = ''; return; }
+ const inner = `${ico('car',44)}<span><b>Cài app ra màn hình chính</b><small>Mở nhanh như app thật, có biểu tượng riêng</small></span><span class="go">Cài</span>`;
+ host.innerHTML = GAS && !IS_PWA_HOST
+  ? `<div style="position:relative"><a class="install" href="${esc(handoffUrl())}" target="_blank" rel="noopener">${inner}</a></div>`
+  : `<button class="install" data-act="install">${inner}</button>`;
+}
+async function doInstall(){
+ if(GAS && !IS_PWA_HOST){ window.open(handoffUrl(), '_blank', 'noopener'); return; }
+ if(BIP){ BIP.prompt(); const r = await BIP.userChoice; BIP = null; if(r && r.outcome === 'accepted') toast('Đã cài app, xem ngoài màn hình chính nhé'); renderInstall(); return; }
+ if(isIOS) openScreen(`<div class="nav">${backBtn}</div><div class="dh"><span class="ic">${ico('car')}</span><h2>Cài app trên iPhone</h2></div><div class="card"><p>1. Mở trang này bằng Safari.\n2. Bấm nút Chia sẻ (ô vuông có mũi tên lên).\n3. Chọn “Thêm vào MH chính”, rồi bấm Thêm.</p></div>`);
+}
+if(IS_PWA_HOST){
+ const link = (rel, href, extra) => { const l = document.createElement('link'); l.rel = rel; l.href = href; Object.assign(l, extra||{}); document.head.appendChild(l); };
+ link('manifest', 'manifest.webmanifest'); link('apple-touch-icon', 'apple-touch-icon.png'); link('icon', 'icon-192.png', {type:'image/png'});
+ if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).catch(() => {});
+ addEventListener('beforeinstallprompt', e => { e.preventDefault(); BIP = e; renderInstall(); });
+ addEventListener('appinstalled', () => { BIP = null; renderInstall(); });
+}
+
+/* ---- Tab: Lưu ý ---- */
+const CHECK = [
+ ['🎨','Thân vỏ, sơn', [['son','Soi sơn dưới nắng: không vết đánh bóng, trầy xước',['N75','Q6']],['taynam','Bấm thử nút 4 tay nắm cửa: không lỏng, không kêu',['T29']],['crom','Chỉ crom thân sau dán chắc, không bong',['T33']],['cua','Mở hết cỡ 2 cửa trước: không kêu cót két',['T35','N76']],['guong','Gương phải chỉnh được đủ 4 hướng',['T32']]]],
+ ['💡','Đèn', [['xinhan','Đèn xi nhan gài khít, không vết keo',['T6']],['denhau','Mép đèn hậu hai bên khít đều, chụp ảnh lưu lại',['T7']],['hoinuoc','Đèn hậu không có hơi nước',['T5']],['vexn','Bật xi nhan, đủ các vế cùng sáng',['T8']]]],
+ ['💺','Nội thất', [['cuagio','Cửa gió hàng ghế sau không bung, có gió',['T10']],['hoc','Mở thử hộc đồ chân ghế phụ',['T24']],['cuasau','Cửa sau bên lái mở được từ trong',['T15']],['hoanthien','Gập ghế 2, xem gioăng cốp, tấm chắn nắng',['T31']]]],
+ ['📶','Phần mềm, kết nối', [['ver','Ghi lại phiên bản phần mềm',['T26']],['acc','Menu có ga tự động (ACC), giữ làn',['T26']],['vfc','Kích hoạt VF Connect, eSIM có sóng',['T14','T17']],['ghe','Chỉnh ghế xong bấm Lưu vị trí trong Hồ sơ',['T22']],['bh','App VinFast hiện thông tin bảo hành',['N36']]]],
+ ['📄','Đồ đi kèm, giấy tờ', [['chia','Đủ 2 chìa khóa, giấy hẹn đăng ký',['Q30']],['cop','Cốp có móc cứu hộ, bộ vá lốp',['Q30']],['vin','Số khung đầu 80 thường là xe demo',['Q121']]]]
+];
+function refLink(r){
+ if(r[0]==='Q') return `<a href="#hoi-dap" data-qa="${r}">Xem hỏi đáp</a>`;
+ const e = D.errs.find(x => x.id===r); return e ? `<a href="#loi-${r}">👥 ${people(e)} người gặp</a>` : '';
+}
+function renderLuu(){
+ if(!S.luu) S.luu = L.profile && L.profile.status==='da' ? 'dung' : 'nhan';
+ document.querySelectorAll('[data-luu]').forEach(b => b.setAttribute('aria-pressed', b.dataset.luu===S.luu));
+ const box = $('#luuBody');
+ if(S.luu==='nhan'){
+  const all = CHECK.flatMap(s => s[2]), done = all.filter(i => L.check[i[0]]).length, r = 22, c = 2*Math.PI*r;
+  box.innerHTML = `<div class="ring"><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="${r}" fill="none" stroke="var(--soft)" stroke-width="6"/><circle cx="28" cy="28" r="${r}" fill="none" stroke="var(--olive)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-done/all.length)}" transform="rotate(-90 28 28)"/><text x="28" y="33" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">${done}</text></svg>
+   <div><b>Đã kiểm ${done}/${all.length} mục</b><div class="note">Kiểm trước khi ký biên bản. Có lỗi thì chụp ảnh, yêu cầu showroom xử lý.</div></div></div>
+   ${CHECK.map(([ic,sec,items]) => `<div class="h"><h2>${ic} ${sec}</h2></div><div class="list">${items.map(([id,t,refs]) => `<div class="ck ${L.check[id]?'done':''}"><input type="checkbox" id="ck-${id}" data-ck="${id}" ${L.check[id]?'checked':''}><div><label for="ck-${id}">${esc(t)}</label><div class="r">${refs.map(refLink).join('')}</div></div></div>`).join('')}</div>`).join('')}
+   <p style="margin:18px 0 0"><button class="btn ghost sm" data-act="ckReset">Bỏ hết dấu tích</button></p>`;
+  return;
+ }
+ box.innerHTML = LOADING ? `<div class="empty">Đang tải…</div>` : `<p class="note" style="margin:0 2px 12px">Những điều anh em tưởng là lỗi, hóa ra chỉ cần biết cách dùng.</p><div class="list">${TIPS.map(t => `<details class="qa"><summary><span class="ic">${t.i}</span>${esc(t.t)}</summary><div class="a">${linkify(breakDates(t.a))}</div></details>`).join('')}</div>`;
+}
+
+/* ---- Tab: Phụ kiện ---- */
+function renderPK(){
+ const box = $('#pkBody');
+ if(LOADING){ box.innerHTML = `<div class="empty">Đang tải…</div>`; return; }
+ const cnt = {}; D.pk.forEach(p => cnt[p.cat||'Khác'] = (cnt[p.cat||'Khác']||0) + 1);
+ const cats = Object.keys(cnt).sort((a,b) => cnt[b]-cnt[a]);
+ const PQ = S.pkQ ? parseQuery(S.pkQ) : null;
+ const item = p => `<div class="pk"><span class="ic" aria-hidden="true">${PKI[p.cat]||'🎁'}</span><div class="tx"><div class="nm">${PQ ? hl(p.name, PQ) : esc(p.name)}</div>${p.note||p.raw?`<div class="nt">${PQ ? hl(p.note||p.raw, PQ) : esc(p.note||p.raw)}</div>`:''}</div>${p.links.length?`<a class="btn sm" href="${esc(p.links[0])}" target="_blank" rel="noopener noreferrer">Mua</a>`:''}</div>`;
+ if(!S.pkQ && !S.pkCat){
+  const big = cats.filter(c => cnt[c] >= 2), small = cats.filter(c => cnt[c] < 2);
+  box.innerHTML = `<div class="tiles">${big.map(c => `<button class="tile" data-pc="${esc(c)}"><span class="i" aria-hidden="true">${PKI[c]||'🎁'}</span><b>${esc(c)}</b><small>${cnt[c]} món</small></button>`).join('')}${small.length?`<button class="tile" data-pc="__other"><span class="i" aria-hidden="true">🧰</span><b>Đồ lặt vặt</b><small>${small.length} món</small></button>`:''}</div>
+   <p class="note" style="margin:14px 2px 0">Link do anh em tự chia sẻ, chưa kiểm chứng. Một số người chia sẻ là bên bán hàng hoặc garage.</p>`;
+  return;
+ }
+ const small = cats.filter(c => cnt[c] < 2);
+ const inCat = D.pk.filter(p => !S.pkCat || (S.pkCat==='__other' ? small.includes(p.cat||'Khác') : (p.cat||'Khác')===S.pkCat));
+ const psr = S.pkQ ? searchItems(inCat, S.pkQ, pkFields) : null;
+ const list = psr ? psr.list : inCat;
+ box.innerHTML = `${S.pkCat?`<button class="back-chip" data-act="clearPk">← Các loại đồ chơi</button>`:''}<div class="list">${list.length ? list.map(item).join('') : `<div class="empty">Chưa có món nào khớp.</div>`}</div>`;
+}
+
+/* ---- Tab: Hỏi đáp ---- */
+let pendingQA = null;
+function renderQA(){
+ const box = $('#qaBody');
+ if(LOADING){ box.innerHTML = `<div class="empty">Đang tải…</div>`; return; }
+ const ans = D.qa.filter(isAnswered), cnt = {}; ans.forEach(q => cnt[q.topic] = (cnt[q.topic]||0) + 1);
+ const tops = Object.keys(cnt).filter(t => cnt[t] >= 3).sort((a,b) => cnt[b]-cnt[a]);
+ $('#qaChips').innerHTML = `<button class="chip" data-tp="" aria-pressed="${!S.qaTopic}">Tất cả</button>` + tops.map(t => `<button class="chip" data-tp="${esc(t)}" aria-pressed="${S.qaTopic===t}">${QAI[t]||'💬'} ${esc(t)}</button>`).join('');
+ const QQ = S.qaQ ? parseQuery(S.qaQ) : null;
+ const unAll = D.qa.filter(q => !isAnswered(q));
+ const un = QQ ? (searchItems(unAll, QQ, qaFields)||{list:[]}).list : unAll;
+ const inTop = ans.filter(q => !S.qaTopic || q.topic===S.qaTopic);
+ const qsr = QQ ? searchItems(inTop, QQ, qaFields) : null;
+ const list = qsr ? qsr.list : inTop;
+ box.innerHTML = `${un.length && !S.qaTopic ? `<details class="unans" ${S.qaQ?'open':''}><summary>${ico('ask',40)}${un.length} câu đang chờ anh em trả lời<span class="note" style="margin-left:auto">+3đ</span></summary>${un.map(q => `<div class="q"><p>${esc(q.q)}</p><button class="btn sm" data-act="answer" data-id="${q.id}">Trả lời</button></div>`).join('')}</details>` : ''}
+  <div class="list">${list.length ? list.map(q => `<details class="qa" id="qa-${q.id}"><summary><span class="ic">${qIcon(q.topic)}</span><span>${QQ ? hl(q.q, QQ) : esc(q.q)}${QQ && !termAllIn(q.q, QQ) ? `<span class="snip">${snippet(q.a, QQ) || snippet(q.note, QQ)}</span>` : ''}</span></summary><div class="a">${linkify(breakDates(q.a))}${q.note?`\n\n${linkify(breakDates(q.note))}`:''}<div class="by">${[q.who,q.date].filter(Boolean).map(esc).join(', ')}</div></div></details>`).join('') : `<div class="empty">Chưa có câu hỏi nào khớp.</div>`}</div>`;
+ if(pendingQA){ const d = $('#qa-'+pendingQA); pendingQA = null; if(d){ d.open = true; requestAnimationFrame(() => d.scrollIntoView({block:'center'})); } }
+}
+
+/* ---- Router ---- */
+const TABS = ['loi','luu-y','phu-kien','hoi-dap'];
+let navDepth = 0;
+function route(){
+ const h = decodeURIComponent(location.hash.slice(1));
+ if(!L.profile) return renderSignup(false);
+ if(h.startsWith('loi-')) return renderDetail(h.slice(4));
+ if(h==='bao-loi') return renderReport();
+ if(h==='ho-so') return renderProfile();
+ if(h==='doi-avatar') return renderAvatar();
+ if(h==='bang-vang'){ renderBoard(); return loadBoard(); }
+ if(h==='sua-ho-so') return renderSignup(true);
+ if(h.startsWith('tra-loi-')) return renderAnswer(h.slice(8));
+ closeScreen();
+ if(TABS.includes(h)) S.tab = h;
+ document.querySelectorAll('[data-view]').forEach(s => s.classList.toggle('hidden', s.dataset.view!==S.tab));
+ document.querySelectorAll('[data-tab]').forEach(a => a.dataset.tab===S.tab ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current'));
+ $('#fab').classList.toggle('hidden', S.tab!=='loi');
+ ({'loi':renderLoi,'luu-y':renderLuu,'phu-kien':renderPK,'hoi-dap':renderQA})[S.tab]();
+ renderMe(); renderInstall();
+}
+function go(h){ navDepth++; location.hash = h; }
+function back(){ if(navDepth > 0){ navDepth--; history.back(); } else location.hash = S.tab; }
+let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('on'),2600); }
+
+/* ---- Server ---- */
+async function api(body){
+ const payload = JSON.stringify(Object.assign({device:L.device, name:(L.profile||{}).name||''}, body));
+ const j = GAS ? await gas('apiPost', payload) : await (await fetch(API_URL, {method:'POST', body: payload})).json();
+ if(!j || !j.ok) throw new Error((j && j.error) || 'Lỗi máy chủ'); return j;
+}
+async function loadServer(){
+ if(!online()){ LOADING = !D.errs.length; return; }
+ try{
+  const j = await getJSON('data');
+  if(!j || j.ok === false) throw new Error((j && j.error) || 'Lỗi máy chủ');
+  LOADING = false;
+  if(j.errs){
+   D = {updated:j.updated, errs:j.errs, qa:j.qa, pk:j.pk, rv:j.rv, groups:j.groups}; prep();
+   try{ localStorage.setItem(DKEY, JSON.stringify(D)); }catch(e){}
+  }
+  EXTRA = j.extra || {}; EXTRA_VER = j.extraVer || {}; ME = j.me || null; BOARD = j.board || [];
+  const keepY = scrollY; route(); if(!location.hash.startsWith('#loi-')) scrollTo(0, keepY); checkLevelUp();
+  syncProfile(); loadBoard();
+ }catch(e){
+  LOADING = false;
+  if(!D.errs.length) $('#loiBody').innerHTML = `<div class="empty">Không đọc được dữ liệu: ${esc(e.message||e)}. Kiểm tra mạng rồi tải lại trang.</div>`;
+  else toast('Đang dùng dữ liệu đã lưu, chưa tải được bản mới');
+ }
+}
+async function refreshMe(){ if(!online()) return checkLevelUp(); try{ const j = await getJSON('data'); if(j && j.me){ ME = j.me; BOARD = j.board||[]; EXTRA = j.extra||EXTRA; } }catch(e){} checkLevelUp(); LB = null; }
+
+/* ---- Events ---- */
+let qT;
+$('#q').addEventListener('input', e => { clearTimeout(qT); qT = setTimeout(() => { S.q = e.target.value.trim(); S.limit = 20; renderLoi(); }, 150); });
+$('#qClear').onclick = () => { $('#q').value=''; S.q=''; renderLoi(); };
+['#q','#pkQ','#qaQ'].forEach(s => $(s).addEventListener('keydown', e => { if(e.key === 'Enter') e.target.blur(); }));
+let pT, aT;
+$('#pkQ').addEventListener('input', e => { clearTimeout(pT); pT = setTimeout(() => { S.pkQ = e.target.value.trim(); renderPK(); }, 150); });
+$('#qaQ').addEventListener('input', e => { clearTimeout(aT); aT = setTimeout(() => { S.qaQ = e.target.value.trim(); renderQA(); }, 150); });
+$('#fab').onclick = () => go('bao-loi');
+$('#meBtn').onclick = () => go('ho-so');
+$('#lbBtn').onclick = () => go('bang-vang');
+$('#instBtn').onclick = () => doInstall();
+
+document.addEventListener('click', async ev => {
+ const t = ev.target.closest('button, a, .levelup'); if(!t) return;
+ const ds = t.dataset;
+ if(ds.act==='closePop'){ if(ev.target===t || t.tagName==='BUTTON') $('#popHost').innerHTML=''; return; }
+ if(ds.g){ S.g = ds.g; S.st=''; S.limit=20; return renderLoi(); }
+ if(ds.av){ AVPICK = ds.av; return renderAvatar(); }
+ if(ds.lbt){ LBTAB = ds.lbt; return renderBoard(); }
+ if(ds.also){ const q = S.q; if(ds.also==='hoi-dap'){ S.qaQ = q; S.qaTopic=''; $('#qaQ').value = q; } else { S.pkQ = q; S.pkCat=''; $('#pkQ').value = q; } location.hash = ds.also; return; }
+ if(ds.st !== undefined){ S.st = ds.st; S.limit=20; return renderLoi(); }
+ if(ds.luu){ S.luu = ds.luu; return renderLuu(); }
+ if(ds.pc){ S.pkCat = ds.pc; return renderPK(); }
+ if(ds.tp !== undefined){ S.qaTopic = ds.tp; return renderQA(); }
+ if(ds.pst){ PF.status = ds.pst; return paintPF(); }
+ if(ds.pcol){ PF.color = ds.pcol; return paintPF(); }
+ if(ds.rg){ DRAFT.rG = DRAFT.rG===ds.rg ? '' : ds.rg; return paintRG(); }
+ if(ds.ver !== undefined){ pickVer = ds.ver; const e = D.errs.find(x => x.id===location.hash.slice(5)); if(e) renderDock(e); if(pickVer==='__other') $('#mtOther').focus(); return; }
+ if(ds.qa){ ev.preventDefault(); pendingQA = ds.qa; S.qaQ=''; S.qaTopic=''; $('#qaQ').value=''; if(location.hash==='#hoi-dap') route(); else location.hash='hoi-dap'; return; }
+ if(t.matches('a[href^="#loi-"]')){ ev.preventDefault(); return go(t.getAttribute('href').slice(1)); }
+ const act = ds.act; if(!act) return;
+ if(act==='back') return back();
+ if(act==='report') return go('bao-loi');
+ if(act==='answer') return go('tra-loi-' + ds.id);
+ if(act==='editProfile') return go('sua-ho-so');
+ if(act==='pickAv'){ AVPICK = null; return go('doi-avatar'); }
+ if(act==='openBoard') return go('bang-vang');
+ if(act==='install') return doInstall();
+ if(act==='saveAv'){ L.profile.av = AVPICK || 'car'; saveLocal(); AVPICK = null; toast('Đã đổi avatar'); renderMe(); syncProfile(); LB = null; return back(); }
+ if(act==='allErr'){ S.g='*'; return renderLoi(); }
+ if(act==='clearG'){ S.g=''; S.st=''; return renderLoi(); }
+ if(act==='clearPk'){ S.pkCat=''; return renderPK(); }
+ if(act==='sort'){ S.sort = S.sort==='n' ? 'new' : 'n'; return renderLoi(); }
+ if(act==='more'){ S.limit += 20; return renderLoi(); }
+ if(act==='ckReset'){ if(confirm('Bỏ hết các mục đã đánh dấu?')){ L.check = {}; saveLocal(); renderLuu(); } return; }
+ if(act==='saveProfile'){
+  PF.name = $('#pName').value.trim(); PF.addr = $('#pAddr').value.trim();
+  if(!(PF.name && PF.status && PF.color)) return toast('Điền tên, tình trạng và màu xe nhé');
+  const first = !L.profile; L.profile = {...PF, av: (L.profile && L.profile.av) || 'car', since: L.profile?.since || Date.now()}; L.name = PF.name; saveLocal(); syncProfile();
+  toast(first ? `Chào mừng ${PF.name} vào hội!` : 'Đã lưu hồ sơ');
+  if(first){ S.luu = null; history.replaceState(null,'','#loi'); navDepth = 0; route(); } else back();
+  return;
+ }
+ if(act==='dockOpen' || act==='dockClose'){ dockOpen = act==='dockOpen'; pickVer=''; const e = D.errs.find(x => x.id===location.hash.slice(5)); return e && renderDock(e); }
+ if(act==='metoo' || act==='unmetoo'){
+  const id = ds.id; t.disabled = true;
+  let v = pickVer; if(v==='__other') v = ($('#mtOther')||{}).value?.trim() || '';
+  try{
+   if(online()){ await api({action:act, id, version:v}); EXTRA[id] = Math.max(0, (EXTRA[id]||0) + (act==='metoo'?1:-1)); }
+   if(act==='metoo') L.metoo[id] = {v, ts:Date.now()}; else delete L.metoo[id];
+   saveLocal(); toast(act==='metoo' ? '👍 Đã ghi nhận, +1 điểm' : 'Đã bỏ ghi nhận');
+   dockOpen = false; renderDetail(id); refreshMe();
+  }catch(err){ t.disabled = false; toast('Chưa gửi được: ' + err.message); }
+  return;
+ }
+ if(act==='sendReport'){
+  const f = { desc:$('#rDesc').value.trim(), group:DRAFT.rG||'', ctx:$('#rCtx').value.trim(), version:$('#rVer').value.trim(), tmp:$('#rTmp').value.trim() };
+  if(!f.desc){ toast('Điền triệu chứng trước đã'); return $('#rDesc').focus(); }
+  if(!online()) return copyOut($('#rOut'), `[Báo lỗi VF8]${f.group?' '+f.group:''}\nTriệu chứng: ${f.desc}${f.ctx?`\nXảy ra khi: ${f.ctx}`:''}${f.version?`\nPhiên bản: ${f.version}`:''}${f.tmp?`\nXử lý tạm: ${f.tmp}`:''}\nNgười báo: ${L.profile.name}`);
+  t.disabled = true;
+  try{ await api(Object.assign({action:'report'}, f)); DRAFT = {}; L.nRep = (L.nRep||0) + 1; saveLocal(); t.classList.add('hidden'); $('#rOut').innerHTML = `<p class="note" style="margin-top:14px">🎉 Đã gửi, +5 điểm. Người quản lý sẽ xem rồi đưa vào danh sách.</p>`; refreshMe(); }
+  catch(err){ t.disabled = false; toast('Chưa gửi được: ' + err.message); }
+  return;
+ }
+ if(act==='sendAnswer'){
+  const text = $('#aText').value.trim(), q = D.qa.find(x => x.id===ds.id);
+  if(!text) return toast('Điền câu trả lời trước đã');
+  if(!online()) return copyOut($('#aOut'), `[Trả lời] ${q.q}\n${text}\n(${L.profile.name})`);
+  t.disabled = true;
+  try{ await api({action:'answer', id:q.id, question:q.q, text}); L.nAns = (L.nAns||0) + 1; saveLocal(); t.classList.add('hidden'); $('#aOut').innerHTML = `<p class="note" style="margin-top:14px">🎉 Đã gửi, +3 điểm. Câu trả lời sẽ hiện sau khi được duyệt.</p>`; refreshMe(); }
+  catch(err){ t.disabled = false; toast('Chưa gửi được: ' + err.message); }
+  return;
+ }
+ if(act==='copy') return copyText(t.parentElement._text);
+});
+document.addEventListener('change', async ev => {
+ if(ev.target.id === 'avFile' && ev.target.files[0]){ try{ AVPICK = 'p:' + await readPhoto(ev.target.files[0]); renderAvatar(); }catch(e){ toast(e.message); } return; }
+ if(ev.target.dataset.ck){ const id = ev.target.dataset.ck; if(ev.target.checked) L.check[id]=1; else delete L.check[id]; saveLocal(); renderLuu(); }
+});
+document.addEventListener('input', ev => {
+ const id = ev.target.id;
+ if(['rDesc','rCtx','rVer','rTmp'].includes(id)) DRAFT[id] = ev.target.value;
+ if(id==='pName'){ PF.name = ev.target.value; $('#pSave').disabled = !(PF.name.trim() && PF.status && PF.color); }
+ if(id==='rDesc'){ const ds = dupes(ev.target.value); $('#rDupes').innerHTML = ds.length ? `<div class="dupes"><b>Có thể lỗi này đã có.</b> Nếu đúng, mở ra bấm 👍 Tôi cũng bị:${ds.map(e => `<a href="#loi-${e.id}">${esc(e.desc.slice(0,80))}${e.desc.length>80?'…':''}</a>`).join('')}</div>` : ''; }
+});
+document.addEventListener('keydown', ev => { if(ev.key==='Escape' && !$('#screen').classList.contains('hidden') && L.profile) back(); });
+window.addEventListener('hashchange', route);
+
+document.querySelectorAll('.menu [data-ic]').forEach(s => s.outerHTML = ico(s.dataset.ic));
+LOADING = !D.errs.length;
+prep();
+if(!location.hash) try{ history.replaceState(null,'','#loi'); }catch(e){}
+route(); loadServer(); if(!online()) checkLevelUp();
+</script>
+</body>
+</html>
