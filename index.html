@@ -374,6 +374,9 @@ ul.keep li:last-child{margin-bottom:0}
 .chip[aria-pressed="true"] .li{color:inherit;filter:none}
 .unans summary .li{--s:40px}
 .install .li{background:rgba(255,255,255,.16);color:#fff;filter:none}
+[data-person]{cursor:pointer}
+.lb li[data-person]:active,.pod[data-person]:active{background:var(--soft)}
+.h .note{font-size:12.5px}
 @keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -559,16 +562,17 @@ const POINTS = [['👍','Bấm “Tôi cũng bị”',1],['🆕','Báo lỗi m�
 const HPOINTS = [['🆕','Người báo lỗi đầu tiên trong sổ tay',5],['👍','Cùng gặp, xác nhận lỗi',1],['💬','Góp câu trả lời, kinh nghiệm',3],['🙋','Đặt câu hỏi cho hội',1],['🎁','Chia sẻ phụ kiện, link mua',3],['⭐','Góp đánh giá xe',2]];
 /* Đóng góp đã có trong sổ tay nhóm (cột "Người báo/Người chia sẻ") → cộng vào Bảng vàng */
 const nameKey = n => String(n||'').normalize('NFC').toLowerCase().replace(/\s+/g,' ').trim();
+function whoNames(who){ const seen = new Set(), out = [];
+ String(who||'').replace(/\s+và nhiều anh em/gi,'').split(/[,;\n]+/).forEach(x => {
+  x = x.trim(); let ask = false;
+  if(/\(hỏi\)\s*$/i.test(x)){ ask = true; x = x.replace(/\s*\(hỏi\)\s*$/i,''); }
+  if(!x || x.length > 40 || /nhiều anh em|nhóm vinno|\(người bán\)|^\(/i.test(x)) return;
+  const k = nameKey(x); if(seen.has(k)) return; seen.add(k); out.push({name:x, k, ask});
+ }); return out; }
 function histTally(since){
  const P = new Map();
  const ok = d => { if(!since) return true; const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(d||''); return !!m && new Date(+m[3], m[2]-1, +m[1]) >= since; };
- const names = who => { const seen = new Set(), out = [];
-  String(who||'').replace(/\s+và nhiều anh em/gi,'').split(/[,;\n]+/).forEach(x => {
-   x = x.trim(); let ask = false;
-   if(/\(hỏi\)\s*$/i.test(x)){ ask = true; x = x.replace(/\s*\(hỏi\)\s*$/i,''); }
-   if(!x || x.length > 40 || /nhiều anh em|nhóm vinno|\(người bán\)|^\(/i.test(x)) return;
-   const k = nameKey(x); if(seen.has(k)) return; seen.add(k); out.push({name:x, k, ask});
-  }); return out; };
+ const names = whoNames;
  const add = (n, f, pts) => { const r = P.get(n.k) || {name:n.name, metoo:0, report:0, answer:0, ask:0, share:0, rv:0, points:0}; r[f]++; r.points += pts; P.set(n.k, r); };
  (D.errs||[]).forEach(e => { if(!ok(e.date)) return; names(e.who).forEach((n,i) => i === 0 ? add(n,'report',5) : add(n,'metoo',1)); });
  (D.qa||[]).forEach(q => { if(!ok(q.date)) return; names(q.who).forEach(n => n.ask ? add(n,'ask',1) : add(n,'answer',3)); });
@@ -577,7 +581,7 @@ function histTally(since){
  return P;
 }
 function mergeHist(list, since, allMap){
- const H = histTally(since), out = (list||[]).map(r => Object.assign({}, r)), byName = new Map(out.map(r => [nameKey(r.name), r]));
+ const H = histTally(since), out = (list||[]).map(r => Object.assign({}, r, {app:{metoo:r.metoo||0, report:r.report||0, answer:r.answer||0, ok:r.ok||0, points:r.points||0}})), byName = new Map(out.map(r => [nameKey(r.name), r]));
  H.forEach((h, k) => {
   const r = byName.get(k);
   if(r){ ['metoo','report','answer','ask','share','rv'].forEach(f => r[f] = (r[f]||0) + h[f]); r.points += h.points; }
@@ -973,14 +977,14 @@ function renderBoard(){
  const hasMonth = !!(LB && LB.month);
  const now = new Date(), mName = `tháng ${now.getMonth()+1}`;
  const top = rows.slice(0,3), rest = rows.slice(3, 30);
- const pod = (r, k) => r ? `<div class="pod p${k+1}${r.me?' isme':''}"><span class="md">${['🥇','🥈','🥉'][k]}</span>${lbAv(r)}<b>${esc(r.name)}</b><div class="pt">${r.points}</div><small>${LEVELS[levelOf(r.allPoints ?? r.points)][1]} ${esc(LEVELS[levelOf(r.allPoints ?? r.points)][2])}</small></div>` : '<div></div>';
+ const pod = (r, k) => r ? `<div class="pod p${k+1}${r.me?' isme':''}" role="button" tabindex="0" data-person="${esc(r.name)}"><span class="md">${['🥇','🥈','🥉'][k]}</span>${lbAv(r)}<b>${esc(r.name)}</b><div class="pt">${r.points}</div><small>${LEVELS[levelOf(r.allPoints ?? r.points)][1]} ${esc(LEVELS[levelOf(r.allPoints ?? r.points)][2])}</small></div>` : '<div></div>';
  const stat = r => [r.report?`🆕${r.report}`:'', r.answer?`💬${r.answer}`:'', r.share?`🎁${r.share}`:'', r.metoo?`👍${r.metoo}`:'', r.rv?`⭐${r.rv}`:'', r.ask?`🙋${r.ask}`:'', r.ok?`✅${r.ok}`:''].filter(Boolean).join('  ');
  const mine = LB.me && LB.me[hasMonth ? LBTAB : 'all'];
  openScreen(`<div class="nav">${backBtn}</div>
   <div class="dh"><span class="ic" style="font-size:40px">🏆</span><h2>Bảng vàng đóng góp<br><small class="note" style="font-weight:500">Người góp nhiều nhất cho hội VINNO VF8</small></h2></div>
   ${hasMonth ? `<div class="seg"><button data-lbt="all" aria-pressed="${LBTAB==='all'}">Từ trước đến nay</button><button data-lbt="month" aria-pressed="${LBTAB==='month'}">Tháng này</button></div>` : ''}
   ${rows.length ? `<div class="podium">${pod(top[1],1)}${pod(top[0],0)}${pod(top[2],2)}</div>
-  ${rest.length ? `<div class="list"><ol class="lb">${rest.map((r,k) => `<li class="${r.me?'isme':''}"><span class="rk">${k+4}</span>${lbAv(r)}<span class="nm"><b>${esc(r.name)}${r.me?' (bạn)':''}</b><small>${stat(r)}</small></span><span class="pt">${r.points}<small>điểm</small></span></li>`).join('')}</ol></div>` : ''}`
+  ${rest.length ? `<div class="list"><ol class="lb">${rest.map((r,k) => `<li class="${r.me?'isme':''}" role="button" tabindex="0" data-person="${esc(r.name)}"><span class="rk">${k+4}</span>${lbAv(r)}<span class="nm"><b>${esc(r.name)}${r.me?' (bạn)':''}</b><small>${stat(r)}</small></span><span class="pt">${r.points}<small>điểm</small></span></li>`).join('')}</ol></div>` : ''}`
   : `<div class="list"><div class="empty">${ico('car',72)}<br>${LBTAB==='month'?`Chưa ai có điểm trong ${mName}.`:'Chưa ai có điểm.'} Bấm 👍 “Tôi cũng bị” ở một lỗi để lên bảng đầu tiên!</div></div>`}
   ${mine && mine.rank > 3 ? `<div class="myrank">${myAv(38)}<span style="flex:1"><b>Hạng của bạn: #${mine.rank}</b><br><small>${mine.points} điểm${rows[0] ? `, kém hạng 1 ${Math.max(0, rows[0].points - mine.points)} điểm` : ''}</small></span></div>` : ''}
   <div class="card" style="margin-top:14px"><h3>Cách kiếm điểm trên app</h3><div class="earn">${POINTS.map(([i,t,n]) => `<span>${i}</span><span>${t}</span><b>+${n}</b>`).join('')}</div></div>
@@ -1262,6 +1266,39 @@ function renderGuide(id){
   <p class="note" style="margin-top:16px">Nguồn: tóm tắt từ HDSD VF 8 All New 2026 của VinFast. Kinh nghiệm anh em là thông tin cộng đồng, không phải hướng dẫn chính hãng. <a href="${HDSD_URL}" target="_blank" rel="noopener">Xem HDSD đầy đủ</a></p>`);
 }
 
+
+function contribOf(name){
+ const k = nameKey(name), C = {report:[], metoo:[], answer:[], ask:[], share:[], rv:[]};
+ const has = who => whoNames(who).findIndex(n => n.k === k);
+ (D.errs||[]).forEach(e => { const i = has(e.who); if(i === 0) C.report.push(e); else if(i > 0) C.metoo.push(e); });
+ (D.qa||[]).forEach(q => { const n = whoNames(q.who).find(n => n.k === k); if(n) (n.ask ? C.ask : C.answer).push(q); });
+ (D.pk||[]).forEach(x => { if(has(x.who) >= 0) C.share.push(x); });
+ (D.rv||[]).forEach(x => { if(has(x.who) >= 0) C.rv.push(x); });
+ return C;
+}
+function renderPerson(name){
+ if(!LB){ openScreen(`<div class="nav">${backBtn}</div><div class="empty">Đang tải…</div>`); loadBoard().then(() => location.hash.startsWith('#nguoi-') && renderPerson(name)); return; }
+ const r = (LB.all||[]).find(x => nameKey(x.name) === nameKey(name)) || {name, points:0, av:'car'};
+ const C = contribOf(name), lv = levelOf(r.allPoints ?? r.points), l = LEVELS[lv], app = r.app || {};
+ const qaRow = q => `<a class="row" href="#hoi-dap" data-qa="${q.id}"><span class="ic">${qIcon(q.topic)}</span><span class="tx"><p class="d">${esc(q.q)}</p><span class="m">${esc(q.topic||'Hỏi đáp')}</span></span></a>`;
+ const pkRow = x => `<a class="row" href="#phu-kien" data-pkq="${esc(x.name)}"><span class="ic">${ico(PKN[x.cat]||'gift')}</span><span class="tx"><p class="d">${esc(x.name)}</p><span class="m">${esc(x.cat||'Phụ kiện')}</span></span></a>`;
+ const sec = (ic, title, pts, list, row, id) => list.length ? `<div class="h"><h2>${ic} ${title} · ${list.length}</h2><span class="note" style="white-space:nowrap">+${pts}đ/mục</span></div><div class="list" id="ps-${id}">${list.slice(0, 8).map(row).join('')}${list.length > 8 ? `<button class="more" data-act="psMore" data-id="${id}">Xem thêm ${list.length - 8}</button>` : ''}</div>` : '';
+ PS = {C, qaRow, pkRow};
+ const appLine = [app.report?`🆕 ${app.report} lỗi mới`:'', app.answer?`💬 ${app.answer} câu trả lời`:'', app.metoo?`👍 ${app.metoo} lần “Tôi cũng bị”`:'', app.ok?`✅ ${app.ok} lần được duyệt`:''].filter(Boolean);
+ const total = C.report.length + C.metoo.length + C.answer.length + C.ask.length + C.share.length + C.rv.length;
+ openScreen(`<div class="nav">${backBtn}</div>
+  <div class="pf"><span style="display:block;width:96px;height:96px;margin:0 auto">${lbAv(r, 96)}</span><h2>${esc(r.name)}${r.me ? ' (bạn)' : ''}</h2><span class="lvl">${l[1]} ${esc(l[2])}</span><p class="note" style="margin:8px 0 0">${r.allPoints ?? r.points} điểm đóng góp${(LB.all||[]).indexOf(r) >= 0 ? ` · hạng #${LB.all.indexOf(r)+1}` : ''}</p></div>
+  ${appLine.length ? `<div class="card" style="margin-top:14px"><h3>📱 Trên app · ${app.points||0} điểm</h3><p>${appLine.join('<br>')}</p></div>` : ''}
+  ${sec('🆕','Lỗi đã báo đầu tiên',5,C.report,e => errRow(e),'report')}
+  ${sec('💬','Góp trả lời, kinh nghiệm',3,C.answer,qaRow,'answer')}
+  ${sec('🎁','Phụ kiện đã chia sẻ',3,C.share,pkRow,'share')}
+  ${sec('👍','Lỗi cùng gặp, xác nhận',1,C.metoo,e => errRow(e),'metoo')}
+  ${sec('🙋','Câu đã hỏi',1,C.ask,qaRow,'ask')}
+  ${C.rv.length ? `<div class="h"><h2>⭐ Góp đánh giá xe · ${C.rv.length}</h2><span class="note" style="white-space:nowrap">+2đ/mục</span></div><div class="card"><p>${C.rv.map(x => esc(x.cat||'Đánh giá chung')).join(', ')}</p></div>` : ''}
+  ${!total && !appLine.length ? `<div class="list"><div class="empty">${ico('puzzle',56)}<br>Chưa tìm thấy đóng góp nào của ${esc(r.name)} trong sổ tay.</div></div>` : ''}
+  <p class="note" style="margin-top:14px">Đóng góp trong sổ tay được ghép theo tên. Người trùng tên sẽ được tính chung.</p>`);
+}
+let PS = null;
 /* ---- Router ---- */
 const TABS = ['loi','luu-y','huong-dan','phu-kien','hoi-dap'];
 let navDepth = 0;
@@ -1270,6 +1307,7 @@ function route(){
  if(!L.profile) return renderSignup(false);
  if(h.startsWith('loi-')) return renderDetail(h.slice(4));
  if(h.startsWith('hd-')) return renderGuide(h.slice(3));
+ if(h.startsWith('nguoi-')) return renderPerson(h.slice(6));
  if(h==='bao-loi') return renderReport();
  if(h==='ho-so') return renderProfile();
  if(h==='doi-avatar') return renderAvatar();
@@ -1330,12 +1368,14 @@ $('#lbBtn').onclick = () => go('bang-vang');
 $('#instBtn').onclick = () => doInstall();
 
 document.addEventListener('click', async ev => {
- const t = ev.target.closest('button, a, .levelup'); if(!t) return;
+ const t = ev.target.closest('button, a, .levelup, [data-person]'); if(!t) return;
  const ds = t.dataset;
  if(ds.act==='closePop'){ if(ev.target===t || t.tagName==='BUTTON') $('#popHost').innerHTML=''; return; }
  if(ds.g){ S.g = ds.g; S.st=''; S.limit=20; return renderLoi(); }
  if(ds.av){ AVPICK = ds.av; return renderAvatar(); }
  if(ds.lbt){ LBTAB = ds.lbt; return renderBoard(); }
+ if(ds.person){ return go('nguoi-' + ds.person); }
+ if(ds.pkq !== undefined){ ev.preventDefault(); S.pkQ = ds.pkq; S.pkCat=''; $('#pkQ').value = ds.pkq; location.hash = 'phu-kien'; return; }
  if(ds.also){ const q = S.q; if(ds.also==='huong-dan'){ S.hdQ = q; $('#hdQ').value = q; } else if(ds.also==='hoi-dap'){ S.qaQ = q; S.qaTopic=''; $('#qaQ').value = q; } else { S.pkQ = q; S.pkCat=''; $('#pkQ').value = q; } location.hash = ds.also; return; }
  if(ds.st !== undefined){ S.st = ds.st; S.limit=20; return renderLoi(); }
  if(ds.luu){ S.luu = ds.luu; return renderLuu(); }
@@ -1354,6 +1394,7 @@ document.addEventListener('click', async ev => {
  if(act==='editProfile') return go('sua-ho-so');
  if(act==='pickAv'){ AVPICK = null; return go('doi-avatar'); }
  if(act==='openBoard') return go('bang-vang');
+ if(act==='psMore' && PS){ const id = t.dataset.id, row = {report:e => errRow(e), metoo:e => errRow(e), answer:PS.qaRow, ask:PS.qaRow, share:PS.pkRow}[id]; $('#ps-'+id).innerHTML = PS.C[id].map(row).join(''); return; }
  if(act==='install') return doInstall();
  if(act==='theme'){ const d = document.documentElement.dataset.theme !== 'dark'; if(d) document.documentElement.dataset.theme = 'dark'; else delete document.documentElement.dataset.theme; try{ localStorage.setItem('vf8olive.theme', d ? 'dark' : 'light'); }catch(e){} toast(d ? 'Đã bật giao diện tối' : 'Đã bật giao diện sáng'); document.querySelectorAll('[data-act=theme]').forEach(b => b.textContent = d ? '☀️ Chuyển giao diện sáng' : '🌙 Chuyển giao diện tối (lái đêm)'); return; }
  if(act==='saveAv'){ L.profile.av = AVPICK || 'car'; saveLocal(); AVPICK = null; toast('Đã đổi avatar'); renderMe(); syncProfile(); LB = null; return back(); }
