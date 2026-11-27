@@ -361,6 +361,19 @@ ul.keep li:last-child{margin-bottom:0}
 .gic text{fill:currentColor;stroke:none;text-anchor:middle;font-family:'Be Vietnam Pro',sans-serif;font-weight:800}
 .g-sac{--gc:#15803D}.g-adas{--gc:#7C3AED}.g-tiennghi{--gc:#B45309}.g-ketnoi{--gc:#0E7490}.g-suco{--gc:#DC2626}
 :root[data-theme="dark"] .gic{background:color-mix(in srgb,var(--gc) 22%,var(--card));filter:brightness(1.35)}
+.li{--s:40px;width:var(--s);height:var(--s);border-radius:calc(var(--s)*.3);display:inline-grid;place-items:center;background:color-mix(in srgb,var(--c) 13%,var(--card));color:var(--c);flex:none;vertical-align:middle}
+.li svg{width:58%;height:58%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.li text{fill:currentColor;stroke:none;text-anchor:middle;font-family:'Be Vietnam Pro',sans-serif;font-weight:800}
+:root[data-theme="dark"] .li{background:color-mix(in srgb,var(--c) 22%,var(--card));filter:brightness(1.35)}
+.tile .li{--s:52px}.ic .li{--s:44px}.dh .ic .li{--s:60px}.pick button .li{--s:50px}.levelup .li{--s:88px;margin:0 auto 6px}.empty .li{margin-bottom:6px}
+.menu .li{--s:30px;background:none;color:inherit;filter:none;transition:transform .15s}
+.menu .li svg{width:88%;height:88%}
+.menu a[aria-current="page"] .li{color:var(--olive);transform:scale(1.06)}
+.chip .li,.also .li{--s:22px;background:none;margin-right:-2px}
+.chip .li svg,.also .li svg{width:90%;height:90%}
+.chip[aria-pressed="true"] .li{color:inherit;filter:none}
+.unans summary .li{--s:40px}
+.install .li{background:rgba(255,255,255,.16);color:#fff;filter:none}
 @keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -442,7 +455,48 @@ const linkify = s => esc(s).replace(/https?:\/\/[^\s<]+/g, u => `<a href="${u}" 
 const CAR = `<path d="M40 148 L40 116 Q41 105 53 101 L66 88 Q72 82 82 82 L146 82 Q158 83 168 94 L182 106 Q201 109 205 121 L206 148 Z" fill="__PAINT__"/> <path d="M71 90 Q75 87 82 87 L111 87 L111 103 L61 103 Z" fill="#2E3A14" opacity=".55"/> <path d="M117 87 L145 87 Q154 88 162 100 L163 103 L117 103 Z" fill="#2E3A14" opacity=".55"/> <rect x="40" y="128" width="166" height="4" fill="#2E3A14" opacity=".18"/> <path d="M196 113 L205 116 L205 122 L197 121 Z" fill="#F3E3A2"/> <path d="M40 112 L46 112 L46 120 L40 120 Z" fill="#C2392E" opacity=".9"/> <circle cx="78" cy="148" r="25" fill="#2E3A14"/><circle cx="170" cy="148" r="25" fill="#2E3A14"/> <circle cx="78" cy="148" r="19" fill="#5E7227"/><circle cx="78" cy="148" r="12.5" fill="#B9CC7E"/><circle cx="78" cy="148" r="6" fill="#C2392E"/> <circle cx="170" cy="148" r="19" fill="#5E7227"/><circle cx="170" cy="148" r="12.5" fill="#B9CC7E"/><circle cx="170" cy="148" r="6" fill="#C2392E"/> <path d="M98 82 C96 73 98 67 103 63" fill="none" stroke="#D9B44A" stroke-width="3" stroke-linecap="round"/> <path d="M102 64 C109 53 124 49 136 52 C130 63 116 68 102 64 Z" fill="#D9B44A"/> <path d="M105 63 C114 59 124 55 132 54" fill="none" stroke="#2E3A14" stroke-width="1.5" stroke-linecap="round" opacity=".5"/> `;
 const LOGO = 'https://adumavinno.github.io/logo.webp';
 const ICN = ['tools','clip','gift','ask','tip','battery','key','camera','tv','ice','soft','ac','bulb','crash','car','seat','wheel','engine','tire','puzzle'];
-const ico = (n, s) => { const k = Math.max(0, ICN.indexOf(n)); return `<span class="ico" aria-hidden="true" style="${s?`--s:${s}px;`:''}background-position:${(k%5)*25}% ${Math.floor(k/5)*100/3}%"></span>`; };
+const spr = (n, s) => { const k = Math.max(0, ICN.indexOf(n)); return `<span class="ico" aria-hidden="true" style="${s?`--s:${s}px;`:''}background-position:${(k%5)*25}% ${Math.floor(k/5)*100/3}%"></span>`; };
+/* Bộ icon nét (line icon) dùng chung toàn app. Bộ icon 3D chỉ còn dùng làm avatar. */
+const LI = {
+ tools:'<path d="M14.6 6.4a4.2 4.2 0 0 0-5.6 5.4L3.4 17.4a1.9 1.9 0 0 0 2.7 2.7l5.6-5.6a4.2 4.2 0 0 0 5.4-5.6l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+ clip:'<rect x="5" y="4.5" width="14" height="17" rx="2.5"/><path d="M9 3.5h6v2.2H9z"/><path d="M8.8 13.2l2.2 2.2 4.4-4.4"/>',
+ tip:'<path d="M12 6.5C10 5 7.5 4.5 3.5 4.5v14c4 0 6.5.5 8.5 2 2-1.5 4.5-2 8.5-2v-14c-4 0-6.5.5-8.5 2z"/><path d="M12 6.5v14"/>',
+ gift:'<rect x="3.5" y="8.5" width="17" height="4" rx="1"/><path d="M5 12.5v8h14v-8M12 8.5v12"/><path d="M12 8.5C10.5 5 7 4.6 7 6.8c0 1.7 3 1.7 5 1.7zM12 8.5c1.5-3.5 5-3.9 5-1.7 0 1.7-3 1.7-5 1.7z"/>',
+ ask:'<path d="M4 4.5h16a1 1 0 0 1 1 1v10.5a1 1 0 0 1-1 1h-9l-4.5 3.5v-3.5H4a1 1 0 0 1-1-1V5.5a1 1 0 0 1 1-1z"/><path d="M10 9a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.3"/><circle cx="12" cy="14.3" r=".4"/>',
+ battery:'<rect x="7" y="4" width="10" height="17" rx="2"/><path d="M10 2.5h4"/><path d="M12.8 8.3l-2.4 4.3h3.2L11.2 17"/>',
+ key:'<rect x="7" y="7.5" width="10" height="14" rx="4"/><circle cx="12" cy="11.6" r="1.4"/><circle cx="12" cy="16.4" r="1.4"/><path d="M10 7.5V5a2 2 0 0 1 4 0v2.5"/>',
+ camera:'<path d="M3.5 8.5a2 2 0 0 1 2-2h2l1.5-2h6l1.5 2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.6"/>',
+ tv:'<rect x="2.5" y="4.5" width="19" height="13" rx="2"/><path d="M8.5 21h7M12 17.5V21"/>',
+ ac:'<path d="M12 2.5v19M3.8 7.3l16.4 9.4M20.2 7.3L3.8 16.7"/><path d="M9.4 4L12 6l2.6-2M9.4 20L12 18l2.6 2M4.4 11l2.5-1.4-.5-3M19.6 13l-2.5 1.4.5 3"/>',
+ soft:'<rect x="6.5" y="6.5" width="11" height="11" rx="2"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="1"/><path d="M9.5 3v3.5M14.5 3v3.5M9.5 17.5V21M14.5 17.5V21M3 9.5h3.5M3 14.5h3.5M17.5 9.5H21M17.5 14.5H21"/>',
+ bulb:'<path d="M10.5 5.5c-3.5 0-6 2.9-6 6.5s2.5 6.5 6 6.5c.9 0 1.5-.6 1.5-1.5V7c0-.9-.6-1.5-1.5-1.5z"/><path d="M15.5 7.5H21M15.5 10.5H21M15.5 13.5H21M15.5 16.5H21"/>',
+ crash:'<path d="M2.5 16.3v-2.4c0-.7.4-1.2 1.1-1.4l2.4-.7 2.3-3.6h6.4l3.1 3.6h1.6a2 2 0 0 1 2 2v2.5"/><path d="M2.5 16.3h2.6M9.3 16.3h5.4M18.9 16.3h2.6"/><circle cx="7.2" cy="16.6" r="2.1"/><circle cx="16.8" cy="16.6" r="2.1"/><path d="M9.4 8.3v3.2"/>',
+ car:'<path d="M5 15.5v-3.2l1.8-4.8A2 2 0 0 1 8.7 6h6.6a2 2 0 0 1 1.9 1.5l1.8 4.8v3.2z"/><path d="M5 12.3h14"/><path d="M6 15.5v2.5h2.5v-2.5M15.5 15.5v2.5H18v-2.5"/><path d="M7.5 13.9h1.3M15.2 13.9h1.3"/>',
+ seat:'<path d="M7.2 3.5c1.4 0 2.4 1 2.5 2.4l.8 7.6h6.3a2 2 0 0 1 2 2V18H8.6a2 2 0 0 1-2-1.8L5.3 5.7C5.2 4.4 6 3.5 7.2 3.5z"/><path d="M9 18v2.5M17 18v2.5"/>',
+ wheel:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.2"/><path d="M3.6 10.6l6.2.6M14.2 11.2l6.2-.6M12 14.2v6.3"/>',
+ engine:'<rect x="4" y="7" width="13" height="10" rx="2"/><path d="M17 10h2.5v4H17M1.5 12H4"/><path d="M11.3 8.8l-2.2 3.6h3l-2.2 3.6"/>',
+ tire:'<circle cx="12" cy="12" r="8.8"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3.2v5.4M12 15.4v5.4M3.2 12h5.4M15.4 12h5.4"/>',
+ puzzle:'<rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="8" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="16" cy="12" r="1.2"/>',
+ plug:'<path d="M9 2.5v4.5M15 2.5v4.5"/><path d="M6.5 7h11v3.5a5.5 5.5 0 0 1-11 0z"/><path d="M12 16v2.5a2.5 2.5 0 0 0 2.5 2.5H19"/>',
+ phone:'<rect x="6.5" y="2.5" width="11" height="19" rx="2.6"/><path d="M10.5 18.5h3"/>',
+ doc:'<path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+ shield:'<path d="M12 3l7 3v5.5c0 4.2-3 7.7-7 9.5-4-1.8-7-5.3-7-9.5V6z"/><path d="M9 12l2 2 4-4"/>',
+ sos:'<rect x="2.5" y="6.5" width="19" height="11" rx="3.2"/><text x="12" y="14.6" style="font-size:6.6px">SOS</text>',
+ map:'<path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/>',
+ wifi:'<path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r=".7"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
+ mat:'<path d="M6 3.5h12l1.5 17h-15z"/><path d="M8 8h8M7.7 12h8.6M7.4 16h9.2"/>',
+ sd:'<path d="M8 3h6.5L18 6.5V20a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M10 6.5v3M12.5 6.5v3M15 7.5v2"/>',
+ buckle:'<rect x="2.5" y="8.5" width="11" height="7" rx="2"/><path d="M13.5 12h8M6.5 12h3"/>',
+ gauge:'<path d="M3.5 17a8.5 8.5 0 1 1 17 0"/><path d="M12 17l4.2-5.2"/><circle cx="12" cy="17" r="1.3"/><path d="M6.4 11.2l1.1.9M12 6.8v1.4M17.6 11.2l-1.1.9"/>',
+ road:'<path d="M9 3L5 21M15 3l4 18"/><path d="M12 4.5v2.5M12 10.5v3M12 17v2.5"/>',
+ spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M18.5 15.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>',
+ broom:'<path d="M14.5 3.5l-4 8"/><path d="M8 11l6 3-1.5 6.5c-3.5-.5-6.5-2-8.5-4.5z"/><path d="M8.5 16.5l2-1M6.5 14.5l2-1"/>'
+};
+const LIC = {tools:'#2459D6',car:'#2459D6',tv:'#2459D6',phone:'#2459D6',doc:'#2459D6',map:'#2459D6',battery:'#15803D',plug:'#15803D',camera:'#7C3AED',gauge:'#7C3AED',ask:'#7C3AED',key:'#B45309',seat:'#B45309',bulb:'#B45309',clip:'#B45309',sun:'#B45309',mat:'#B45309',buckle:'#B45309',ac:'#0E7490',soft:'#0E7490',wifi:'#0E7490',tip:'#0E7490',crash:'#DC2626',sos:'#DC2626',shield:'#DC2626',gift:'#DB2777',spark:'#DB2777',broom:'#DB2777',wheel:'#475569',engine:'#475569',tire:'#475569',puzzle:'#64748B',road:'#475569',sd:'#475569'};
+const ico = (n, s) => `<span class="li" aria-hidden="true" style="--c:${LIC[n]||'#2459D6'};${s?`--s:${s}px;`:''}"><svg viewBox="0 0 24 24">${LI[n]||LI.puzzle}</svg></span>`;
+const PKN = {'Camera hành trình':'camera','Thảm sàn':'mat','Cứu hộ / Lốp':'tire','Thẻ nhớ':'sd','Gối tựa':'seat','Bảo vệ nội thất':'shield','Chốt cài dây an toàn':'buckle','Bảo vệ pin':'battery','Dụng cụ':'tools','Phát wifi trên xe':'wifi','Phim cách nhiệt':'sun','Sạc tại nhà':'plug','Che nắng':'sun','Máy hút bụi':'broom','Giá đỡ điện thoại':'phone','Điện thoại / Sạc':'phone','Đèn LED nội thất':'bulb','Ốp mâm':'tire','Bọc vô lăng':'wheel','Chìa khóa':'key','VETC':'road','Hiển thị tốc độ (HUD)':'gauge','Nước hoa / đồ chơi xe':'spark','Trang trí':'spark'};
+const QAN = {'Pin / Sạc':'battery','Sạc':'battery','Giấy tờ':'doc','Mua xe':'car','Phụ kiện':'gift','Cài đặt':'soft','Lưu ý':'clip','Màn hình':'tv','Chìa khóa':'key','Lái xe':'wheel','Bảo hành':'shield','ADAS':'camera','Điều hòa':'ac','Thiết bị':'plug','Cứu hộ':'sos','Nội thất':'seat','Nhận xe':'car','VF Connect':'wifi','Mẹo':'tip','Lốp':'tire','Lốp / Mâm':'tire','Camera':'camera','Đèn':'bulb','Bảo hiểm':'shield','Ắc quy 12V':'battery','Vietmap':'map'};
 const DKEY = 'vf8olive.data';
 let D = JSON.parse($('#seed').textContent) || (() => { try{ return JSON.parse(localStorage.getItem(DKEY)); }catch(e){ return null; } })() || {updated:'', errs:[], qa:[], pk:[], rv:[], groups:[]};
 let LOADING = !D.errs.length;
@@ -487,7 +541,7 @@ const GROUPS = {
 };
 const gIcon = (g, s) => ico((GROUPS[g]||['puzzle'])[0], s);
 const QIC = {'Pin / Sạc':'battery','Sạc':'battery','Ắc quy 12V':'battery','Chìa khóa':'key','Khóa / Chìa khóa':'key','Khóa / Cốp':'key','VF Connect':'key','ADAS':'camera','Camera':'camera','Màn hình':'tv','Màn hình / Giải trí':'tv','Giải trí':'tv','Phần mềm / OTA':'soft','Phiên bản':'soft','Cài đặt':'soft','Điều hòa':'ac','Đèn':'bulb','Ngoại thất':'crash','Thân vỏ':'crash','Nội thất':'seat','Lái xe':'wheel','Lốp':'tire','Lốp / Mâm':'tire','Phụ kiện':'gift','Pin / Phụ kiện':'gift','Nhận xe':'car','Mua xe':'car','Lưu ý':'tip','Mẹo':'tip'};
-const qIcon = (t, s) => ico(QIC[t] || 'ask', s);
+const qIcon = (t, s) => ico(QAN[t] || QIC[t] || 'ask', s);
 const PKI = {'Camera hành trình':'📹','Thảm sàn':'🟫','Cứu hộ / Lốp':'🛟','Thẻ nhớ':'💾','Gối tựa':'🛋️','Bảo vệ nội thất':'🛡️','Chốt cài dây an toàn':'🔗','Bảo vệ pin':'🔋','Dụng cụ':'🔧','Phát wifi trên xe':'📶','Phim cách nhiệt':'🕶️','Sạc tại nhà':'🔌','Che nắng':'⛱️','Máy hút bụi':'🧹','Giá đỡ điện thoại':'📱','Điện thoại / Sạc':'📱','Đèn LED nội thất':'💡','Ốp mâm':'🛞','Bọc vô lăng':'🎡','Chìa khóa':'🔑','VETC':'🛣️','Hiển thị tốc độ (HUD)':'🧮','Nước hoa / đồ chơi xe':'🌸','Trang trí':'✨'};
 const QAI = {'Pin / Sạc':'🔋','Sạc':'🔋','Giấy tờ':'📄','Mua xe':'🧾','Phụ kiện':'🎁','Cài đặt':'⚙️','Lưu ý':'📌','Màn hình':'📺','Chìa khóa':'🔑','Lái xe':'🧭','Bảo hành':'🛡️','ADAS':'📷','Điều hòa':'❄️','Thiết bị':'🔌','Cứu hộ':'🛟','Nội thất':'💺','Nhận xe':'🚗','VF Connect':'📶','Mẹo':'💡','Lốp':'🛞','Lốp / Mâm':'🛞','Camera':'📷','Đèn':'💡','Bảo hiểm':'📑','Ắc quy 12V':'🔋','Vietmap':'🗺️'};
 const PAINTS = [['Trắng','#F4F4F1'],['Đen','#1E1F22'],['Xám','#7B8088'],['Bạc','#C3C7CC'],['Đỏ','#B3262B'],['Xanh dương','#2D5D9F'],['Xanh ô liu','#6E7B3A'],['Màu khác','#B59A6A']];
@@ -548,7 +602,7 @@ function avatarHtml(av, color, size){
  const st = size ? `style="width:${size}px;height:${size}px"` : '';
  av = String(av || 'car');
  if(av.startsWith('p:data:image/')) return `<span class="avw" ${st}><img src="${esc(av.slice(2))}" alt=""></span>`;
- if(av.startsWith('i:')) return `<span class="avw" ${st}>${ico(av.slice(2))}</span>`;
+ if(av.startsWith('i:')) return `<span class="avw" ${st}>${spr(av.slice(2))}</span>`;
  return `<span class="avw" ${st}>${carSvg(paintHex(color || 'Xanh dương'))}</span>`;
 }
 const myAv = (size) => avatarHtml((L.profile||{}).av, (L.profile||{}).color, size);
@@ -1011,10 +1065,10 @@ function renderPK(){
  const cnt = {}; D.pk.forEach(p => cnt[p.cat||'Khác'] = (cnt[p.cat||'Khác']||0) + 1);
  const cats = Object.keys(cnt).sort((a,b) => cnt[b]-cnt[a]);
  const PQ = S.pkQ ? parseQuery(S.pkQ) : null;
- const item = p => `<div class="pk"><span class="ic" aria-hidden="true">${PKI[p.cat]||'🎁'}</span><div class="tx"><div class="nm">${PQ ? hl(p.name, PQ) : esc(p.name)}</div>${p.note||p.raw?`<div class="nt">${PQ ? hl(p.note||p.raw, PQ) : esc(p.note||p.raw)}</div>`:''}</div>${p.links.length?`<a class="btn sm" href="${esc(p.links[0])}" target="_blank" rel="noopener noreferrer">Mua</a>`:''}</div>`;
+ const item = p => `<div class="pk"><span class="ic" aria-hidden="true">${ico(PKN[p.cat]||'gift')}</span><div class="tx"><div class="nm">${PQ ? hl(p.name, PQ) : esc(p.name)}</div>${p.note||p.raw?`<div class="nt">${PQ ? hl(p.note||p.raw, PQ) : esc(p.note||p.raw)}</div>`:''}</div>${p.links.length?`<a class="btn sm" href="${esc(p.links[0])}" target="_blank" rel="noopener noreferrer">Mua</a>`:''}</div>`;
  if(!S.pkQ && !S.pkCat){
   const big = cats.filter(c => cnt[c] >= 2), small = cats.filter(c => cnt[c] < 2);
-  box.innerHTML = `<div class="tiles">${big.map(c => `<button class="tile" data-pc="${esc(c)}"><span class="i" aria-hidden="true">${PKI[c]||'🎁'}</span><b>${esc(c)}</b><small>${cnt[c]} món</small></button>`).join('')}${small.length?`<button class="tile" data-pc="__other"><span class="i" aria-hidden="true">🧰</span><b>Đồ lặt vặt</b><small>${small.length} món</small></button>`:''}</div>
+  box.innerHTML = `<div class="tiles">${big.map(c => `<button class="tile" data-pc="${esc(c)}">${ico(PKN[c]||'gift')}<b>${esc(c)}</b><small>${cnt[c]} món</small></button>`).join('')}${small.length?`<button class="tile" data-pc="__other">${ico('tools')}<b>Đồ lặt vặt</b><small>${small.length} món</small></button>`:''}</div>
    <p class="note" style="margin:14px 2px 0">Link do anh em tự chia sẻ, chưa kiểm chứng. Một số người chia sẻ là bên bán hàng hoặc garage.</p>`;
   return;
  }
@@ -1032,7 +1086,7 @@ function renderQA(){
  if(LOADING){ box.innerHTML = `<div class="empty">Đang tải…</div>`; return; }
  const ans = D.qa.filter(isAnswered), cnt = {}; ans.forEach(q => cnt[q.topic] = (cnt[q.topic]||0) + 1);
  const tops = Object.keys(cnt).filter(t => cnt[t] >= 3).sort((a,b) => cnt[b]-cnt[a]);
- $('#qaChips').innerHTML = `<button class="chip" data-tp="" aria-pressed="${!S.qaTopic}">Tất cả</button>` + tops.map(t => `<button class="chip" data-tp="${esc(t)}" aria-pressed="${S.qaTopic===t}">${QAI[t]||'💬'} ${esc(t)}</button>`).join('');
+ $('#qaChips').innerHTML = `<button class="chip" data-tp="" aria-pressed="${!S.qaTopic}">Tất cả</button>` + tops.map(t => `<button class="chip" data-tp="${esc(t)}" aria-pressed="${S.qaTopic===t}">${ico(QAN[t]||'ask',20)}${esc(t)}</button>`).join('');
  const QQ = S.qaQ ? parseQuery(S.qaQ) : null;
  const unAll = D.qa.filter(q => !isAnswered(q));
  const un = QQ ? (searchItems(unAll, QQ, qaFields)||{list:[]}).list : unAll;
