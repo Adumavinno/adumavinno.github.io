@@ -14,10 +14,6 @@
 --brand:#1E2A5A;--olive:#2459D6;--on:#FFFFFF;--tint:#E8EEFF;--gold:#F59E0B;
 --red:#C2392E;--amber:#B07A0A;--green:#2D7A43;--blue:#2E66A6;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
---bg:#0D1120;--card:#161B2E;--soft:#1F2640;--ink:#E8ECF7;--muted:#A0A8C0;--line:#2A3250;
---brand:#0A0E1C;--olive:#7FA6FF;--on:#0D1120;--tint:#1C2A52;--gold:#FBBF24;
---red:#F07A6E;--amber:#E5B550;--green:#72C98A;--blue:#7DABE6}}
 :root[data-theme="dark"]{color-scheme:dark;
 --bg:#0D1120;--card:#161B2E;--soft:#1F2640;--ink:#E8ECF7;--muted:#A0A8C0;--line:#2A3250;
 --brand:#0A0E1C;--olive:#7FA6FF;--on:#0D1120;--tint:#1C2A52;--gold:#FBBF24;
@@ -411,6 +407,7 @@ main{padding-top:16px}
 const API_URL = 'https://script.google.com/macros/s/AKfycbx1XQMGFbZSYXTvg2L6FW4KKl_u1nGOWJf6ygS2SFA_EsR6vFGugCW4iIm9pY6OBh9C/exec';
 const PWA_URL = 'https://adumavinno.github.io/';
 const IS_PWA_HOST = /github\.io$/.test(location.hostname);
+try{ if(localStorage.getItem('vf8olive.theme')==='dark') document.documentElement.dataset.theme='dark'; }catch(e){}
 // Khóa an toàn: chỉ cho chạy mã của chính app, chỉ gửi dữ liệu tới máy chủ Google của hội, không nhúng trang lạ
 if(IS_PWA_HOST){ const m = document.createElement('meta'); m.httpEquiv = 'Content-Security-Policy'; m.content = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"; document.head.appendChild(m); }
 const $ = s => document.querySelector(s);
@@ -801,6 +798,7 @@ function renderProfile(){
   <div class="nums"><div><b>${s.metoo}</b><small>👍 Tôi cũng bị</small></div><div><b>${s.report}</b><small>🆕 Báo lỗi</small></div><div><b>${s.answer}</b><small>💬 Trả lời</small></div></div>
   <div class="card"><h3>Cách kiếm điểm</h3><div class="earn">${POINTS.map(([i,t,n]) => `<span>${i}</span><span>${t}</span><b>+${n}</b>`).join('')}</div></div>
   <div class="card"><h3>Các cấp trong hội</h3><ol class="ladder">${LEVELS.map((x,k) => `<li class="${k===lv?'on':k>lv?'lock':''}"><span class="e">${x[1]}</span><span class="t"><b>${esc(x[2])}</b><small>${esc(x[3])}</small></span><span class="p">${x[0]}đ</span></li>`).join('')}</ol></div>
+  <button class="btn ghost full" data-act="theme">${document.documentElement.dataset.theme==='dark' ? '☀️ Chuyển giao diện sáng' : '🌙 Chuyển giao diện tối (lái đêm)'}</button>
   <button class="mini" data-act="openBoard"><span style="font-size:28px">🏆</span><span><b>Xem Bảng vàng đóng góp</b><small>Ai đang dẫn đầu hội tháng này</small></span></button>
   <div style="height:12px"></div>
   <div class="card"><h3>Thông tin của bạn</h3><p>${p.status==='da'?'🚗 Đã nhận xe':'⏳ Chưa nhận xe'}, màu ${esc(p.color.toLowerCase())}${p.addr?`\n📍 ${esc(p.addr)}`:''}</p></div>
@@ -1068,6 +1066,7 @@ document.addEventListener('click', async ev => {
  if(act==='pickAv'){ AVPICK = null; return go('doi-avatar'); }
  if(act==='openBoard') return go('bang-vang');
  if(act==='install') return doInstall();
+ if(act==='theme'){ const d = document.documentElement.dataset.theme !== 'dark'; if(d) document.documentElement.dataset.theme = 'dark'; else delete document.documentElement.dataset.theme; try{ localStorage.setItem('vf8olive.theme', d ? 'dark' : 'light'); }catch(e){} toast(d ? 'Đã bật giao diện tối' : 'Đã bật giao diện sáng'); document.querySelectorAll('[data-act=theme]').forEach(b => b.textContent = d ? '☀️ Chuyển giao diện sáng' : '🌙 Chuyển giao diện tối (lái đêm)'); return; }
  if(act==='saveAv'){ L.profile.av = AVPICK || 'car'; saveLocal(); AVPICK = null; toast('Đã đổi avatar'); renderMe(); syncProfile(); LB = null; return back(); }
  if(act==='allErr'){ S.g='*'; return renderLoi(); }
  if(act==='clearG'){ S.g=''; S.st=''; return renderLoi(); }
