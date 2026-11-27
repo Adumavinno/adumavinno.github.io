@@ -7,11 +7,11 @@
 <title>VINNO VF8 All New</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:light;
---bg:#F3F5FB;--card:#FFFFFF;--soft:#EAEEF7;--ink:#141B33;--muted:#5B6378;--line:#DFE4EF;
---brand:#1E2A5A;--olive:#2459D6;--on:#FFFFFF;--tint:#E2EAFF;--gold:#F59E0B;
+--bg:#FFFFFF;--card:#F4F6FA;--soft:#E9EDF4;--ink:#121A33;--muted:#667085;--line:#E7EAF0;
+--brand:#1E2A5A;--olive:#2459D6;--on:#FFFFFF;--tint:#E8EEFF;--gold:#F59E0B;
 --red:#C2392E;--amber:#B07A0A;--green:#2D7A43;--blue:#2E66A6;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
@@ -38,9 +38,9 @@ a{color:var(--olive)}
 .head .wrap{display:flex;align-items:center;gap:10px;padding-top:12px;padding-bottom:6px}
 .head .logo{height:46px;width:auto;flex:none;display:block}
 .av{display:block;width:100%;height:100%}
-.head h1{margin:0;font:800 20px/1.05 'Baloo 2','Be Vietnam Pro',sans-serif;flex:1;color:var(--ink)}
+.head h1{margin:0;font:800 20px/1.05 'Be Vietnam Pro',sans-serif;flex:1;color:var(--ink)}
 .head h1 small{display:block;font:600 11.5px/1.2 'Be Vietnam Pro',sans-serif;color:var(--muted);letter-spacing:.06em}
-.h h2,.dh h2,.welcome h2,.pf h2,.tile b,.levelup h3{font-family:'Baloo 2','Be Vietnam Pro',sans-serif}
+.h h2,.dh h2,.welcome h2,.pf h2,.tile b,.levelup h3{font-family:'Be Vietnam Pro',sans-serif}
 .ico{display:inline-block;flex:none;width:var(--s,40px);height:var(--s,40px);background:url(https://adumavinno.github.io/icons.webp) no-repeat;background-size:500% 400%}
 .me{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:3px 10px 3px 3px;font-size:13px;font-weight:600;max-width:55%}
 .me .av{width:30px;height:30px}
@@ -269,7 +269,7 @@ mark{background:color-mix(in srgb,var(--gold) 38%,transparent);color:inherit;bor
 .pod.p1 .avw{width:84px;height:84px;box-shadow:0 0 0 4px var(--gold)}
 .pod .md{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:26px}
 .pod b{display:block;font-size:14px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pod .pt{font:800 20px/1.1 'Baloo 2',sans-serif;color:var(--olive)}
+.pod .pt{font:800 20px/1.1 'Be Vietnam Pro',sans-serif;color:var(--olive)}
 .pod small{display:block;font-size:11.5px;color:var(--muted)}
 .lb li{display:flex;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid var(--line)}
 .lb{list-style:none;margin:0;padding:0}
@@ -279,9 +279,9 @@ mark{background:color-mix(in srgb,var(--gold) 38%,transparent);color:inherit;bor
 .lb .nm{flex:1;min-width:0}
 .lb .nm b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lb .nm small{font-size:12px;color:var(--muted)}
-.lb .pt{font:800 18px/1 'Baloo 2',sans-serif;text-align:right}
+.lb .pt{font:800 18px/1 'Be Vietnam Pro',sans-serif;text-align:right}
 .lb .pt small{display:block;font:500 11px 'Be Vietnam Pro',sans-serif;color:var(--muted)}
-.lb li.mine,.pod.mine{outline:2px solid var(--olive);outline-offset:-2px}
+.lb li.isme,.pod.isme{outline:2px solid var(--olive);outline-offset:-2px}
 .myrank{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));margin-top:12px;background:var(--ink);color:var(--bg);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px}
 .myrank .avw{width:38px;height:38px}
 .mini{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:16px;padding:12px 14px;margin-top:14px;border:0;width:100%;text-align:left}
@@ -300,6 +300,56 @@ mark{background:color-mix(in srgb,var(--gold) 38%,transparent);color:inherit;bor
 .levelup .e{font-size:56px;line-height:1}
 .levelup .ico{--s:96px;margin:0 auto}
 .levelup h3{margin:8px 0 4px;font-size:20px}
+/* ---- Giao diện sáng (v7) ---- */
+.head,.menu,body::before{background:var(--bg)}
+.head .wrap{padding-top:10px;padding-bottom:4px;gap:8px}
+.head .logo{height:40px}
+.head h1{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.head h1 small{font-size:12px;letter-spacing:0;font-weight:500;margin-top:2px}
+.hbtn{border:0;background:var(--card);border-radius:50%;width:40px;height:40px;font-size:19px}
+.me{border:0;background:var(--card);padding:4px 12px 4px 4px}
+.menu{border-bottom:1px solid var(--line)}
+.menu .wrap{gap:0;padding-top:2px}
+.menu a{position:relative;gap:4px;padding:6px 2px 10px;font-size:13px;border-bottom:0;color:var(--muted)}
+.menu a .ico{--s:30px}
+.menu a[aria-current="page"]{color:var(--ink);font-weight:700}
+.menu a[aria-current="page"] .ico{transform:scale(1.08)}
+.menu a[aria-current="page"]::after{content:"";position:absolute;left:50%;bottom:-1px;width:32px;height:3px;border-radius:3px 3px 0 0;background:var(--olive);transform:translateX(-50%)}
+main{padding-top:16px}
+.search input{border:1.5px solid transparent;background:var(--card);height:50px;border-radius:16px}
+.search input:focus{border-color:var(--olive);background:var(--bg)}
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.chip{border:0;background:var(--card);font-weight:600;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.h{margin:22px 2px 10px}
+.h h2{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.tiles{gap:10px}
+.tile{box-shadow:none;border-radius:20px;min-height:118px;gap:3px;transition:background .15s}
+.tile:active{background:var(--soft);transform:scale(.98)}
+.tile .ico{--s:54px}
+.tile b{font-size:14px;font-weight:700}
+.tile.hot::after{top:9px;right:9px;min-width:18px;height:18px;font-size:10.5px;border-radius:9px}
+.list,.card,details.fold,.mini,.stat,.nums div,.ring{border-radius:20px}
+.row{padding:13px 16px}
+.btn{border-radius:14px}
+.btn.ghost{background:var(--card)}
+.fab{background:var(--ink);color:var(--bg);box-shadow:0 8px 24px rgba(18,26,51,.22);height:52px}
+.inp{border:1.5px solid transparent;background:var(--card);border-radius:14px}
+.inp:focus{border-color:var(--olive);background:var(--bg)}
+.pick button{background:var(--bg);border:1.5px solid var(--line)}
+.pick button[aria-pressed="true"]{border-color:var(--olive);background:var(--tint)}
+.paint[aria-pressed="true"] i{box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--olive)}
+.dock{background:var(--bg)}
+.seg{background:var(--card);border-radius:14px}
+.seg button[aria-pressed="true"]{background:var(--bg);box-shadow:0 1px 3px rgba(18,26,51,.1)}
+.also button{border:0;background:var(--tint)}
+.install{background:var(--brand);border-radius:20px}
+.install .go{color:var(--brand)}
+.avgrid button{background:var(--card)}
+.upl{background:var(--bg)}
+.pod{border-radius:20px 20px 12px 12px}
+.myrank{border-radius:18px}
+.unans{border-radius:20px}
 @keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -307,16 +357,16 @@ mark{background:color-mix(in srgb,var(--gold) 38%,transparent);color:inherit;bor
 <body>
 <header class="head"><div class="wrap">
 <img class="logo" src="https://adumavinno.github.io/logo.webp" alt="Logo VINNO VF8 All New">
-<h1>VINNO VF8<small>ALL NEW CLUB</small></h1>
+<h1>VINNO VF8<small>All New Club</small></h1>
 <button class="hbtn hidden" id="instBtn" aria-label="Cài app ra màn hình">📲</button>
 <button class="hbtn" id="lbBtn" aria-label="Bảng vàng đóng góp">🏆</button>
 <button class="me hidden" id="meBtn" aria-label="Hồ sơ của tôi"></button>
 </div></header>
 <nav class="menu" aria-label="Mục chính"><div class="wrap">
-<a href="#loi" data-tab="loi"><span class="ico" data-ic="tools" aria-hidden="true"></span>Lỗi &amp;<br>khắc phục</a>
-<a href="#luu-y" data-tab="luu-y"><span class="ico" data-ic="clip" aria-hidden="true"></span>Lưu ý<br>nhận, dùng xe</a>
-<a href="#phu-kien" data-tab="phu-kien"><span class="ico" data-ic="gift" aria-hidden="true"></span>Đồ chơi<br>phụ kiện</a>
-<a href="#hoi-dap" data-tab="hoi-dap"><span class="ico" data-ic="ask" aria-hidden="true"></span>Hỏi<br>đáp</a>
+<a href="#loi" data-tab="loi"><span class="ico" data-ic="tools" aria-hidden="true"></span>Lỗi &amp; sửa</a>
+<a href="#luu-y" data-tab="luu-y"><span class="ico" data-ic="clip" aria-hidden="true"></span>Lưu ý</a>
+<a href="#phu-kien" data-tab="phu-kien"><span class="ico" data-ic="gift" aria-hidden="true"></span>Phụ kiện</a>
+<a href="#hoi-dap" data-tab="hoi-dap"><span class="ico" data-ic="ask" aria-hidden="true"></span>Hỏi đáp</a>
 </div></nav>
 
 <main><div class="wrap">
@@ -807,14 +857,14 @@ function renderBoard(){
  const hasMonth = !!(LB && LB.month);
  const now = new Date(), mName = `tháng ${now.getMonth()+1}`;
  const top = rows.slice(0,3), rest = rows.slice(3, 30);
- const pod = (r, k) => r ? `<div class="pod p${k+1}${r.me?' mine':''}"><span class="md">${['🥇','🥈','🥉'][k]}</span>${lbAv(r)}<b>${esc(r.name)}</b><div class="pt">${r.points}</div><small>${LEVELS[levelOf(r.allPoints ?? r.points)][1]} ${esc(LEVELS[levelOf(r.allPoints ?? r.points)][2])}</small></div>` : '<div></div>';
+ const pod = (r, k) => r ? `<div class="pod p${k+1}${r.me?' isme':''}"><span class="md">${['🥇','🥈','🥉'][k]}</span>${lbAv(r)}<b>${esc(r.name)}</b><div class="pt">${r.points}</div><small>${LEVELS[levelOf(r.allPoints ?? r.points)][1]} ${esc(LEVELS[levelOf(r.allPoints ?? r.points)][2])}</small></div>` : '<div></div>';
  const stat = r => [r.metoo?`👍${r.metoo}`:'', r.report?`🆕${r.report}`:'', r.answer?`💬${r.answer}`:'', r.ok?`✅${r.ok}`:''].filter(Boolean).join('  ');
  const mine = LB.me && LB.me[hasMonth ? LBTAB : 'all'];
  openScreen(`<div class="nav">${backBtn}</div>
   <div class="dh"><span class="ic" style="font-size:40px">🏆</span><h2>Bảng vàng đóng góp<br><small class="note" style="font-weight:500">Người góp nhiều nhất cho hội VINNO VF8</small></h2></div>
   ${hasMonth ? `<div class="seg"><button data-lbt="month" aria-pressed="${LBTAB==='month'}">Tháng này</button><button data-lbt="all" aria-pressed="${LBTAB==='all'}">Từ trước đến nay</button></div>` : ''}
   ${rows.length ? `<div class="podium">${pod(top[1],1)}${pod(top[0],0)}${pod(top[2],2)}</div>
-  ${rest.length ? `<div class="list"><ol class="lb">${rest.map((r,k) => `<li class="${r.me?'mine':''}"><span class="rk">${k+4}</span>${lbAv(r)}<span class="nm"><b>${esc(r.name)}${r.me?' (bạn)':''}</b><small>${stat(r)}</small></span><span class="pt">${r.points}<small>điểm</small></span></li>`).join('')}</ol></div>` : ''}`
+  ${rest.length ? `<div class="list"><ol class="lb">${rest.map((r,k) => `<li class="${r.me?'isme':''}"><span class="rk">${k+4}</span>${lbAv(r)}<span class="nm"><b>${esc(r.name)}${r.me?' (bạn)':''}</b><small>${stat(r)}</small></span><span class="pt">${r.points}<small>điểm</small></span></li>`).join('')}</ol></div>` : ''}`
   : `<div class="list"><div class="empty">${ico('car',72)}<br>${LBTAB==='month'?`Chưa ai có điểm trong ${mName}.`:'Chưa ai có điểm.'} Bấm 👍 “Tôi cũng bị” ở một lỗi để lên bảng đầu tiên!</div></div>`}
   ${mine && mine.rank > 3 ? `<div class="myrank">${myAv(38)}<span style="flex:1"><b>Hạng của bạn: #${mine.rank}</b><br><small>${mine.points} điểm${rows[0] ? `, kém hạng 1 ${Math.max(0, rows[0].points - mine.points)} điểm` : ''}</small></span></div>` : ''}
   <div class="card" style="margin-top:14px"><h3>Cách kiếm điểm</h3><div class="earn">${POINTS.map(([i,t,n]) => `<span>${i}</span><span>${t}</span><b>+${n}</b>`).join('')}</div></div>
