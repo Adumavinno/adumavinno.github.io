@@ -383,7 +383,7 @@ ul.keep li:last-child{margin-bottom:0}
 </head>
 <body>
 <header class="head"><div class="wrap">
-<img class="logo" src="https://adumavinno.github.io/logo.webp" alt="Logo VINNO VF8 All New">
+<img class="logo" src="https://adumavinno.github.io/logo.webp?v=2" alt="Logo VINNO VF8 All New">
 <h1>VINNO VF8<small>All New Club</small></h1>
 <button class="hbtn hidden" id="instBtn" aria-label="Cài app ra màn hình">📲</button>
 <button class="hbtn" id="lbBtn" aria-label="Bảng vàng đóng góp">🏆</button>
@@ -456,7 +456,7 @@ const DATE_RE = /(?:^|\s)((?:\d{1,2}\s*[–-]\s*)?\d{1,2}\/\d{1,2}(?:\/\d{4})?)\
 const breakDates = s => String(s ?? '').replace(DATE_RE, (m,d,i) => (i ? '\n\n' : '') + d + ':');
 const linkify = s => esc(s).replace(/https?:\/\/[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener noreferrer">${u.length>40?u.slice(0,38)+'…':u}</a>`);
 const CAR = `<path d="M40 148 L40 116 Q41 105 53 101 L66 88 Q72 82 82 82 L146 82 Q158 83 168 94 L182 106 Q201 109 205 121 L206 148 Z" fill="__PAINT__"/> <path d="M71 90 Q75 87 82 87 L111 87 L111 103 L61 103 Z" fill="#2E3A14" opacity=".55"/> <path d="M117 87 L145 87 Q154 88 162 100 L163 103 L117 103 Z" fill="#2E3A14" opacity=".55"/> <rect x="40" y="128" width="166" height="4" fill="#2E3A14" opacity=".18"/> <path d="M196 113 L205 116 L205 122 L197 121 Z" fill="#F3E3A2"/> <path d="M40 112 L46 112 L46 120 L40 120 Z" fill="#C2392E" opacity=".9"/> <circle cx="78" cy="148" r="25" fill="#2E3A14"/><circle cx="170" cy="148" r="25" fill="#2E3A14"/> <circle cx="78" cy="148" r="19" fill="#5E7227"/><circle cx="78" cy="148" r="12.5" fill="#B9CC7E"/><circle cx="78" cy="148" r="6" fill="#C2392E"/> <circle cx="170" cy="148" r="19" fill="#5E7227"/><circle cx="170" cy="148" r="12.5" fill="#B9CC7E"/><circle cx="170" cy="148" r="6" fill="#C2392E"/> <path d="M98 82 C96 73 98 67 103 63" fill="none" stroke="#D9B44A" stroke-width="3" stroke-linecap="round"/> <path d="M102 64 C109 53 124 49 136 52 C130 63 116 68 102 64 Z" fill="#D9B44A"/> <path d="M105 63 C114 59 124 55 132 54" fill="none" stroke="#2E3A14" stroke-width="1.5" stroke-linecap="round" opacity=".5"/> `;
-const LOGO = 'https://adumavinno.github.io/logo.webp';
+const LOGO = 'https://adumavinno.github.io/logo.webp?v=2';
 const ICN = ['tools','clip','gift','ask','tip','battery','key','camera','tv','ice','soft','ac','bulb','crash','car','seat','wheel','engine','tire','puzzle'];
 const spr = (n, s) => { const k = Math.max(0, ICN.indexOf(n)); return `<span class="ico" aria-hidden="true" style="${s?`--s:${s}px;`:''}background-position:${(k%5)*25}% ${Math.floor(k/5)*100/3}%"></span>`; };
 /* Bộ icon nét (line icon) dùng chung toàn app. Bộ icon 3D chỉ còn dùng làm avatar. */
@@ -1025,7 +1025,7 @@ async function doInstall(){
 }
 if(IS_PWA_HOST){
  const link = (rel, href, extra) => { const l = document.createElement('link'); l.rel = rel; l.href = href; Object.assign(l, extra||{}); document.head.appendChild(l); };
- link('manifest', 'manifest.webmanifest'); link('apple-touch-icon', 'apple-touch-icon.png'); link('icon', 'icon-192.png', {type:'image/png'});
+ link('manifest', 'manifest.webmanifest'); link('apple-touch-icon', 'apple-touch-icon.png?v=2'); link('icon', 'icon-192.png?v=2', {type:'image/png'});
  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).catch(() => {});
  addEventListener('beforeinstallprompt', e => { e.preventDefault(); BIP = e; renderInstall(); });
  addEventListener('appinstalled', () => { BIP = null; renderInstall(); });
